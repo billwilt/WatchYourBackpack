@@ -44,7 +44,7 @@ public class MainController {
 	public ModelAndView testWeather() {
 		ModelAndView mav = new ModelAndView("index");
 		Currently weather = DSApiServ.getWeather("42.3601", "-71.0589");
-		mav.addObject(weather);
+		mav.addObject("weather", weather);
 		return mav;
 		 
 		
