@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import co.grandcircus.WatchYourBackpack.DSModel.NpsResponse;
+import co.grandcircus.WatchYourBackpack.DSModel.NpsResponse.NpsResponse;
 
 @Component
 public class ApiService {

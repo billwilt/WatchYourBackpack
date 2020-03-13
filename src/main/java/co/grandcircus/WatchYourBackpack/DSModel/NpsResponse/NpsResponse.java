@@ -1,4 +1,4 @@
-package co.grandcircus.WatchYourBackpack.DSModel;
+package co.grandcircus.WatchYourBackpack.DSModel.NpsResponse;
 
 public class NpsResponse {
 	
