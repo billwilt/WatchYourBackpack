@@ -43,11 +43,26 @@ public class MainController {
 	@RequestMapping ("/")
 	public ModelAndView testWeather() {
 		ModelAndView mav = new ModelAndView("index");
-		Currently weather = DSApiServ.getWeather("42.3601", "-71.0589");
-		mav.addObject(weather);
-		return mav;
-		 
 		
+		NpsResponse isleRoyal = apiServ.isleRoyal();
+		NpsResponse yellowstone = apiServ.yellowstone();
+		NpsResponse grandCanyon = apiServ.grandCanyon();
+		
+		Currently isleRoyalWeather = DSApiServ.getWeather(isleRoyal.getData().get(0).getLatitude(), isleRoyal.getData().get(0).getLongitude());
+		Currently yellowstoneWeather = DSApiServ.getWeather(yellowstone.getData().get(0).getLatitude(), yellowstone.getData().get(0).getLongitude());
+		Currently grandCanyonWeather = DSApiServ.getWeather(grandCanyon.getData().get(0).getLatitude(), grandCanyon.getData().get(0).getLongitude());
+		
+		mav.addObject(isleRoyal);
+		mav.addObject(yellowstone);
+		mav.addObject(grandCanyon);
+		
+		mav.addObject(isleRoyalWeather);
+		mav.addObject(yellowstoneWeather);
+		mav.addObject(grandCanyonWeather);
+		
+		return mav;		
 	}
+	
+	
 
 }
