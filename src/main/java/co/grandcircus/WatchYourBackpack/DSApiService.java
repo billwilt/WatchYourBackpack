@@ -1,5 +1,7 @@
 package co.grandcircus.WatchYourBackpack;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpHeaders;
@@ -28,10 +30,8 @@ public class DSApiService {
 		rt = new RestTemplateBuilder().additionalInterceptors(interceptor).build();
 	}
 
-	public Currently getWeather(String lat, String lon, String localDate, String localTime) {
-		
-		String url = "https://api.darksky.net/forecast/" + apiKeyDS + "/" + lat + "," + lon + "," + 
-		localDate + "T" + localTime;
+	public Currently getWeather(String lat, String lon) {
+		String url = "https://api.darksky.net/forecast/" + apiKeyDS + "/" + lat + "," + lon;
 		DSResponse response = rt.getForObject(url, DSResponse.class);
 		return response.getCurrently();
 	}
