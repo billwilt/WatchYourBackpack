@@ -4,8 +4,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.DSApiService;
+import co.grandcircus.WatchYourBackpack.DSModel.Currently;
 
 
 @Controller
@@ -17,8 +20,17 @@ public class MainController {
 	@Autowired
 	private DSApiService DSApiServ;
 
+	//This we will use later when we get the characters set up
 	//@Autowired
 	//private XDao xDao;
 	
-	
+	@RequestMapping ("/")
+	public ModelAndView test() {
+		ModelAndView mav = new ModelAndView();
+		Currently weather = DSApiServ.getWeather("42.3601", "-71.0589");
+		mav.addObject(weather);
+		return mav;
+		
+		
+	}
 }
