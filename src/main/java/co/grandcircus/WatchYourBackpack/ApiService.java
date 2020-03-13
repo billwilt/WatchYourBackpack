@@ -7,7 +7,7 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import co.grandcircus.WatchYourBackpack.DSModel.NpsResponse.NpsResponse;
+import co.grandcircus.WatchYourBackpack.NpsResponse.NpsResponse;
 
 @Component
 public class ApiService {
@@ -27,17 +27,32 @@ public class ApiService {
 		};
 		rt = new RestTemplateBuilder().additionalInterceptors(interceptor).build();
 	}
-
-	public NpsResponse findNpsResponse() {
-
-		String token = apiNPS;
-		String url = "https://developer.nps.gov/api/v1/parks?stateCode=MI&api_key=" + token;
-
-		NpsResponse response = null;
-		response = rt.getForObject(url, NpsResponse.class);
+	
+	public NpsResponse isleRoyal() {
 		
+		String token = apiNPS;
+		String url1 = "https://developer.nps.gov/api/v1/parks?stateCode=MI&parkCode=isro&api_key=" + token;
+		NpsResponse response = null;
+		response = rt.getForObject(url1, NpsResponse.class);
 		return response;
-
+	}
+	
+	public NpsResponse yellowstone() {
+		
+		String token = apiNPS;
+		NpsResponse response = null;
+		String url2 = "https://developer.nps.gov/api/v1/parks?stateCode=WY&parkCode=yell&api_key=" + token;
+		response = rt.getForObject(url2, NpsResponse.class);
+		return response;
+	}
+	
+	public NpsResponse grandCanyon() {
+		
+		String token = apiNPS;
+		String url3 = "https://developer.nps.gov/api/v1/parks?stateCode=AZ&parkCode=grca&api_key=" + token;
+		NpsResponse response = null;
+		response = rt.getForObject(url3, NpsResponse.class);
+		return response;
 	}
 
 }

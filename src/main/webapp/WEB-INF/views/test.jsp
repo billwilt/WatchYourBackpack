@@ -32,8 +32,10 @@
 </head>
 <body>
 <c:forEach items="${test.data}" var="park">
-<h1>${park.longitude}</h1>
-<h1>${park.latitude}</h1>
+<h6>${park.name}</h6>
+<h6>${park.url}</h6>
+<h6>${park.longitude}</h6>
+<h6>${park.latitude}</h6>
 </c:forEach>
 </body>
 </html>

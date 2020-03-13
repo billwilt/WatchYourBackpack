@@ -9,15 +9,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.ApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
-
-import co.grandcircus.WatchYourBackpack.DSModel.NpsResponse.NpsResponse;
-
 import co.grandcircus.WatchYourBackpack.DSModel.Currently;
+import co.grandcircus.WatchYourBackpack.NpsResponse.NpsResponse;
 
 
 
 @Controller
-public class MainController {
+public class MainController {	
 	
 	@Autowired
 	private ApiService apiServ;
@@ -36,7 +34,7 @@ public class MainController {
 	
 	@RequestMapping("/npstest")
 	public ModelAndView test() {
-		NpsResponse test = apiServ.findNpsResponse();
+		NpsResponse test = apiServ.isleRoyal();
 		System.out.println(test);
 		return new ModelAndView("test", "test", test);
 	}
