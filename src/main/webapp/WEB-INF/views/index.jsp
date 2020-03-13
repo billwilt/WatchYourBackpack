@@ -11,8 +11,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <!-- Favicon It's a coffee cup right now. Change it to whatever you want-->
-<link rel="icon" type="image/png"
-	href="https://i2.wp.com/awakedetroit.com/wp-content/uploads/2019/04/cropped-Favicon.png?ssl=1">
+<link rel="icon" type="image/png" href="/backpack-01.png">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -28,7 +27,7 @@
 <!-- Your custom styles -->
 <link rel="stylesheet" href="css/style.css">
 
-<title>Insert title here</title>
+<title>Watch your Back!pack</title>
 </head>
 <body>
 
