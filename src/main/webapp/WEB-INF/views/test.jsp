@@ -31,6 +31,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>${test}</h1>
+<c:forEach items="${test.data}" var="park">
+<h1>${park.longitude}</h1>
+<h1>${park.latitude}</h1>
+</c:forEach>
 </body>
 </html>

@@ -1,20 +1,23 @@
 package co.grandcircus.WatchYourBackpack.DSModel.NpsResponse;
 
+import java.util.List;
+
 public class NpsResponse {
 	
-	private Park park;
-
-	public Park getPark() {
-		return park;
-	}
-
-	public void setPark(Park park) {
-		this.park = park;
-	}
+	private List<Park> data;
 
 	@Override
 	public String toString() {
-		return "NpsResponse [park=" + park + "]";
+		return "NpsResponse [data=" + data + "]";
 	}
+
+	public List<Park> getData() {
+		return data;
+	}
+
+	public void setData(List<Park> data) {
+		this.data = data;
+	}
+
 
 }

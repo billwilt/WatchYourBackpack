@@ -1,9 +1,10 @@
 package co.grandcircus.WatchYourBackpack.DSModel.NpsResponse;
 
-public class Addresses {
+public class Address {
 	
 	private String city;
 	private String stateCode;
+	
 	public String getCity() {
 		return city;
 	}

@@ -36,15 +36,14 @@ public class MainController {
 	
 	@RequestMapping("/npstest")
 	public ModelAndView test() {
-		
 		NpsResponse test = apiServ.findNpsResponse();
-		
+		System.out.println(test);
 		return new ModelAndView("test", "test", test);
 	}
 	
 
 	@RequestMapping ("/")
-	public ModelAndView test() {
+	public ModelAndView testWeather() {
 		ModelAndView mav = new ModelAndView();
 		Currently weather = DSApiServ.getWeather("42.3601", "-71.0589");
 		mav.addObject(weather);
