@@ -31,7 +31,11 @@ public class ApiService {
 	public NpsResponse findNpsResponse() {
 
 		String token = apiNPS;
-		String url = "https://developer.nps.gov/api/v1/parks?stateCode=MI&api_key=" + token;
+		String url = "https://developer.nps.gov/api/v1/parks?stateCode=MI&parkCode=isro&api_key=" + token;
+		
+		String url1 = "https://developer.nps.gov/api/v1/parks?stateCode=MI&parkCode=isro&api_key=" + token;
+		String url2 = "https://developer.nps.gov/api/v1/parks?stateCode=MI&&api_key=" + token;
+		String url3 = "https://developer.nps.gov/api/v1/parks?stateCode=MI&&api_key=" + token;
 
 		NpsResponse response = null;
 		response = rt.getForObject(url, NpsResponse.class);

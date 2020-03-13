@@ -8,6 +8,8 @@ public class Park {
 	private Campsites campsites;
 	private String latitude;
 	private String longitude;
+	private String url;
+	private String name;
 
 	
 
@@ -38,7 +40,7 @@ public class Park {
 	@Override
 	public String toString() {
 		return "Park [addresses=" + addresses + ", campsites=" + campsites + ", latitude=" + latitude + ", longitude="
-				+ longitude + "]";
+				+ longitude + ", url=" + url + ", name=" + name + "]";
 	}
 
 	public List<Address> getAddresses() {
@@ -47,6 +49,22 @@ public class Park {
 
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
