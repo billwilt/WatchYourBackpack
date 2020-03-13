@@ -28,7 +28,7 @@ public class ApiService {
 		rt = new RestTemplateBuilder().additionalInterceptors(interceptor).build();
 	}
 	
-	public NpsResponse isleRoyal() {
+	public NpsResponse isleRoyale() {
 		
 		String token = apiNPS;
 		String url1 = "https://developer.nps.gov/api/v1/parks?stateCode=MI&parkCode=isro&api_key=" + token;

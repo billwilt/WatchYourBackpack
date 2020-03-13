@@ -34,7 +34,7 @@ public class MainController {
 	
 	@RequestMapping("/npstest")
 	public ModelAndView test() {
-		NpsResponse test = apiServ.isleRoyal();
+		NpsResponse test = apiServ.isleRoyale();
 		System.out.println(test);
 		return new ModelAndView("test", "test", test);
 	}
@@ -44,15 +44,15 @@ public class MainController {
 	public ModelAndView testWeather() {
 		ModelAndView mav = new ModelAndView("index");
 		
-		NpsResponse isleRoyal = apiServ.isleRoyal();
+		NpsResponse isleRoyale = apiServ.isleRoyale();
 		NpsResponse yellowstone = apiServ.yellowstone();
 		NpsResponse grandCanyon = apiServ.grandCanyon();
 		
-		Currently isleRoyalWeather = DSApiServ.getWeather(isleRoyal.getData().get(0).getLatitude(), isleRoyal.getData().get(0).getLongitude());
+		Currently isleRoyalWeather = DSApiServ.getWeather(isleRoyale.getData().get(0).getLatitude(), isleRoyale.getData().get(0).getLongitude());
 		Currently yellowstoneWeather = DSApiServ.getWeather(yellowstone.getData().get(0).getLatitude(), yellowstone.getData().get(0).getLongitude());
 		Currently grandCanyonWeather = DSApiServ.getWeather(grandCanyon.getData().get(0).getLatitude(), grandCanyon.getData().get(0).getLongitude());
 		
-		mav.addObject(isleRoyal);
+		mav.addObject(isleRoyale);
 		mav.addObject(yellowstone);
 		mav.addObject(grandCanyon);
 		

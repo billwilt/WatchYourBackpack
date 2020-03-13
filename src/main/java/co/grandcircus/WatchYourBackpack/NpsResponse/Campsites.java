@@ -5,6 +5,7 @@ public class Campsites {
 	private int totalsites;
 	private int tentonly;
 	private int rvonly;
+	
 	public int getTotalsites() {
 		return totalsites;
 	}
