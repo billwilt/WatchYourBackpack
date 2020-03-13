@@ -26,7 +26,7 @@ public class ApiService {
 	public NpsResponse findNpsResponse() {
 
 		String token = "GKRdDKf9YMfEFYsJ5SaTZfTWbqzjNz5ylf6TBcw2";
-		String url = "https://https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=" + token;
+		String url = "https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=" + token;
 
 		NpsResponse response = null;
 		response = rt.getForObject(url, NpsResponse.class);
