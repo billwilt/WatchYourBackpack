@@ -7,13 +7,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.grandcircus.WatchYourBackpack.ApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
+
+import co.grandcircus.WatchYourBackpack.DSModel.NpsResponse.NpsResponse;
+
 import co.grandcircus.WatchYourBackpack.DSModel.Currently;
+
 
 
 @Controller
 public class MainController {
-
+	
+	@Autowired
+	private ApiService apiServ;
+	
 	@Autowired
 	private HttpSession sesh;
 
@@ -24,6 +32,17 @@ public class MainController {
 	//@Autowired
 	//private XDao xDao;
 	
+
+	
+	@RequestMapping("/npstest")
+	public ModelAndView test() {
+		
+		NpsResponse test = apiServ.findNpsResponse();
+		
+		return new ModelAndView("test", "test", test);
+	}
+	
+
 	@RequestMapping ("/")
 	public ModelAndView test() {
 		ModelAndView mav = new ModelAndView();
@@ -33,4 +52,5 @@ public class MainController {
 		
 		
 	}
+
 }
