@@ -31,7 +31,8 @@
 </head>
 <body>
 
-
+Hello.
+${ weather.summary }
 
 
 
