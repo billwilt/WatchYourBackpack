@@ -1,12 +1,9 @@
 package co.grandcircus.WatchYourBackpack;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import co.grandcircus.WatchYourBackpack.DSModel.NpsResponse.NpsResponse;
@@ -26,21 +23,14 @@ public class ApiService {
 		rt = new RestTemplateBuilder().additionalInterceptors(interceptor).build();
 	}
 
-	public NpsResponse findNpsResponse(String word) {
+	public NpsResponse findNpsResponse() {
 
 		String token = "GKRdDKf9YMfEFYsJ5SaTZfTWbqzjNz5ylf6TBcw2";
-		String url = "https://developer.nps.gov/api/v1/";
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "Token " + token);
+		String url = "https://https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=" + token;
 
 		NpsResponse response = null;
-
-		try {
-			response = rt.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), NpsResponse.class).getBody();
-		} catch (RestClientException e) {
-			System.out.println("BAD");
-		}
+		response = rt.getForObject(url, NpsResponse.class);
+		
 		return response;
 
 	}
