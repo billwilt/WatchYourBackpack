@@ -36,9 +36,8 @@ public class MainController {
 	
 	@RequestMapping("/npstest")
 	public ModelAndView test() {
-		
 		NpsResponse test = apiServ.findNpsResponse();
-		
+		System.out.println(test);
 		return new ModelAndView("test", "test", test);
 	}
 	
