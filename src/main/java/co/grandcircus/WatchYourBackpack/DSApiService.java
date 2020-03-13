@@ -1,6 +1,5 @@
 package co.grandcircus.WatchYourBackpack;
 
-import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
