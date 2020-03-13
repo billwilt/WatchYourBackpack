@@ -48,17 +48,21 @@ public class MainController {
 		NpsResponse yellowstone = apiServ.yellowstone();
 		NpsResponse grandCanyon = apiServ.grandCanyon();
 		
-		Currently isleRoyalWeather = DSApiServ.getWeather(isleRoyale.getData().get(0).getLatitude(), isleRoyale.getData().get(0).getLongitude());
+		Currently isleRoyaleWeather = DSApiServ.getWeather(isleRoyale.getData().get(0).getLatitude(), isleRoyale.getData().get(0).getLongitude());
 		Currently yellowstoneWeather = DSApiServ.getWeather(yellowstone.getData().get(0).getLatitude(), yellowstone.getData().get(0).getLongitude());
 		Currently grandCanyonWeather = DSApiServ.getWeather(grandCanyon.getData().get(0).getLatitude(), grandCanyon.getData().get(0).getLongitude());
 		
-		mav.addObject(isleRoyale);
-		mav.addObject(yellowstone);
-		mav.addObject(grandCanyon);
+		//testing the lng and lat
+		System.out.println(isleRoyale.getData().get(0).getLatitude());
+		System.out.println(isleRoyale.getData().get(0).getLongitude());
 		
-		mav.addObject(isleRoyalWeather);
-		mav.addObject(yellowstoneWeather);
-		mav.addObject(grandCanyonWeather);
+		mav.addObject("isleRoyale", isleRoyale);
+		mav.addObject("yellowstone", yellowstone);
+		mav.addObject("grandCanyon", grandCanyon);
+		
+		mav.addObject("isleRoyaleWeather", isleRoyaleWeather);
+		mav.addObject("yellowstoneWeather", yellowstoneWeather);
+		mav.addObject("grandCanyonWeather", grandCanyonWeather);
 		
 		return mav;		
 	}

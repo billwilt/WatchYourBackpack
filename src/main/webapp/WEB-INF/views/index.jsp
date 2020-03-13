@@ -25,14 +25,51 @@
 	integrity="sha384-yrfSO0DBjS56u5M+SjWTyAHujrkiYVtRYh2dtB3yLQtUz3bodOeialO59u5lUCFF"
 	crossorigin="anonymous">
 <!-- Your custom styles -->
-<link rel="stylesheet" href="css/style.css">
+<link href="/style.css" rel="stylesheet" />
 
 <title>Watch your Back!pack</title>
 </head>
 <body>
 
-Hello.
-${ weather.summary }
+	Hello. ${ weather.summary }
+
+	<form>
+		
+		<div class="form-check disabled inputForm">
+			<h2>CHOOSE YOUR PLAYER</h2>
+			<div class="form-group">
+    			<select class="custom-select">
+ 			      <option selected="" id="playerID">Player Choices</option>
+  			      <option value="1">One</option>
+			      <option value="2">Two</option>
+			      <option value="3">Three</option>
+			    </select>
+			 </div>
+		</div>
+		
+		<div class="form-check disabled inputForm">
+			<h2>CHOOSE YOUR CAMPSITE</h2>
+				<div class="parkChoice"><input type="radio" name="park" id="parkID" value="${isleRoyale}">
+				<label class="choice">Isle Royale </label>
+				<p> Current Weather: ${isleRoyaleWeather.getSummary()}</p>
+				<p> Temperature: ${isleRoyaleWeather.getTemperature()} F</p>
+				</div>
+				
+				<div class="parkChoice"><input type="radio" name="park" id="parkID" value="${yellowstone}">
+				<label class="choice">Yellowstone </label>
+				<p> Current Weather: ${yellowstoneWeather.getSummary()}</p>
+				<p> Temperature: ${yellowstoneWeather.getTemperature()} F</p>
+				</div>
+				
+				<div class="parkChoice"><input type="radio" name="park" id="parkID" value="${grandCanyon}">
+				<label class="choice">Grand Canyon </label>
+				<p> Current Weather: ${grandCanyonWeather.getSummary()} </p>
+				<p> Temperature: ${grandCanyonWeather.getTemperature()} F</p>
+				</div>
+		</div>
+		
+		<button class="startButton">START GAME</button>
+	</form>
 
 
 
