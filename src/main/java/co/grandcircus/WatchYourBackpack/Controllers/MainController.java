@@ -44,11 +44,11 @@ public class MainController {
 
 	@RequestMapping ("/")
 	public ModelAndView testWeather() {
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView("index");
 		Currently weather = DSApiServ.getWeather("42.3601", "-71.0589");
 		mav.addObject(weather);
 		return mav;
-		
+		 
 		
 	}
 
