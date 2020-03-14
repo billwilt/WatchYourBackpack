@@ -10,6 +10,7 @@ public class Park {
 	private String url;
 	private String name;
 	private String parkCode;
+	private List<Fee> entranceFees;
 
 	public String getLatitude() {
 		return latitude;
@@ -29,8 +30,8 @@ public class Park {
 
 	@Override
 	public String toString() {
-		return "Park [addresses=" + addresses + ", latitude=" + latitude + ", longitude="
-				+ longitude + ", url=" + url + ", name=" + name + "]";
+		return "Park [addresses=" + addresses + ", latitude=" + latitude + ", longitude=" + longitude + ", url=" + url
+				+ ", name=" + name + ", parkCode=" + parkCode + ", entranceFees=" + entranceFees + "]";
 	}
 
 	public List<Address> getAddresses() {
@@ -63,6 +64,14 @@ public class Park {
 
 	public void setParkCode(String parkCode) {
 		this.parkCode = parkCode;
+	}
+
+	public List<Fee> getEntranceFees() {
+		return entranceFees;
+	}
+
+	public void setEntranceFees(List<Fee> entranceFees) {
+		this.entranceFees = entranceFees;
 	}
 
 }

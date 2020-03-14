@@ -75,14 +75,20 @@ public class MainController {
 	public ModelAndView startGame(String parkCode, String user) {
 		ModelAndView mav = new ModelAndView("start");
 		
+		if (user.equals("NO")) {
+			return new ModelAndView("redirect:/");
+		}
+		
 		Park park = apiServ.findByParkCode(parkCode);
 		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
+		String cost = (park.getEntranceFees().get(0).getCost());
 		
 		System.out.println(currentWeather);
 		
-		mav.addObject(currentWeather);
-		mav.addObject(park);
+		mav.addObject("currentWeather", currentWeather);
+		mav.addObject("park", park);
 		mav.addObject("user", user);
+		mav.addObject("cost", cost);
 		
 		return mav;
 	}
