@@ -30,11 +30,11 @@
 <title>New Game+</title>
 </head>
 <body>
-
-<h5>${park.getLatitude()}</h5>
-<h5>${park.getLongitude()}</h5>
-<h5>${user}</h5>
-<h5></h5>
-
+	<div class="card1">
+		<h2>Current Settings: ${park.getName()}</h2>
+		<h3>You Are: ${user}</h3>
+		<h5>Current Weather: ${currentWeather.getSummary()}</h5>
+		<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
+	</div>
 </body>
 </html>
