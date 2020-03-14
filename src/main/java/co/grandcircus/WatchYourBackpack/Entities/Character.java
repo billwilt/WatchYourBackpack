@@ -19,7 +19,7 @@ public class Character {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String type; //fighter, pyro, strategy?
+	private String type; //only three possible values: "fighter", "pyromaniac", "strategist"
 	//so when the user chooses a type, that triggers different values for the stats? Would that be a switch case inside the setters?
 	private int attack;
 	private int fire;
