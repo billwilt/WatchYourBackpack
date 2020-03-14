@@ -5,21 +5,12 @@ import java.util.List;
 public class Park {
 
 	private List<Address> addresses;
-	private Campsites campsites;
 	private String latitude;
 	private String longitude;
 	private String url;
 	private String name;
-
-	
-
-	public Campsites getCampsites() {
-		return campsites;
-	}
-
-	public void setCampsites(Campsites campsites) {
-		this.campsites = campsites;
-	}
+	private String parkCode;
+	private List<Fee> entranceFees;
 
 	public String getLatitude() {
 		return latitude;
@@ -39,8 +30,8 @@ public class Park {
 
 	@Override
 	public String toString() {
-		return "Park [addresses=" + addresses + ", campsites=" + campsites + ", latitude=" + latitude + ", longitude="
-				+ longitude + ", url=" + url + ", name=" + name + "]";
+		return "Park [addresses=" + addresses + ", latitude=" + latitude + ", longitude=" + longitude + ", url=" + url
+				+ ", name=" + name + ", parkCode=" + parkCode + ", entranceFees=" + entranceFees + "]";
 	}
 
 	public List<Address> getAddresses() {
@@ -65,6 +56,22 @@ public class Park {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getParkCode() {
+		return parkCode;
+	}
+
+	public void setParkCode(String parkCode) {
+		this.parkCode = parkCode;
+	}
+
+	public List<Fee> getEntranceFees() {
+		return entranceFees;
+	}
+
+	public void setEntranceFees(List<Fee> entranceFees) {
+		this.entranceFees = entranceFees;
 	}
 
 }

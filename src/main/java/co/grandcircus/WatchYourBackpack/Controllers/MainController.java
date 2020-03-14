@@ -12,6 +12,7 @@ import co.grandcircus.WatchYourBackpack.ApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.DSModel.Currently;
 import co.grandcircus.WatchYourBackpack.NpsResponse.NpsResponse;
+import co.grandcircus.WatchYourBackpack.NpsResponse.Park;
 
 @Controller
 public class MainController {
@@ -71,11 +72,23 @@ public class MainController {
 	}
 
 	@PostMapping("/start")
-	public ModelAndView startGame(NpsResponse park, String user) {
+	public ModelAndView startGame(String parkCode, String user) {
 		ModelAndView mav = new ModelAndView("start");
 		
-		mav.addObject("park", park.getData().get(0));
+		if (user.equals("NO")) {
+			return new ModelAndView("redirect:/");
+		}
+		
+		Park park = apiServ.findByParkCode(parkCode);
+		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
+		String cost = (park.getEntranceFees().get(0).getCost());
+		
+		System.out.println(currentWeather);
+		
+		mav.addObject("currentWeather", currentWeather);
+		mav.addObject("park", park);
 		mav.addObject("user", user);
+		mav.addObject("cost", cost);
 		
 		return mav;
 	}

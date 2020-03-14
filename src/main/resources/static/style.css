@@ -35,14 +35,21 @@
 	padding: 15px;
 }
 
-.choice {
-	size: 15px;
-}
-
 .parkChoice {
 	border: 2px solid black;
 	padding: 5px;
 	background: white;
 	border-radius: 10px;
 	margin-top: 5px;
+}
+
+.card1 {
+	margin-top: 2%;
+	margin-left: 2%;
+	border: 2px solid black;
+	background: powderblue;
+	color: black;
+	padding: 15px;
+	border-radius: 10px;
+	width: 25%;
 }

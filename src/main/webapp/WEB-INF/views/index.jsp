@@ -39,9 +39,9 @@
 			<div class="form-group">
 				<select name="user" class="custom-select" required>
 					<option value="NO">Player Choices</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
+					<option value="Jeannie">Jeannie</option>
+					<option value="Sean">Sean</option>
+					<option value="Bill">Bill</option>
 				</select>
 			</div>
 		</div>
@@ -49,21 +49,21 @@
 		<div class="form-check disabled inputForm-right">
 			<h2>CHOOSE YOUR CAMPSITE</h2>
 			<div class="parkChoice">
-				<input type="radio" name="park" id="parkID" value="${isleRoyale}">
+				<input type="radio" name="parkCode" id="parkID" value="${isleRoyale.getData().get(0).getParkCode()}">
 				<label class="choice">Isle Royale </label>
 				<p>Current Weather: ${isleRoyaleWeather.getSummary()}</p>
 				<p>Temperature: ${isleRoyaleWeather.getTemperature()} F</p>
 			</div>
 
 			<div class="parkChoice">
-				<input type="radio" name="park" id="parkID" value="${yellowstone}">
+				<input type="radio" name="parkCode" id="parkID" value="${yellowstone.getData().get(0).getParkCode()}">
 				<label class="choice">Yellowstone </label>
 				<p>Current Weather: ${yellowstoneWeather.getSummary()}</p>
 				<p>Temperature: ${yellowstoneWeather.getTemperature()} F</p>
 			</div>
 
 			<div class="parkChoice">
-				<input type="radio" name="park" id="parkID" value="${grandCanyon}">
+				<input type="radio" name="parkCode" id="parkID" value="${grandCanyon.getData().get(0).getParkCode()}">
 				<label class="choice">Grand Canyon </label>
 				<p>Current Weather: ${grandCanyonWeather.getSummary()}</p>
 				<p>Temperature: ${grandCanyonWeather.getTemperature()} F</p>

@@ -30,11 +30,33 @@
 <title>New Game+</title>
 </head>
 <body>
+	<div class="card1">
+		<h2>Current Settings: ${park.getName()}</h2>
+		<h3>You Are: ${user}</h3>
+		<h5>Current Weather: ${currentWeather.getSummary()}</h5>
+		<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
+	</div>
+	
+	<form action="" method="post" class="card1">
+		<div>
+			<div class="parkChoice">
+				<input type="radio" name="price" value=0>
+				<label class="choice">In the Leaves</label>
+				<p>Price: FREE</p>
+			</div>
 
-<h5>${park.getLatitude()}</h5>
-<h5>${park.getLongitude()}</h5>
-<h5>${user}</h5>
-<h5></h5>
+			<div class="parkChoice">
+				<input type="radio" name="price" value=10>
+				<label class="choice">Tent</label>
+				<p>Price: $10</p>
+			</div>
 
+			<div class="parkChoice">
+				<input type="radio" name="price" value="${cost}">
+				<label class="choice">Cabin</label>
+				<p>Price: $${cost}</p>
+			</div>
+		</div>
+	</form>
 </body>
 </html>
