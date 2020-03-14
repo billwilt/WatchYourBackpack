@@ -44,10 +44,12 @@ public class MainController {
 	public ModelAndView testWeather() {
 		ModelAndView mav = new ModelAndView("index");
 		
+		//getting parks
 		NpsResponse isleRoyale = apiServ.isleRoyale();
 		NpsResponse yellowstone = apiServ.yellowstone();
 		NpsResponse grandCanyon = apiServ.grandCanyon();
 		
+		//getting weather with the parks lng and lat
 		Currently isleRoyaleWeather = DSApiServ.getWeather(isleRoyale.getData().get(0).getLatitude(), isleRoyale.getData().get(0).getLongitude());
 		Currently yellowstoneWeather = DSApiServ.getWeather(yellowstone.getData().get(0).getLatitude(), yellowstone.getData().get(0).getLongitude());
 		Currently grandCanyonWeather = DSApiServ.getWeather(grandCanyon.getData().get(0).getLatitude(), grandCanyon.getData().get(0).getLongitude());
@@ -56,10 +58,12 @@ public class MainController {
 		System.out.println(isleRoyale.getData().get(0).getLatitude());
 		System.out.println(isleRoyale.getData().get(0).getLongitude());
 		
+		//adding the parks to the model
 		mav.addObject("isleRoyale", isleRoyale);
 		mav.addObject("yellowstone", yellowstone);
 		mav.addObject("grandCanyon", grandCanyon);
 		
+		//adding the weather for each park
 		mav.addObject("isleRoyaleWeather", isleRoyaleWeather);
 		mav.addObject("yellowstoneWeather", yellowstoneWeather);
 		mav.addObject("grandCanyonWeather", grandCanyonWeather);

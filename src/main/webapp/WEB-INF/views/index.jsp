@@ -29,16 +29,14 @@
 
 <title>Watch your Back!pack</title>
 </head>
-<body>
-
-	Hello. ${ weather.summary }
+<body style="background-image: url('WatchYourBackpack-01.jpg'); background-repeat: no-repeat; background-size: 75% 76%;">
 
 	<form>
 		
-		<div class="form-check disabled inputForm">
+		<div class="form-check disabled inputForm-left">
 			<h2>CHOOSE YOUR PLAYER</h2>
 			<div class="form-group">
-    			<select class="custom-select">
+    			<select class="custom-select" required>
  			      <option selected="" id="playerID">Player Choices</option>
   			      <option value="1">One</option>
 			      <option value="2">Two</option>
@@ -47,7 +45,7 @@
 			 </div>
 		</div>
 		
-		<div class="form-check disabled inputForm">
+		<div class="form-check disabled inputForm-right">
 			<h2>CHOOSE YOUR CAMPSITE</h2>
 				<div class="parkChoice"><input type="radio" name="park" id="parkID" value="${isleRoyale}">
 				<label class="choice">Isle Royale </label>
