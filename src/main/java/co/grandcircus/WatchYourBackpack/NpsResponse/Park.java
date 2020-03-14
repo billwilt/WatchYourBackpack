@@ -10,7 +10,7 @@ public class Park {
 	private String longitude;
 	private String url;
 	private String name;
-
+	private String parkCode;
 	
 
 	public Campsites getCampsites() {
@@ -65,6 +65,14 @@ public class Park {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getParkCode() {
+		return parkCode;
+	}
+
+	public void setParkCode(String parkCode) {
+		this.parkCode = parkCode;
 	}
 
 }

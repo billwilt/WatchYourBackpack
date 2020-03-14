@@ -71,10 +71,10 @@ public class MainController {
 	}
 
 	@PostMapping("/start")
-	public ModelAndView startGame(NpsResponse park, String user) {
+	public ModelAndView startGame(String parkCode, String user) {
 		ModelAndView mav = new ModelAndView("start");
 		
-		mav.addObject("park", park.getData().get(0));
+		mav.addObject("park", apiServ.findByParkCode(parkCode));
 		mav.addObject("user", user);
 		
 		return mav;

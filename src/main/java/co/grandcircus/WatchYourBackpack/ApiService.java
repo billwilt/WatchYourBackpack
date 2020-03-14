@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import co.grandcircus.WatchYourBackpack.NpsResponse.NpsResponse;
+import co.grandcircus.WatchYourBackpack.NpsResponse.Park;
 
 @Component
 public class ApiService {
@@ -53,6 +54,15 @@ public class ApiService {
 		NpsResponse response = null;
 		response = rt.getForObject(url3, NpsResponse.class);
 		return response;
+	}
+	
+	public Park findByParkCode(String parkCode) {
+		String token = apiNPS;
+		String url3 = "https://developer.nps.gov/api/v1/parks?parkCode=" + parkCode + "&api_key=" + token;
+		NpsResponse response = null;
+		response = rt.getForObject(url3, NpsResponse.class);
+		Park responsePark = response.getData().get(0);
+		return responsePark;
 	}
 
 }
