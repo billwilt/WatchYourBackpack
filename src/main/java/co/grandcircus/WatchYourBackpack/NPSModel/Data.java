@@ -1,4 +1,4 @@
-package co.grandcircus.WatchYourBackpack.NpsResponse;
+package co.grandcircus.WatchYourBackpack.NPSModel;
 
 import java.util.List;
 

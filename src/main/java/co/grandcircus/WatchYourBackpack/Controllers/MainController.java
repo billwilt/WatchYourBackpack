@@ -11,8 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import co.grandcircus.WatchYourBackpack.ApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.DSModel.Currently;
-import co.grandcircus.WatchYourBackpack.NpsResponse.NpsResponse;
-import co.grandcircus.WatchYourBackpack.NpsResponse.Park;
+import co.grandcircus.WatchYourBackpack.NPSModel.NpsResponse;
+import co.grandcircus.WatchYourBackpack.NPSModel.Park;
 
 @Controller
 public class MainController {

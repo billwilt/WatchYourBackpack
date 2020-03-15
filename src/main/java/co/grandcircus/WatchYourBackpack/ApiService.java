@@ -7,8 +7,8 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import co.grandcircus.WatchYourBackpack.NpsResponse.NpsResponse;
-import co.grandcircus.WatchYourBackpack.NpsResponse.Park;
+import co.grandcircus.WatchYourBackpack.NPSModel.NpsResponse;
+import co.grandcircus.WatchYourBackpack.NPSModel.Park;
 
 @Component
 public class ApiService {

@@ -1,9 +1,11 @@
-package co.grandcircus.WatchYourBackpack.NpsResponse;
+package co.grandcircus.WatchYourBackpack.NPSModel;
 
 public class Fee {
 	
 	private String cost;
 	private String title;
+	
+	
 	public String getCost() {
 		return cost;
 	}
