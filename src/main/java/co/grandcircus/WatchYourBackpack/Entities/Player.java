@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -14,26 +16,27 @@ import co.grandcircus.WatchYourBackpack.DSModel.Currently;
 
 
 @Entity
-public class Character {
+public class Player {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	private String name;
-	private String type; //fighter, pyro, strategy?
+	private String description;//The description will show next to the character's name when user is choosing character.
+	//We will fill in the description of the stock characters so it gives user clue to character's stats
+	//We will have to explain to user when creating their own character how the description will be shown
+	private String type; //only three possible values: "fighter", "pyromaniac", "strategist"
 	//so when the user chooses a type, that triggers different values for the stats? Would that be a switch case inside the setters?
-	private int attack;
-	private int fire;
-	private int resourcefulness;
+	private Integer attack;
+	private Integer fire;
+	private Integer resourcefulness;
+	private Double money;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany (mappedBy = "players")
 	private List<Item> items;
-	
-	
-	private String startDate;//set the start date when Character is created. 
-	//Don't forget to reset the start date when character plays again
 
-	@OneToOne (cascade = CascadeType.ALL)
-	private Currently weather;
+	//@OneToOne (cascade = CascadeType.ALL)//I commented this out bc I don't think we need Currently to be an entity
+	//private Currently weather;//I don't think it needs to be stored in the Character at all because it is only called once, right?
 	
 	
 
@@ -93,27 +96,21 @@ public class Character {
 		this.items = items;
 	}
 
-	public String getStartDate() {
-		return startDate;
-	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-	public Currently getWeather() {
-		return weather;
-	}
-
-	public void setWeather(Currently weather) {
-		this.weather = weather;
-	}
 
 	@Override
 	public String toString() {
-		return "Character [id=" + id + ", name=" + name + ", type=" + type + ", attack=" + attack + ", fire=" + fire
-				+ ", resourcefulness=" + resourcefulness + ", items=" + items + ", startDate=" + startDate
-				+ ", weather=" + weather + "]";
+		return "Character [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description + ", attack=" + attack + ", fire=" + fire
+				+ ", resourcefulness=" + resourcefulness + ", items=" + items
+				+ "]";
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	
