@@ -30,6 +30,9 @@ public class TestController {
 	public ModelAndView test() {
 		ModelAndView mav = new ModelAndView("test");
 		
+		//mav.addObject("parkCodes",
+		NPSapiServ.getParkCodesWithCampgrounds();
+		
 		//fill database. Only wanted to do this once to grab info, so commented out
 		//pServ.fillDatabase();
 		

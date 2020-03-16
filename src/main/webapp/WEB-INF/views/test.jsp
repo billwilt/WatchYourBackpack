@@ -42,8 +42,12 @@
 		<p><h6>${ fee }</h6>
 </c:forEach>
 
-<c:forEach items ="${ campgrounds }" var = "campground">
+<%-- <c:forEach items="${ parkCodes }" var="fee">
+		<p><h6>${ fee }</h6>
+</c:forEach> --%>
+
+<%-- <c:forEach items ="${ campgrounds }" var = "campground">
 <p><h3>${ campground.name }</h3> ${ campground.amenities }</p>
-</c:forEach>
+</c:forEach> --%>
 </body>
 </html>
