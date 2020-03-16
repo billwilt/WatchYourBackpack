@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import co.grandcircus.WatchYourBackpack.ApiService;
+import co.grandcircus.WatchYourBackpack.NPSApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
-import co.grandcircus.WatchYourBackpack.DSModel.Currently;
-import co.grandcircus.WatchYourBackpack.NpsResponse.NpsResponse;
-import co.grandcircus.WatchYourBackpack.NpsResponse.Park;
+import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
+import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
+import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
 
 @Controller
 public class MainController {
 
 	@Autowired
-	private ApiService apiServ;
+	private NPSApiService apiServ;
 
 	@Autowired
 	private HttpSession sesh;
@@ -30,15 +30,8 @@ public class MainController {
 	// @Autowired
 	// private XDao xDao;
 
-	@RequestMapping("/npstest")
-	public ModelAndView test() {
-		NpsResponse test = apiServ.isleRoyale();
-		System.out.println(test);
-		return new ModelAndView("test", "test", test);
-	}
-
 	@RequestMapping("/")
-	public ModelAndView testWeather() {
+	public ModelAndView showHome() {
 		ModelAndView mav = new ModelAndView("index");
 
 		// getting parks
@@ -92,5 +85,4 @@ public class MainController {
 		
 		return mav;
 	}
-
 }

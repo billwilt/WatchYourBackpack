@@ -31,11 +31,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:forEach items="${test.data}" var="park">
-<h6>${park.name}</h6>
-<h6>${park.url}</h6>
-<h6>${park.longitude}</h6>
-<h6>${park.latitude}</h6>
+	<c:forEach items="${test.data}" var="park">
+		<h6>${park.name}</h6>
+		<h6>${park.url}</h6>
+		<h6>${park.longitude}</h6>
+		<h6>${park.latitude}</h6>
+	</c:forEach>
+
+	<c:forEach items="${ fees }" var="fee">
+		<p><h6>${ fee }</h6>
+</c:forEach>
+
+<c:forEach items ="${ campgrounds }" var = "campground">
+<p><h3>${ campground.name }</h3> ${ campground.amenities }</p>
 </c:forEach>
 </body>
 </html>

@@ -1,24 +1,10 @@
-package co.grandcircus.WatchYourBackpack.DSModel;
+package co.grandcircus.WatchYourBackpack.Models.DSModel;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
 public class Currently {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; 	
+	
 	private String summary;
 	private String icon;
 	private Double temperature;
-	
-	//rework the below to work with National Parks?
-	//@OneToOne(mappedBy = "weather")
-	//private FavEvent favEvent;
-	
 	
 	
 	public String getSummary() {
