@@ -23,9 +23,6 @@ public class Item {
 	private Integer fireAdd;
 	private Integer resourcefulnessAdd;
 	
-	@ManyToMany   //(cascade = CascadeType.ALL)
-	private List<Player> players;//I honestly don't understand why we would need this but I'm putting it in and crossing my fingers it solves my issue creating the db
-	
 	
 	public Long getId() {
 		return id;

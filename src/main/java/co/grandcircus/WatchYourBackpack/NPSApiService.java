@@ -1,6 +1,9 @@
 package co.grandcircus.WatchYourBackpack;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -9,6 +12,8 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import co.grandcircus.WatchYourBackpack.Models.CampgroundModel.Campground;
+import co.grandcircus.WatchYourBackpack.Models.CampgroundModel.CampgroundResponse;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
 
@@ -71,6 +76,21 @@ public class NPSApiService {
 		String url = "https://api.nps.gov/api/v1/parks?limit=20&start=497&api_key=" + apiNPS;
 		NpsResponse response = rt.getForObject(url, NpsResponse.class);
 		return response.getData();
+	}
+
+	public Set<String> getParkCodesWithCampgrounds() {
+		
+		Set<String> parkCodes = new HashSet<>();
+		for (int i = 1; i < 501; i=i+20) {
+			String url = "https://api.nps.gov/api/v1/campgrounds?limit=20&start=" + i + "&api_key=" + apiNPS;
+			CampgroundResponse response = rt.getForObject(url, CampgroundResponse.class);
+			for (Campground campground: response.getData()) {
+				parkCodes.add(campground.getParkCode());
+				
+			}
+		}
+		System.out.println(parkCodes);
+		return parkCodes;
 	}
 }
 

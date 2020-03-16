@@ -15,11 +15,57 @@ public class DBPark {
 	private String name;
 	private String parkCode;
 	private Double entranceFee; 
-	private Boolean campingAllowed;
 	private String stateCode;
+	private String longitude;
+	private String latitude;
+	private String url;
+	private String imageUrl;
+	private String imageAltText;
 	
 	
 	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	public String getImageAltText() {
+		return imageAltText;
+	}
+	public void setImageAltText(String imageAltText) {
+		this.imageAltText = imageAltText;
+	}
+	public String getStateCode() {
+		return stateCode;
+	}
+	public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
+	}
+	public String getParkCode() {
+		return parkCode;
+	}
+	public void setParkCode(String parkCode) {
+		this.parkCode = parkCode;
+	}
+	public String getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+	public String getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -37,6 +83,13 @@ public class DBPark {
 	}
 	public void setEntranceFee(Double entranceFee) {
 		this.entranceFee = entranceFee;
+	}
+
+	@Override
+	public String toString() {
+		return "DBPark [id=" + id + ", name=" + name + ", entranceFee=" + entranceFee + ", stateCode=" + stateCode
+				+ ", parkCode=" + parkCode + ", longitude=" + longitude + ", latitude=" + latitude + ", url=" + url
+				+ ", imageUrl=" + imageUrl + ", imageAltText=" + imageAltText + "]";
 	}
 
 	
