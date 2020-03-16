@@ -12,10 +12,10 @@ public class DBPark {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 	
 	
-	private String name; 
+	private String name;
+	private String parkCode;
 	private Double entranceFee; 
 	private String stateCode;
-	private String parkCode;
 	private String longitude;
 	private String latitude;
 	private String url;
@@ -84,12 +84,14 @@ public class DBPark {
 	public void setEntranceFee(Double entranceFee) {
 		this.entranceFee = entranceFee;
 	}
+
 	@Override
 	public String toString() {
 		return "DBPark [id=" + id + ", name=" + name + ", entranceFee=" + entranceFee + ", stateCode=" + stateCode
 				+ ", parkCode=" + parkCode + ", longitude=" + longitude + ", latitude=" + latitude + ", url=" + url
 				+ ", imageUrl=" + imageUrl + ", imageAltText=" + imageAltText + "]";
 	}
+
 	
 	
 }
