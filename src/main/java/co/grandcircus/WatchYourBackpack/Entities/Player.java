@@ -32,7 +32,7 @@ public class Player {
 	private Integer resourcefulness;
 	private Double money;
 	
-	@ManyToMany (mappedBy = "players")
+	@ManyToMany
 	private List<Item> items;
 
 	//@OneToOne (cascade = CascadeType.ALL)//I commented this out bc I don't think we need Currently to be an entity

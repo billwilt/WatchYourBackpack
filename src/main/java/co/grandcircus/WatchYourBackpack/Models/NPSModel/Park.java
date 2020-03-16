@@ -11,6 +11,8 @@ public class Park {
 	private String name;
 	private String parkCode;
 	private List<Fee> entranceFees;
+	private List<Image> images;
+	private String states;
 
 	public String getLatitude() {
 		return latitude;
@@ -28,10 +30,13 @@ public class Park {
 		this.longitude = longitude;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Park [addresses=" + addresses + ", latitude=" + latitude + ", longitude=" + longitude + ", url=" + url
-				+ ", name=" + name + ", parkCode=" + parkCode + ", entranceFees=" + entranceFees + "]";
+				+ ", name=" + name + ", parkCode=" + parkCode + ", entranceFees=" + entranceFees + ", images=" + images
+				+ ", states=" + states + "]";
 	}
 
 	public List<Address> getAddresses() {
@@ -72,6 +77,22 @@ public class Park {
 
 	public void setEntranceFees(List<Fee> entranceFees) {
 		this.entranceFees = entranceFees;
+	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+	public String getStateCode() {
+		return states;
+	}
+
+	public void setStateCode(String stateCode) {
+		this.states = stateCode;
 	}
 
 }
