@@ -8,6 +8,8 @@ public class Campsites {
 	private String totalsites;
 	private String electricalhookups;
 	private String rvonly;
+	
+	
 	public String getOther() {
 		return other;
 	}

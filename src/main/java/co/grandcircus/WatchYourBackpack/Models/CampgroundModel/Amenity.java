@@ -8,6 +8,8 @@ public class Amenity {
 	private String firewoodforsale;
 	private List<String> potablewater;
 	private List<String> toilets;
+	
+	
 	public String getCellphonereception() {
 		return cellphonereception;
 	}
