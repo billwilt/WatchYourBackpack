@@ -12,8 +12,8 @@ public class DBPark {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 	
 	
-	private String name; //Park.name
-	private Double entranceFee; //Park.entranceFees.getAt(0).cost
+	private String name; 
+	private Double entranceFee; 
 	
 	
 	public Long getId() {

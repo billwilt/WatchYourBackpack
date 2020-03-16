@@ -16,7 +16,7 @@ import co.grandcircus.WatchYourBackpack.DSModel.Currently;
 
 
 @Entity
-public class Character {
+public class Player {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -30,8 +30,9 @@ public class Character {
 	private Integer attack;
 	private Integer fire;
 	private Integer resourcefulness;
+	private Double money;
 	
-	@ManyToMany (mappedBy = "characters")
+	@ManyToMany (mappedBy = "players")
 	private List<Item> items;
 
 	//@OneToOne (cascade = CascadeType.ALL)//I commented this out bc I don't think we need Currently to be an entity

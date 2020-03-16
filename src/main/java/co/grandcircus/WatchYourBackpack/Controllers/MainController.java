@@ -30,15 +30,8 @@ public class MainController {
 	// @Autowired
 	// private XDao xDao;
 
-	@RequestMapping("/npstest")
-	public ModelAndView test() {
-		NpsResponse test = apiServ.isleRoyale();
-		System.out.println(test);
-		return new ModelAndView("test", "test", test);
-	}
-
 	@RequestMapping("/")
-	public ModelAndView testWeather() {
+	public ModelAndView showHome() {
 		ModelAndView mav = new ModelAndView("index");
 
 		// getting parks
@@ -92,5 +85,4 @@ public class MainController {
 		
 		return mav;
 	}
-
 }

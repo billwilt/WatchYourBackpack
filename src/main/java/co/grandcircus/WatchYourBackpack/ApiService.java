@@ -1,5 +1,7 @@
 package co.grandcircus.WatchYourBackpack;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +17,6 @@ public class ApiService {
 	
 	@Value("${NPS-api}")
 	private String apiNPS;
-
 
 	private RestTemplate rt;
 
@@ -65,21 +66,13 @@ public class ApiService {
 		return responsePark;
 	}
 
+	public List<Park> getParks(){
+				  //  https://api.nps.gov/api/v1/parks?limit=1&start=8&api_key=GKRdDKf9YMfEFYsJ5SaTZfTWbqzjNz5ylf6TBcw2
+		String url = "https://api.nps.gov/api/v1/parks?limit=20&start=497&api_key=" + apiNPS;
+		NpsResponse response = rt.getForObject(url, NpsResponse.class);
+		return response.getData();
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
