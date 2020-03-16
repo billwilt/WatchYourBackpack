@@ -1,4 +1,4 @@
-package co.grandcircus.WatchYourBackpack.NPSModel;
+package co.grandcircus.WatchYourBackpack.Models.NPSModel;
 
 public class Address {
 

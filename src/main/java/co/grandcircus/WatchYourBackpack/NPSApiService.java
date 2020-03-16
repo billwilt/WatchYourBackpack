@@ -9,11 +9,11 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import co.grandcircus.WatchYourBackpack.NPSModel.NpsResponse;
-import co.grandcircus.WatchYourBackpack.NPSModel.Park;
+import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
+import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
 
 @Component
-public class ApiService {
+public class NPSApiService {
 	
 	@Value("${NPS-api}")
 	private String apiNPS;

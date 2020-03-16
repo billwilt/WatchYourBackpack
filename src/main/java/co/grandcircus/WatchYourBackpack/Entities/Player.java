@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import co.grandcircus.WatchYourBackpack.DSModel.Currently;
+import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
 
 
 @Entity
