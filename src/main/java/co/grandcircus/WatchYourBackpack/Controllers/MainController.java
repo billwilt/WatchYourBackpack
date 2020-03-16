@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import co.grandcircus.WatchYourBackpack.ApiService;
+import co.grandcircus.WatchYourBackpack.NPSApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
-import co.grandcircus.WatchYourBackpack.DSModel.Currently;
-import co.grandcircus.WatchYourBackpack.NPSModel.NpsResponse;
-import co.grandcircus.WatchYourBackpack.NPSModel.Park;
+import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
+import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
+import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
 
 @Controller
 public class MainController {
 
 	@Autowired
-	private ApiService apiServ;
+	private NPSApiService apiServ;
 
 	@Autowired
 	private HttpSession sesh;

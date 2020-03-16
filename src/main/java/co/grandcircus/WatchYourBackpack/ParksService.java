@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
 import co.grandcircus.WatchYourBackpack.Entities.DBPark;
-import co.grandcircus.WatchYourBackpack.NPSModel.Park;
+import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
 
 @Component
 public class ParksService {
@@ -15,7 +15,7 @@ public class ParksService {
 	@Autowired
 	private ParksDao pDao;
 	@Autowired
-	private ApiService NPSapiServ;
+	private NPSApiService NPSapiServ;
 
 	public void fillDatabase() {
 		//Load database of park names and entrance fees
