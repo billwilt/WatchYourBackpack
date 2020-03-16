@@ -12,8 +12,12 @@ public class DBPark {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 	
 	
-	private String name; 
+	private String name;
+	private String parkCode;
 	private Double entranceFee; 
+	private Boolean campingAllowed;
+	private String stateCode;
+	
 	
 	
 	public Long getId() {
@@ -34,10 +38,7 @@ public class DBPark {
 	public void setEntranceFee(Double entranceFee) {
 		this.entranceFee = entranceFee;
 	}
-	@Override
-	public String toString() {
-		return "DBPark [id=" + id + ", name=" + name + ", entranceFee=" + entranceFee + "]";
-	}
+
 	
 	
 }
