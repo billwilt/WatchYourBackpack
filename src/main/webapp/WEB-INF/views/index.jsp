@@ -37,12 +37,22 @@
 		<div class="form-check disabled inputForm-left">
 			<h2>CHOOSE YOUR PLAYER</h2>
 			<div class="form-group">
-				<select name="user" class="custom-select" required>
+				<select name="id" class="custom-select" required>
 					<c:forEach items="${players}" var="player">
-						<option label="${player.getName()}" value="id">${player.getId()}</option>
+					
+					
+					
+						
+						<option value="${player.getId()}">${player.getName()} Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness()}</option>
+					
+					
+					
+					
 					</c:forEach>
 					<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
 				</select>
+				
+				<a href="/newPlayer">Add New Player</a>
 			</div>
 		</div>
 
