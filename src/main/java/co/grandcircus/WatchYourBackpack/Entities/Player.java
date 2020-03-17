@@ -97,8 +97,7 @@ public class Player {
 	public String toString() {
 		return "Player [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", attack="
 				+ attack + ", fire=" + fire + ", resourcefulness=" + resourcefulness + ", money=" + money + "]";
-}
-
+  }
 
 
 	public String getDescription() {
