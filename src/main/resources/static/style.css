@@ -13,6 +13,19 @@
 	padding: 10px;
 }
 
+.inputForm-right2 {
+	border: 2px solid black;
+	float: right;
+	border-radius: 10px;
+	color: black;
+	background: powderblue;
+	width: 25%;
+	height: 20%;
+	margin-left: 28%;
+	margin-top: 15px;
+	padding: 10px;
+}
+
 .inputForm-right {
 	border: 2px solid black;
 	border-radius: 10px;
@@ -24,6 +37,7 @@
 	margin-top: 15px;
 	padding: 10px;
 }
+
 
 .startButton {
 	margin-top: 30px;
