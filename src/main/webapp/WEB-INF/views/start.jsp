@@ -29,15 +29,18 @@
 
 <title>New Game+</title>
 </head>
-<body>
-	<div class="card1">
+<body>	
+	<form action="/confirmSettings" method="post">
+	
+	<div class="card1" class="inputForm-right2">
 		<h2>Current Settings: ${park.getName()}</h2>
 		<h3>You Are: ${chosenPlayer.getName()}</h3>
 		<h5>Current Weather: ${currentWeather.getSummary()}</h5>
 		<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
 	</div>
 	
-	<div class="form-check disabled inputForm-right">
+		
+		<div class="form-check disabled inputForm-right">
 			<h2>CHOOSE YOUR TEAMMATE</h2>
 			<div class="form-group">
 				<select name="id" class="custom-select" required>
@@ -50,9 +53,8 @@
 				</select>
 			</div>
 		</div>
-	
-	<form action="" method="post" class="card1 inputForm-left">
-		<div>
+		
+		<div class="card1 inputForm-left">
 			<div class="parkChoice">
 				<input type="radio" name="price" value=0>
 				<label class="choice">In the Leaves</label>
@@ -66,9 +68,9 @@
 			</div>
 
 			<div class="parkChoice">
-				<input type="radio" name="price" value="${cost}">
+				<input type="radio" name="price" value=20>
 				<label class="choice">Cabin</label>
-				<p>Price: $${cost}</p>
+				<p>Price: $20</p>
 			</div>
 		</div>
 		
