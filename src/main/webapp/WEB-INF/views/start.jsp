@@ -41,7 +41,7 @@
 	
 		
 		<div class="form-check disabled inputForm-right">
-			<h2>CHOOSE YOUR TEAMMATE</h2>
+			<h2>CHOOSE YOUR FRIEND</h2>
 			<div class="form-group">
 				<select name="id" class="custom-select" required>
 					<c:forEach items="${availableTeam}" var="player">
@@ -73,7 +73,7 @@
 				<p>Price: $20</p>
 			</div>
 		</div>
-		
+		<button>Confirm</button>
 	</form>
 </body>
 </html>
