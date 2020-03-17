@@ -27,8 +27,10 @@ public class Player {
 	private Integer resourcefulness;
 	private Double money;
 
+	//we don't actually need to store the items in the player since they get reset after each game.
 //	@ManyToMany
 //	private List<Item> items;
+
 
 	// @OneToOne (cascade = CascadeType.ALL)//I commented this out bc I don't think
 	// we need Currently to be an entity
@@ -93,9 +95,9 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description + ", attack="
-				+ attack + ", fire=" + fire + ", resourcefulness=" + resourcefulness + "]";
-	}
+		return "Player [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", attack="
+				+ attack + ", fire=" + fire + ", resourcefulness=" + resourcefulness + ", money=" + money + "]";
+}
 
 	public String getDescription() {
 		return description;
