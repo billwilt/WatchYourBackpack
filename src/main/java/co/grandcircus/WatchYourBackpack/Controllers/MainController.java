@@ -13,8 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.NPSApiService;
-import co.grandcircus.WatchYourBackpack.ParksService;
+import co.grandcircus.WatchYourBackpack.Daos.ItemDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
+import co.grandcircus.WatchYourBackpack.Entities.GameStatus;
+import co.grandcircus.WatchYourBackpack.Entities.Item;
 import co.grandcircus.WatchYourBackpack.Entities.Player;
 import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
@@ -34,6 +36,9 @@ public class MainController {
 
 	@Autowired
 	private PlayerDao playerDao;
+	
+	@Autowired
+	private ItemDao itemDao;
 
 	// This we will use later when we get the characters set up
 	// @Autowired
@@ -142,6 +147,7 @@ public class MainController {
 		sesh.setAttribute("player1", chosenPlayer);
 		sesh.setAttribute("park", park);
 		
+		//creating the available players for team list
 		List<Player> allPlayers = new ArrayList<>();
 
 		//only adding players that arent the chosen player
@@ -152,7 +158,12 @@ public class MainController {
 		}
 		
 		List<Player> possibleTeam = allPlayers;
+		List<Item> items = itemDao.findAll();
 		
+		//testing the list of items
+		System.out.println(items);
+		
+		mav.addObject("items", items);
 		mav.addObject("availableTeam", possibleTeam);
 		mav.addObject("currentWeather", currentWeather);
 		mav.addObject("park", park);
@@ -171,26 +182,68 @@ public class MainController {
 		Double totalCost = 0.0;
 		Player player1 = (Player) sesh.getAttribute("player1");
 		
+		//getting the total levels to add to game status
+		Integer totalAttack = player1.getAttack() + player2.getAttack();
+		Integer totalFire = player1.getFire() + player2.getFire();
+		Integer totalResourcefulness = player1.getResourcefulness() + player2.getResourcefulness();
+		
 		//if they don't have enough money, set price to 0 for sleeping in the leaves
 		if (player1.getMoney() < price || price == 0) {
 			price = 0;
 			mav.addObject("sleeping", "in the leaves");
 		} else if (price == 10) {
 			mav.addObject("sleeping", "in a nice tent");
+			totalResourcefulness += 1;
 		} else {
 			mav.addObject("sleeping", "in a cabin");
+			totalResourcefulness += 2;
 		}
+		
+		Park park = (Park) sesh.getAttribute("park");
+		
+		//making the game status
+		GameStatus gameStatus = new GameStatus();
+		
+		gameStatus.setMainPlayer((Player) sesh.getAttribute("player1"));
+		gameStatus.setPartner(player2);
+		gameStatus.setParkcode(park.getParkCode());
+		gameStatus.setWeather((Currently) sesh.getAttribute("currentWeather"));
+		gameStatus.setHealth(3);
+		gameStatus.setTotalAttack(totalAttack);
+		gameStatus.setTotalFire(totalFire);
+		gameStatus.setTotalResourcefulness(totalResourcefulness);
+		
+		sesh.setAttribute("gameStatus", gameStatus);
 		
 		//STRETCH GOAL: add the price of items as well
 		totalCost += price;
 		sesh.setAttribute("totalCost", totalCost);
+		sesh.setAttribute("walletAfter", (player1.getMoney() - totalCost));
 		
 		mav.addObject("walletAfter", (player1.getMoney() - totalCost));
 		mav.addObject("totalCost", totalCost);
-		mav.addObject("player1", sesh.getAttribute("player1"));
+		mav.addObject("player1", player1);
 		mav.addObject("player2", player2);
 		mav.addObject("park", sesh.getAttribute("park"));
 		mav.addObject("currentWeather", sesh.getAttribute("currentWeather"));
+		
+		return mav;
+	}
+	
+	@RequestMapping("/play")
+	public ModelAndView day1() {
+		ModelAndView mav = new ModelAndView("day1");
+		
+		//setting the players wallet to the new wallet amount
+		Player player1 = (Player) sesh.getAttribute("player1");
+		Long player1Id = player1.getId();
+		Player player1b = playerDao.findById(player1Id).orElse(null);
+		player1.setMoney((double) sesh.getAttribute("walletAfter"));
+		
+		//adding the usual things to the model
+		mav.addObject("player1", sesh.getAttribute("player1"));
+		mav.addObject("player2", sesh.getAttribute("player2"));
+		mav.addObject("gameStatus", sesh.getAttribute("gameStatus"));
 		
 		return mav;
 	}
