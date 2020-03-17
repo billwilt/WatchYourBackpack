@@ -62,34 +62,34 @@
 
 				<td class="grayColor">
 					<div class="card1">
-					<!--  	<form action="" method="post" class="card1"> -->
-							<div>
+						<!--  	<form action="" method="post" class="card1"> -->
+						<div>
 
-								<div class="parkChoice">
-									<input type="radio" name="price" value=0> <label
-										class="choice">In the Leaves</label>
-									<p>Price: FREE</p>
-								</div>
-
-								<div class="parkChoice">
-									<input type="radio" name="price" value=10> <label
-										class="choice">Tent</label>
-									<p>Price: $10</p>
-								</div>
-
-								<div class="parkChoice">
-
-									<input type="radio" name="price" value=20> <label
-										class="choice">Cabin</label>
-									<p>Price: $20</p>
-
-								</div>
+							<div class="parkChoice">
+								<input type="radio" name="price" value=0> <label
+									class="choice">In the Leaves</label>
+								<p>Price: FREE</p>
 							</div>
-						<!-- </form> -->
+
+							<div class="parkChoice">
+								<input type="radio" name="price" value=10> <label
+									class="choice">Tent</label>
+								<p>Price: $10</p>
+							</div>
+
+							<div class="parkChoice">
+
+								<input type="radio" name="price" value=20> <label
+									class="choice">Cabin</label>
+								<p>Price: $20</p>
+
+							</div>
+						</div>
+					</div> <!-- </form> -->
 				</td>
 
 				<!-- <form action="" method="post" class="card1"> -->
-					<td class="grayColor"><div>
+				<td class="grayColor"><div>
 						<div>
 							<label for="items">Choose three (3) items:</label>
 						</div>
@@ -106,10 +106,38 @@
 						</select><br> <br>
 						<button>Confirm</button>
 
-					</div>
-				</form>
-				</td>
+					</div></td>
 			</tr>
+
 		</table>
+		<h4>Choose Three (3) items:</h4>
+		<p>
+			<select id="item1" name="item1" required>
+				<c:forEach items="${items}" var="item">
+					<option value="${item.getId()}">${item.getItemName()} |
+						Attack: ${item.getAttackAdd()} Fire: ${item.getFireAdd()}
+						Resourcefulness: ${item.getResourcefulnessAdd()}</option>
+				</c:forEach>
+			</select>
+		</p>
+		<p>
+			<select id="item2" name="item2">
+				<c:forEach items="${items}" var="item">
+					<option value="${item.getId()}">${item.getItemName()} |
+						Attack: ${item.getAttackAdd()} Fire: ${item.getFireAdd()}
+						Resourcefulness: ${item.getResourcefulnessAdd()}</option>
+				</c:forEach>
+			</select>
+		</p>
+		<p>
+			<select id="item3" name="item3" required>
+				<c:forEach items="${items}" var="item">
+					<option value="${item.getId()}">${item.getItemName()} |
+						Attack: ${item.getAttackAdd()} Fire: ${item.getFireAdd()}
+						Resourcefulness: ${item.getResourcefulnessAdd()}</option>
+				</c:forEach>
+			</select>
+		</p>
+	</form>
 </body>
 </html>
