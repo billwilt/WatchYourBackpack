@@ -80,6 +80,39 @@ public class MainController {
 
 		return mav;
 	}
+	
+	@RequestMapping("/newPlayer")
+	public ModelAndView newPlayer() {
+		return new ModelAndView("newPlayer");
+	}
+	
+	@PostMapping("/newPlayer")
+	public ModelAndView addNewPlayer(String name, String description, int type, Double money) {
+		
+		Player player = new Player();
+		
+		player.setName(name);
+		player.setDescription(description);
+		player.setMoney(money);
+		
+		if (type == 1) {
+			player.setAttack(1);
+			player.setFire(0);
+			player.setResourcefulness(0);
+		} else if (type == 2) {
+			player.setAttack(0);
+			player.setFire(1);
+			player.setResourcefulness(0);			
+		} else {
+			player.setAttack(0);
+			player.setFire(0);
+			player.setResourcefulness(1);			
+		}
+		
+		playerDao.save(player);
+		
+		return new ModelAndView("redirect:/");
+	}
 
 	@PostMapping("/start")
 	public ModelAndView startGame(String parkCode, Long id) {
@@ -102,6 +135,9 @@ public class MainController {
 		String cost = (park.getEntranceFees().get(0).getCost());
 		
 		System.out.println(currentWeather);
+		
+		sesh.setAttribute("player1", chosenPlayer);
+		sesh.setAttribute("park", park);
 		
 		mav.addObject("currentWeather", currentWeather);
 		mav.addObject("park", park);
