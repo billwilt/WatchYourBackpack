@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import co.grandcircus.WatchYourBackpack.NPSApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
+import co.grandcircus.WatchYourBackpack.NPSApiService;
+import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
@@ -25,6 +26,9 @@ public class MainController {
 
 	@Autowired
 	private DSApiService DSApiServ;
+	
+	@Autowired
+	private PlayerDao playerDao;
 
 	// This we will use later when we get the characters set up
 	// @Autowired
