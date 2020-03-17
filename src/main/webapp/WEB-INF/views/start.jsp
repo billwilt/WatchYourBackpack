@@ -32,7 +32,7 @@
 <body>
 	<div class="card1">
 		<h2>Current Settings: ${park.getName()}</h2>
-		<h3>You Are: ${user}</h3>
+		<h3>You Are: ${chosenPlayer.getName()}</h3>
 		<h5>Current Weather: ${currentWeather.getSummary()}</h5>
 		<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
 	</div>
