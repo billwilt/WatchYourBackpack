@@ -12,7 +12,9 @@ public class GameStatus {
 	private List<Item> items;
 	private Currently weather;
 	private String parkcode;
-	
+	private Integer totalAttack;
+	private Integer totalFire;
+	private Integer	totalResourcefulness;
 	
 	public Player getMainPlayer() {
 		return mainPlayer;
@@ -49,13 +51,32 @@ public class GameStatus {
 	@Override
 	public String toString() {
 		return "GameStatus [mainPlayer=" + mainPlayer + ", partner=" + partner + ", health=" + health + ", items="
-				+ items + ", weather=" + weather + "]";
+				+ items + ", weather=" + weather + ", parkcode=" + parkcode + ", totalAttack=" + totalAttack
+				+ ", totalFire=" + totalFire + ", totalResourcefulness=" + totalResourcefulness + "]";
 	}
 	public String getParkcode() {
 		return parkcode;
 	}
 	public void setParkcode(String parkcode) {
 		this.parkcode = parkcode;
+	}
+	public Integer getTotalAttack() {
+		return totalAttack;
+	}
+	public void setTotalAttack(Integer totalAttack) {
+		this.totalAttack = totalAttack;
+	}
+	public Integer getTotalFire() {
+		return totalFire;
+	}
+	public void setTotalFire(Integer totalFire) {
+		this.totalFire = totalFire;
+	}
+	public Integer getTotalResourcefulness() {
+		return totalResourcefulness;
+	}
+	public void setTotalResourcefulness(Integer totalResourcefulness) {
+		this.totalResourcefulness = totalResourcefulness;
 	}
 
 

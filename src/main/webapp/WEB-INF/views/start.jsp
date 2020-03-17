@@ -61,6 +61,7 @@
 						</div>
 					</td>
 
+
 					<td align="center" class="column">
 						<div>
 							<!--  	<form action="" method="post" class="card1"> -->
@@ -76,38 +77,63 @@
 									<p>Price: $10</p>
 								</div>
 
-								<div class="parkChoice">
-
+							<div class="parkChoice">
 									<input type="radio" name="price" value=20> <label>Cabin</label>
 									<p>Price: $20</p>
-
-								</div>
 							</div>
-						</div> <!-- </form> -->
-					</td>
-					<!-- <form action="" method="post" class="card1"> -->
-					<td align="center" class="column"><div>
-							<div>
-								<label for="items">Choose three (3) items:</label>
-							</div>
-							<select id="items" name="items" size="9" multiple>
-								<option value="matches">Matches</option>
-								<option value="flintSteel">Flint &amp; Steel</option>
-								<option value="wetFireStarterCube">Wet Fire Starter Cube</option>
-								<option value="swissArmyKnife">Swiss Army Knife</option>
-								<option value="machete">Machete</option>
-								<option value="bearSpray">Bear Spray</option>
-								<option value="mapCompass">Map &amp; Compass</option>
-								<option value="rope">Rope</option>
-								<option value="tarp">Tarp</option>
-							</select><br> <br>
-							<button>Confirm</button>
 
-						</div></td>
-				</tr>
-			</table>
-			</div>
+						</div>
+					</div> <!-- </form> -->
+				</td>
+
+				<!-- <form action="" method="post" class="card1"> -->
+				<td class="grayColor">
+						<div>
+						<!-- 	<label for="items">Choose three (3) items:</label>
+						</div>
+						<select id="items" name="items" size="9" multiple>
+							<option value="matches">Matches</option>
+							<option value="flintSteel">Flint &amp; Steel</option>
+							<option value="wetFireStarterCube">Wet Fire Starter Cube</option>
+							<option value="swissArmyKnife">Swiss Army Knife</option>
+							<option value="machete">Machete</option>
+							<option value="bearSpray">Bear Spray</option>
+							<option value="mapCompass">Map &amp; Compass</option>
+							<option value="rope">Rope</option>
+							<option value="tarp">Tarp</option>
+						</select><br> <br>
+						-->
+						<h4>Choose Three (3) items:</h4>
+						<p>
+							<select id="item1" name="item1Id" required>
+								<c:forEach items="${items}" var="item">
+									<option value="${item.getId()}">${item.getItemName()}</option>
+								</c:forEach>
+							</select>
+						</p>
+						<p>
+							<select id="item2" name="item2Id" required>
+								<c:forEach items="${items}" var="item">
+									<option value="${item.getId()}">${item.getItemName()}</option>
+								</c:forEach>
+							</select>
+						</p>
+						<p>
+							<select id="item3" name="item3Id" required>
+								<c:forEach items="${items}" var="item">
+									<option value="${item.getId()}">${item.getItemName()}</option>
+								</c:forEach>
+							</select>
+						</p>
+
+						<button>Confirm</button>
+
+					</div></td>
+			</tr>
+
+		</table>
+
 	</form>
-	
+
 </body>
 </html>

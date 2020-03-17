@@ -1,9 +1,12 @@
 package co.grandcircus.WatchYourBackpack.Entities;
 
+import java.util.List;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 
 @MappedSuperclass
 public abstract class Event {
@@ -13,8 +16,8 @@ public abstract class Event {
 	protected Long id;
 	protected String name;
 	protected String description;
-	protected String outcome;
 	protected int rsrcThresh;
+	protected String EventImageUrl;
 	
 	
 	public Long getId() {
@@ -35,12 +38,8 @@ public abstract class Event {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getOutcome() {
-		return outcome;
-	}
-	public void setOutcome(String outcome) {
-		this.outcome = outcome;
-	}
+
+
 	public int getRsrcThresh() {
 		return rsrcThresh;
 	}
@@ -49,8 +48,8 @@ public abstract class Event {
 	}
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", outcome=" + outcome
-				+ ", rsrcThresh=" + rsrcThresh + "]";
+		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", rsrcThresh=" + rsrcThresh
+				+ "]";
 	}
 	
 

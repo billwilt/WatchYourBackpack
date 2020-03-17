@@ -1,17 +1,28 @@
 package co.grandcircus.WatchYourBackpack.Entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class WeatherEvent extends Event{
 	
+	@OneToMany (mappedBy = "weatherEvent")
+	protected List<Outcome> outcomes;
 
 	private String triggerIcon;
-	//if weather events don't have attack or fire thresholds... can they be null or do they have to be set to zero?
 
+	public List<Outcome> getOutcomes() {
+		return outcomes;
+	}
+	public void setOutcomes(List<Outcome> outcomes) {
+		this.outcomes = outcomes;
+	}
+	
 	public String getTriggerIcon() {
 		return triggerIcon;
 	}
