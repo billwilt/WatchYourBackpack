@@ -20,12 +20,20 @@
 		<h6>Attack: ${player1.getAttack()}</h6>
 		<h6>Fire: ${player1.getFire()}</h6>
 		<h6>Resourcefulness: ${player1.getResourcefulness()}</h6>
+		<h6>Wallet before trip: $${player1.getMoney()}</h6>
 	</div>
 	<div class="confirmCube">
 		<h2>Your Friend: ${player2.getName()}</h2>
 		<h6>Attack: ${player2.getAttack()}</h6>
 		<h6>Fire: ${player2.getFire()}</h6>
 		<h6>Resourcefulness: ${player2.getResourcefulness()}</h6>
+	</div>
+	<div class="confirmCube">
+		<h2>Park: ${park.getName()}</h2>
+		<h5>Weather: ${currentWeather.getSummary()}</h5>
+		<h6>Total Cost: $${totalCost}</h6>
+		<h6>Sleeping: ${sleeping}</h6>
+		<h6>Wallet after trip: $${walletAfter}</h6>
 	</div>
 </body>
 </html>
