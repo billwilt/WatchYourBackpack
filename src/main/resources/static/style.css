@@ -21,7 +21,6 @@
 	background: powderblue;
 	width: 25%;
 	height: 20%;
-	margin-left: 28%;
 	margin-top: 15px;
 	padding: 10px;
 }
@@ -54,7 +53,7 @@
 	padding: 5px;
 	background: white;
 	border-radius: 10px;
-	margin-top: 5px;
+	width: 75%;
 }
 
 .parkChoice1 {
@@ -62,8 +61,6 @@
 	padding: 5px;
 	background: white;
 	border-radius: 10px;
-	margin-top: 5px;
-	width: 30%;
 }
 
 .card1 {
@@ -92,12 +89,25 @@
 	
 }
 
-table, th, td {
-  border: 1px solid black;
+.column {
+  float: left;
+  width: 33.33%;
 }
 
+.center {
+  text-align: center;
+  	margin-top: 2%;
+	margin-left: 2%;
+	border: 2px solid black;
+	background: powderblue;
+	color: black;
+	padding: 15px;
+	margin: 15px;
+	border-radius: 10px;
+}
 
-
-
+/* table, th, td {
+  border: 1px solid black;
+} */
 
 
