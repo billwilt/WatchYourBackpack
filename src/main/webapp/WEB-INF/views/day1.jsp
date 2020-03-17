@@ -7,20 +7,23 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="/style.css" rel="stylesheet" />
-
 <title>Insert title here</title>
 </head>
 <body>
-<div class="confirmCube">
+<table class="stats-table">
+<tr>
+<td>
 <h5>Team: ${player1.getName()} & ${player2.getName()}</h5>
-<h5>Health: ${gameStatus.getHealth()}</h5>
 <h5>Weather: ${gameStatus.getWeather().getSummary()}</h5>
-<h6>Day 6</h6>
-</div>
-<div class="confirmCube">
+<h6>Day 1</h6>
+</td>
+<td>
 <h5>Team Attack: ${gameStatus.getTotalAttack()}</h5>
 <h5>Team Fire: ${gameStatus.getTotalFire()}</h5>
 <h5>Team Resourcefulness: ${gameStatus.getTotalResourcefulness()}</h5>
-</div>
+<h6>Team Health: ${gameStatus.getHealth()}</h6>
+<td>
+</tr>
+</table>
 </body>
 </html>

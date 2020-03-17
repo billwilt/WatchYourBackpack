@@ -89,9 +89,9 @@
 				</td>
 
 				<!-- <form action="" method="post" class="card1"> -->
-				<td class="grayColor"><div>
+				<td class="grayColor">
 						<div>
-							<label for="items">Choose three (3) items:</label>
+						<!-- 	<label for="items">Choose three (3) items:</label>
 						</div>
 						<select id="items" name="items" size="9" multiple>
 							<option value="matches">Matches</option>
@@ -104,40 +104,37 @@
 							<option value="rope">Rope</option>
 							<option value="tarp">Tarp</option>
 						</select><br> <br>
+						-->
+						<h4>Choose Three (3) items:</h4>
+						<p>
+							<select id="item1" name="item1Id" required>
+								<c:forEach items="${items}" var="item">
+									<option value="${item.getId()}">${item.getItemName()}</option>
+								</c:forEach>
+							</select>
+						</p>
+						<p>
+							<select id="item2" name="item2Id" required>
+								<c:forEach items="${items}" var="item">
+									<option value="${item.getId()}">${item.getItemName()}</option>
+								</c:forEach>
+							</select>
+						</p>
+						<p>
+							<select id="item3" name="item3Id" required>
+								<c:forEach items="${items}" var="item">
+									<option value="${item.getId()}">${item.getItemName()}</option>
+								</c:forEach>
+							</select>
+						</p>
+
 						<button>Confirm</button>
 
 					</div></td>
 			</tr>
 
 		</table>
-		<h4>Choose Three (3) items:</h4>
-		<p>
-			<select id="item1" name="item1" required>
-				<c:forEach items="${items}" var="item">
-					<option value="${item.getId()}">${item.getItemName()} |
-						Attack: ${item.getAttackAdd()} Fire: ${item.getFireAdd()}
-						Resourcefulness: ${item.getResourcefulnessAdd()}</option>
-				</c:forEach>
-			</select>
-		</p>
-		<p>
-			<select id="item2" name="item2">
-				<c:forEach items="${items}" var="item">
-					<option value="${item.getId()}">${item.getItemName()} |
-						Attack: ${item.getAttackAdd()} Fire: ${item.getFireAdd()}
-						Resourcefulness: ${item.getResourcefulnessAdd()}</option>
-				</c:forEach>
-			</select>
-		</p>
-		<p>
-			<select id="item3" name="item3" required>
-				<c:forEach items="${items}" var="item">
-					<option value="${item.getId()}">${item.getItemName()} |
-						Attack: ${item.getAttackAdd()} Fire: ${item.getFireAdd()}
-						Resourcefulness: ${item.getResourcefulnessAdd()}</option>
-				</c:forEach>
-			</select>
-		</p>
+
 	</form>
 </body>
 </html>
