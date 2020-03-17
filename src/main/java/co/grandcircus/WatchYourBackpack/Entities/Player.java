@@ -1,12 +1,9 @@
 package co.grandcircus.WatchYourBackpack.Entities;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class Player {
@@ -30,8 +27,8 @@ public class Player {
 	private Integer resourcefulness;
 	private Double money;
 
-	@ManyToMany
-	private List<Item> items;
+//	@ManyToMany
+//	private List<Item> items;
 
 	// @OneToOne (cascade = CascadeType.ALL)//I commented this out bc I don't think
 	// we need Currently to be an entity
@@ -86,18 +83,18 @@ public class Player {
 		this.resourcefulness = resourcefulness;
 	}
 
-	public List<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
+//	public List<Item> getItems() {
+//		return items;
+//	}
+//
+//	public void setItems(List<Item> items) {
+//		this.items = items;
+//	}
 
 	@Override
 	public String toString() {
 		return "Player [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description + ", attack="
-				+ attack + ", fire=" + fire + ", resourcefulness=" + resourcefulness + ", items=" + items + "]";
+				+ attack + ", fire=" + fire + ", resourcefulness=" + resourcefulness + "]";
 	}
 
 	public String getDescription() {
