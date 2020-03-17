@@ -174,8 +174,16 @@ public class MainController {
 	}
 	
 	@PostMapping("/confirmSettings")
-	public ModelAndView confirmPage(double price, Long id) {
+	public ModelAndView confirmPage(double price, Long id, Long item1Id, Long item2Id, Long item3Id) {
 		ModelAndView mav = new ModelAndView("confirmPage");
+		
+		Item item1 = itemDao.findById(item1Id).orElse(null);
+		Item item2 = itemDao.findById(item2Id).orElse(null);
+		Item item3 = itemDao.findById(item3Id).orElse(null);
+		
+		Integer itemsAttack = item1.getAttackAdd() + item2.getAttackAdd() + item3.getAttackAdd();
+		Integer itemsFire = item1.getFireAdd() + item2.getFireAdd() + item3.getFireAdd();
+		Integer itemsResourcefulness = item1.getResourcefulnessAdd() + item2.getResourcefulnessAdd() + item3.getResourcefulnessAdd();
 		
 		Player player2 = playerDao.findById(id).orElse(null);
 		sesh.setAttribute("player2", player2);
@@ -183,9 +191,9 @@ public class MainController {
 		Player player1 = (Player) sesh.getAttribute("player1");
 		
 		//getting the total levels to add to game status
-		Integer totalAttack = player1.getAttack() + player2.getAttack();
-		Integer totalFire = player1.getFire() + player2.getFire();
-		Integer totalResourcefulness = player1.getResourcefulness() + player2.getResourcefulness();
+		Integer totalAttack = player1.getAttack() + player2.getAttack() + itemsAttack;
+		Integer totalFire = player1.getFire() + player2.getFire() + itemsFire;
+		Integer totalResourcefulness = player1.getResourcefulness() + player2.getResourcefulness() + itemsResourcefulness;
 		
 		//if they don't have enough money, set price to 0 for sleeping in the leaves
 		if (player1.getMoney() < price || price == 0) {
