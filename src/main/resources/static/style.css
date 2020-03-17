@@ -74,7 +74,6 @@
 	color: black;
 	padding: 15px;
 	border-radius: 10px;
-	width: 25%;
 }
 
 .confirmCube {
@@ -86,6 +85,15 @@
 	margin-top: 3%;
 	margin-left: 3%;
 	border-radius: 10px;
+}
+
+.grayColor {
+	background-color: gray;
+	
+}
+
+table, th, td {
+  border: 1px solid black;
 }
 
 

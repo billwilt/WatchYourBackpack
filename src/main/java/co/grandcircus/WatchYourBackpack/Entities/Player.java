@@ -99,6 +99,8 @@ public class Player {
 				+ attack + ", fire=" + fire + ", resourcefulness=" + resourcefulness + ", money=" + money + "]";
 }
 
+
+
 	public String getDescription() {
 		return description;
 	}
