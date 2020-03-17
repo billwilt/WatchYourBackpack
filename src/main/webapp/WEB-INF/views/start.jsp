@@ -37,7 +37,21 @@
 		<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
 	</div>
 	
-	<form action="" method="post" class="card1">
+	<div class="form-check disabled inputForm-right">
+			<h2>CHOOSE YOUR TEAMMATE</h2>
+			<div class="form-group">
+				<select name="id" class="custom-select" required>
+					<c:forEach items="${availableTeam}" var="player">
+						
+						<option value="${player.getId()}">${player.getName()} Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness()}</option>				
+					
+					</c:forEach>
+					<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
+				</select>
+			</div>
+		</div>
+	
+	<form action="" method="post" class="card1 inputForm-left">
 		<div>
 			<div class="parkChoice">
 				<input type="radio" name="price" value=0>
@@ -57,6 +71,7 @@
 				<p>Price: $${cost}</p>
 			</div>
 		</div>
+		
 	</form>
 </body>
 </html>
