@@ -32,8 +32,9 @@ public class Player {
 	private Integer resourcefulness;
 	private Double money;
 	
-	@ManyToMany
-	private List<Item> items;
+	//we don't actually need to store the items in the player since they get reset after each game.
+//	@ManyToMany
+//	private List<Item> items;
 
 	//@OneToOne (cascade = CascadeType.ALL)//I commented this out bc I don't think we need Currently to be an entity
 	//private Currently weather;//I don't think it needs to be stored in the Character at all because it is only called once, right?
@@ -88,21 +89,12 @@ public class Player {
 		this.resourcefulness = resourcefulness;
 	}
 
-	public List<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
-
 
 
 	@Override
 	public String toString() {
-		return "Character [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description + ", attack=" + attack + ", fire=" + fire
-				+ ", resourcefulness=" + resourcefulness + ", items=" + items
-				+ "]";
+		return "Player [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", attack="
+				+ attack + ", fire=" + fire + ", resourcefulness=" + resourcefulness + ", money=" + money + "]";
 	}
 
 	public String getDescription() {
@@ -111,6 +103,14 @@ public class Player {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Double getMoney() {
+		return money;
+	}
+
+	public void setMoney(Double money) {
+		this.money = money;
 	}
 	
 	
