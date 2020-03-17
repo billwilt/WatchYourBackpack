@@ -39,15 +39,7 @@
 			<div class="form-group">
 				<select name="id" class="custom-select" required>
 					<c:forEach items="${players}" var="player">
-					
-					
-					
-						
 						<option value="${player.getId()}">${player.getName()} Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness()}</option>
-					
-					
-					
-					
 					</c:forEach>
 					<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
 				</select>

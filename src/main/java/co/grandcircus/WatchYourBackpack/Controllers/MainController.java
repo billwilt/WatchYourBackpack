@@ -1,5 +1,6 @@
 package co.grandcircus.WatchYourBackpack.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.NPSApiService;
+import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Entities.Player;
 import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
@@ -136,13 +138,46 @@ public class MainController {
 		
 		System.out.println(currentWeather);
 		
+		sesh.setAttribute("currentWeather", currentWeather);
 		sesh.setAttribute("player1", chosenPlayer);
 		sesh.setAttribute("park", park);
 		
+		List<Player> allPlayers = new ArrayList<>();
+
+		//only adding players that arent the chosen player
+		for (Long i = 1L; i <= playerDao.count(); i ++) {
+			if (i != id) {
+				allPlayers.add(playerDao.getOne(i));
+			}
+		}
+		
+		List<Player> possibleTeam = allPlayers;
+		
+		mav.addObject("availableTeam", possibleTeam);
 		mav.addObject("currentWeather", currentWeather);
 		mav.addObject("park", park);
 		mav.addObject("chosenPlayer", chosenPlayer);
 		mav.addObject("cost", cost);
+		
+		return mav;
+	}
+	
+	@PostMapping("/confirmSettings")
+	public ModelAndView confirmPage(double price, Long id) {
+		ModelAndView mav = new ModelAndView("confirmPage");
+		
+		Player player2 = playerDao.findById(id).orElse(null);
+		sesh.setAttribute("player2", player2);
+		
+		//STRETCH GOAL: add the price of items as well
+		Double totalCost = 0.0;
+		totalCost += price;
+		sesh.setAttribute("totalCost", totalCost);
+		
+		mav.addObject("player1", sesh.getAttribute("player1"));
+		mav.addObject("player2", player2);
+		mav.addObject("park", sesh.getAttribute("park"));
+		mav.addObject("currentWeather", sesh.getAttribute("currentWeather"));
 		
 		return mav;
 	}

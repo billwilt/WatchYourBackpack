@@ -29,16 +29,38 @@
 
 <title>New Game+</title>
 </head>
-<body>
-	<div class="card1">
+<body>	
+	<form action="/confirmSettings" method="post">
+	
+	<div class="card1" class="inputForm-right2">
 		<h2>Current Settings: ${park.getName()}</h2>
 		<h3>You Are: ${chosenPlayer.getName()}</h3>
 		<h5>Current Weather: ${currentWeather.getSummary()}</h5>
 		<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
 	</div>
 
+	
+		
+		<div class="form-check disabled inputForm-right">
+			<h2>CHOOSE YOUR TEAMMATE</h2>
+			<div class="form-group">
+				<select name="id" class="custom-select" required>
+					<c:forEach items="${availableTeam}" var="player">
+						
+						<option value="${player.getId()}">${player.getName()} Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness()}</option>				
+					
+					</c:forEach>
+					<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
+				</select>
+			</div>
+		</div>
+		
+		<div class="card1 inputForm-left">
+
+
 	<form action="" method="post" class="card1">
 		<div>
+
 			<div class="parkChoice">
 				<input type="radio" name="price" value=0> <label
 					class="choice">In the Leaves</label>
@@ -52,11 +74,14 @@
 			</div>
 
 			<div class="parkChoice">
-				<input type="radio" name="price" value="${cost}"> <label
-					class="choice">Cabin</label>
-				<p>Price: $${cost}</p>
+
+				<input type="radio" name="price" value=20>
+				<label class="choice">Cabin</label>
+				<p>Price: $20</p>
+
 			</div>
 		</div>
+		
 	</form>
 
 	<form action="" method="post" class="card1">
