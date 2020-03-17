@@ -100,7 +100,7 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Character [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description + ", attack=" + attack + ", fire=" + fire
+		return "Player [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description + ", attack=" + attack + ", fire=" + fire
 				+ ", resourcefulness=" + resourcefulness + ", items=" + items
 				+ "]";
 	}
