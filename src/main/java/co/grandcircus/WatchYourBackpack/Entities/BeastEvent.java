@@ -1,9 +1,9 @@
 package co.grandcircus.WatchYourBackpack.Entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class BeastEvent extends Event{
@@ -11,12 +11,21 @@ public class BeastEvent extends Event{
 	private int attackThresh;
 	private int fireThresh;
 	
+	@OneToMany (mappedBy = "beastEvent")
+	protected List<Outcome> outcomes;
 	
+	//constructor sets rsrcThresh to 6
 	public BeastEvent() {
 		super();
 		rsrcThresh = 6;
 	}
 	
+	public List<Outcome> getOutcomes() {
+		return outcomes;
+	}
+	public void setOutcomes(List<Outcome> outcomes) {
+		this.outcomes = outcomes;
+	}
 	
 	public int getAttackThresh() {
 		return attackThresh;
