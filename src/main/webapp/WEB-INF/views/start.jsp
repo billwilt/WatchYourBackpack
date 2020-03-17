@@ -37,6 +37,7 @@
 			<h3>You Are: ${chosenPlayer.getName()}</h3>
 			<h5>Current Weather: ${currentWeather.getSummary()}</h5>
 			<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
+
 		</div>
 
 		<table style="width: 100%">
