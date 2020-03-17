@@ -32,7 +32,7 @@
 <body>
 	<form action="/confirmSettings" method="post">
 
-		<div class="card1" class="inputForm-right2">
+		<div class="center">
 			<h2>Current Settings: ${park.getName()}</h2>
 			<h3>You Are: ${chosenPlayer.getName()}</h3>
 			<h5>Current Weather: ${currentWeather.getSummary()}</h5>
@@ -40,76 +40,74 @@
 
 		</div>
 
-		<table style="width: 100%">
-			<tr>
-				<td class="grayColor">
-					<div class="form-check disabled">
-						<h2>CHOOSE YOUR FRIEND</h2>
-						<div class="form-group">
-							<select name="id" class="custom-select" required>
-								<c:forEach items="${availableTeam}" var="player">
+		<div class="center">
+			<table style="width: 100%">
+				<tr>
+					<td align="center" class="column">
+						<div class="form-check disabled">
+							<h2>CHOOSE YOUR FRIEND</h2>
+							<div class="form-group">
+								<select name="id" class="custom-select" required>
+									<c:forEach items="${availableTeam}" var="player">
 
-									<option value="${player.getId()}">${player.getName()}
-										Attack: ${player.getAttack()} Fire: ${player.getFire()}
-										Resourcefulness: ${player.getResourcefulness()}</option>
+										<option value="${player.getId()}">${player.getName()}
+											[Attack=${player.getAttack()}, Fire=${player.getFire()},
+											Resourcefulness=${player.getResourcefulness()}]</option>
 
-								</c:forEach>
-								<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
-							</select>
+									</c:forEach>
+									<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
+								</select>
+							</div>
 						</div>
-					</div>
-				</td>
+					</td>
 
-				<td class="grayColor">
-					<div class="card1">
-					<!--  	<form action="" method="post" class="card1"> -->
+					<td align="center" class="column">
+						<div>
+							<!--  	<form action="" method="post" class="card1"> -->
 							<div>
 
 								<div class="parkChoice">
-									<input type="radio" name="price" value=0> <label
-										class="choice">In the Leaves</label>
+									<input type="radio" name="price" value=0> <label>In the Leaves</label>
 									<p>Price: FREE</p>
 								</div>
 
 								<div class="parkChoice">
-									<input type="radio" name="price" value=10> <label
-										class="choice">Tent</label>
+									<input type="radio" name="price" value=10> <label>Tent</label>
 									<p>Price: $10</p>
 								</div>
 
 								<div class="parkChoice">
 
-									<input type="radio" name="price" value=20> <label
-										class="choice">Cabin</label>
+									<input type="radio" name="price" value=20> <label>Cabin</label>
 									<p>Price: $20</p>
 
 								</div>
 							</div>
-						<!-- </form> -->
-				</td>
+						</div> <!-- </form> -->
+					</td>
+					<!-- <form action="" method="post" class="card1"> -->
+					<td align="center" class="column"><div>
+							<div>
+								<label for="items">Choose three (3) items:</label>
+							</div>
+							<select id="items" name="items" size="9" multiple>
+								<option value="matches">Matches</option>
+								<option value="flintSteel">Flint &amp; Steel</option>
+								<option value="wetFireStarterCube">Wet Fire Starter Cube</option>
+								<option value="swissArmyKnife">Swiss Army Knife</option>
+								<option value="machete">Machete</option>
+								<option value="bearSpray">Bear Spray</option>
+								<option value="mapCompass">Map &amp; Compass</option>
+								<option value="rope">Rope</option>
+								<option value="tarp">Tarp</option>
+							</select><br> <br>
+							<button>Confirm</button>
 
-				<!-- <form action="" method="post" class="card1"> -->
-					<td class="grayColor"><div>
-						<div>
-							<label for="items">Choose three (3) items:</label>
-						</div>
-						<select id="items" name="items" size="9" multiple>
-							<option value="matches">Matches</option>
-							<option value="flintSteel">Flint &amp; Steel</option>
-							<option value="wetFireStarterCube">Wet Fire Starter Cube</option>
-							<option value="swissArmyKnife">Swiss Army Knife</option>
-							<option value="machete">Machete</option>
-							<option value="bearSpray">Bear Spray</option>
-							<option value="mapCompass">Map &amp; Compass</option>
-							<option value="rope">Rope</option>
-							<option value="tarp">Tarp</option>
-						</select><br> <br>
-						<button>Confirm</button>
-
-					</div>
-				</form>
-				</td>
-			</tr>
-		</table>
+						</div></td>
+				</tr>
+			</table>
+			</div>
+	</form>
+	
 </body>
 </html>
