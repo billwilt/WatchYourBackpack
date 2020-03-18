@@ -49,9 +49,12 @@ public class TestController {
 		mav.addObject("stateCodes", stateCodes);
 		System.out.println(stateCodes);
 		
-		//getting parks from database
-		List<DBPark> parks = pDao.findAll();
-		mav.addObject("parks", parks);
+		//getting parks from database ordered by name
+		List<DBPark> parksByName = pDao.findAllByOrderByName();
+		mav.addObject("parksByName", parksByName);
+		//getting parks from database ordered by state code
+		List<DBPark> parksByState = pDao.findAllByOrderByStateCode();
+		mav.addObject("parksByState", parksByState);
 		
 		//getting parks by stateCode
 		List<DBPark> parksInState = pDao.findByStateCode("MI");

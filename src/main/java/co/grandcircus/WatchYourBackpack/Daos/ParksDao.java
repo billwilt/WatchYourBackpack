@@ -17,4 +17,8 @@ public interface ParksDao extends JpaRepository<DBPark, Long>{
 	List<String> findDistinctStateCodes();
 	
 	List<DBPark> findByStateCode(String stateCode);
+	
+	List<DBPark> findAllByOrderByName();
+	
+	List<DBPark> findAllByOrderByStateCode();
 }

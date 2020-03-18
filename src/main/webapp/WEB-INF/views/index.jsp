@@ -50,17 +50,27 @@
 
 		<div class="form-check disabled inputForm-right">
 			<h2>CHOOSE YOUR CAMPSITE</h2>
-			
-				<div class="form-group">
-					<select class="custom-select" name="parkCode"> <!-- onchange="toggleParkDisplay({ "state" : state })" -->
-						<option selected="">Browse Parks</option>
-						<c:forEach var="park" items="${ parks }">
-							<option value="${ park.getParkCode() }">${ park.getName() }</option>
-						</c:forEach>
-					</select>
-				</div>
+			<button href="#by-name" type="button" class="btn" data-toggle="collapse">Browse Parks by Name</button>
+			<button href="#by-state" type="button" class="btn" data-toggle="collapse">Browse Parks by State</button>
+			<div class="form-group collapse" id="by-name">
+				<select class="custom-select" name="parkCode">
+					<!-- onchange="toggleParkDisplay({ "state" : state })" -->
+					<option selected="">Browse Parks by Name</option>
+					<c:forEach var="park" items="${ parksByName }">
+						<option value="${ park.getParkCode() }">${ park.getName() }, (${ park.getStateCode() })</option>
+					</c:forEach>
+				</select>
+			</div>
+			<div class="form-group collapse" id="by-state">
+				<select class="custom-select" name="parkCode">
+					<option selected="">Browse Parks by State</option>
+					<c:forEach var="park" items="${ parksByState }">
+						<option value="${ park.getParkCode() }">${ park.getStateCode() }, ${ park.getName() }</option>
+					</c:forEach>
+				</select>
+			</div>
 
-				<%-- <c:forEach items="${ parks }" var="park">
+			<%-- <c:forEach items="${ parks }" var="park">
 					<c:if test=" ${ park.getStateCode() == 'MI' }">
 						<div class="parkChoice parks-in-state">
 							<input type="radio" name="parkCode" id="parkID"
@@ -105,11 +115,22 @@
 		<button class="startButton">START GAME</button>
 	</form>
 	<script>
+	function toggleDropdownByName() {
+		document.getElementsByClassName("browse-by-name").classList
+				.toggle("show");
+	}
+	function toggleDropdownByState() {
+		document.getElementsByClassName("browse-by-state").classList
+				.toggle("show");
+	}
 		function toggleParkDisplay(change) {
 			let state = change.data.state;
 			document.getElementsByClassName("parks-in-state").classList
 					.toggle("show");
 		}
 	</script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
