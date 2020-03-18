@@ -15,9 +15,12 @@ import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.NPSApiService;
 import co.grandcircus.WatchYourBackpack.Daos.ItemDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
+import co.grandcircus.WatchYourBackpack.Daos.WeatherEventDao;
 import co.grandcircus.WatchYourBackpack.Entities.GameStatus;
 import co.grandcircus.WatchYourBackpack.Entities.Item;
+import co.grandcircus.WatchYourBackpack.Entities.Outcome;
 import co.grandcircus.WatchYourBackpack.Entities.Player;
+import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
 import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
@@ -38,11 +41,45 @@ public class MainController {
 	private PlayerDao playerDao;
 	
 	@Autowired
+	private WeatherEventDao WEDao;
+	
+	@Autowired
 	private ItemDao itemDao;
 
 	// This we will use later when we get the characters set up
 	// @Autowired
 	// private XDao xDao;
+	
+	@RequestMapping("/addEvent")
+	public ModelAndView addEvent() {
+		WeatherEvent we1 = new WeatherEvent();
+		
+		String name = "";
+		String description = "";
+		int rsrcThresh = 1;
+		
+		Outcome a = new Outcome();
+		Outcome b = new Outcome();
+		
+		a.setSurvived(true);
+		a.setDescription("");
+		
+		b.setSurvived(false);
+		b.setDescription("");
+		
+		List<String> triggerIcon = new ArrayList<>();
+		triggerIcon.add("");
+		triggerIcon.add("");
+		
+		we1.setDescription(description);
+		we1.setName(name);
+		we1.setTriggerIcon(triggerIcon);
+		we1.setRsrcThresh(rsrcThresh);
+		we1.setOutcomes(null);
+		
+		WEDao.save(we1);
+		return new ModelAndView("redirect:/");
+	}
 
 	@RequestMapping("/")
 	public ModelAndView showHome() {
