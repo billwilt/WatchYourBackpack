@@ -1,12 +1,9 @@
 package co.grandcircus.WatchYourBackpack.Entities;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class Player {
@@ -30,7 +27,6 @@ public class Player {
 	private Integer resourcefulness;
 	private Double money;
 
-	
 	//we don't actually need to store the items in the player since they get reset after each game.
 //	@ManyToMany
 //	private List<Item> items;
@@ -89,11 +85,19 @@ public class Player {
 		this.resourcefulness = resourcefulness;
 	}
 
+//	public List<Item> getItems() {
+//		return items;
+//	}
+//
+//	public void setItems(List<Item> items) {
+//		this.items = items;
+//	}
+
 	@Override
 	public String toString() {
 		return "Player [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", attack="
 				+ attack + ", fire=" + fire + ", resourcefulness=" + resourcefulness + ", money=" + money + "]";
-	}
+  }
 
 
 	public String getDescription() {

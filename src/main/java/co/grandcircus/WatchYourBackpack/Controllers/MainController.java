@@ -168,12 +168,25 @@ public class MainController {
 		
 		Player player2 = playerDao.findById(id).orElse(null);
 		sesh.setAttribute("player2", player2);
+		Double totalCost = 0.0;
+		Player player1 = (Player) sesh.getAttribute("player1");
+		
+		//if they don't have enough money, set price to 0 for sleeping in the leaves
+		if (player1.getMoney() < price || price == 0) {
+			price = 0;
+			mav.addObject("sleeping", "in the leaves");
+		} else if (price == 10) {
+			mav.addObject("sleeping", "in a nice tent");
+		} else {
+			mav.addObject("sleeping", "in a cabin");
+		}
 		
 		//STRETCH GOAL: add the price of items as well
-		Double totalCost = 0.0;
 		totalCost += price;
 		sesh.setAttribute("totalCost", totalCost);
 		
+		mav.addObject("walletAfter", (player1.getMoney() - totalCost));
+		mav.addObject("totalCost", totalCost);
 		mav.addObject("player1", sesh.getAttribute("player1"));
 		mav.addObject("player2", player2);
 		mav.addObject("park", sesh.getAttribute("park"));
