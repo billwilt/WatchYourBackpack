@@ -39,44 +39,98 @@
 			<div class="form-group">
 				<select name="id" class="custom-select" required>
 					<c:forEach items="${players}" var="player">
-						<option value="${player.getId()}">${player.getName()} Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness()}</option>
+						<option value="${player.getId()}">${player.getName()}
+							Attack: ${player.getAttack()} Fire: ${player.getFire()}
+							Resourcefulness: ${player.getResourcefulness()}</option>
 					</c:forEach>
 					<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
-				</select>
-				
-				<a href="/newPlayer">Add New Player</a>
+				</select> <a href="/newPlayer">Add New Player</a>
 			</div>
 		</div>
 
 		<div class="form-check disabled inputForm-right">
 			<h2>CHOOSE YOUR CAMPSITE</h2>
-			<div class="parkChoice">
-				<input type="radio" name="parkCode" id="parkID"
-					value="${isleRoyale.getData().get(0).getParkCode()}"> <label
-					class="choice">Isle Royale </label>
-				<p>Current Weather: ${isleRoyaleWeather.getSummary()}</p>
-				<p>Temperature: ${isleRoyaleWeather.getTemperature()} F</p>
+			<button href="#by-name" type="button" class="btn" data-toggle="collapse">Browse Parks by Name</button>
+			<button href="#by-state" type="button" class="btn" data-toggle="collapse">Browse Parks by State</button>
+			<div class="form-group collapse" id="by-name">
+				<select class="custom-select" name="parkCode">
+					<!-- onchange="toggleParkDisplay({ "state" : state })" -->
+					<option selected="">Browse Parks by Name</option>
+					<c:forEach var="park" items="${ parksByName }">
+						<option value="${ park.getParkCode() }">${ park.getName() }, (${ park.getStateCode() })</option>
+					</c:forEach>
+				</select>
+			</div>
+			<div class="form-group collapse" id="by-state">
+				<select class="custom-select" name="parkCode">
+					<option selected="">Browse Parks by State</option>
+					<c:forEach var="park" items="${ parksByState }">
+						<option value="${ park.getParkCode() }">${ park.getStateCode() }, ${ park.getName() }</option>
+					</c:forEach>
+				</select>
 			</div>
 
-			<div class="parkChoice">
-				<input type="radio" name="parkCode" id="parkID"
-					value="${yellowstone.getData().get(0).getParkCode()}"> <label
-					class="choice">Yellowstone </label>
-				<p>Current Weather: ${yellowstoneWeather.getSummary()}</p>
-				<p>Temperature: ${yellowstoneWeather.getTemperature()} F</p>
-			</div>
+			<%-- <c:forEach items="${ parks }" var="park">
+					<c:if test=" ${ park.getStateCode() == 'MI' }">
+						<div class="parkChoice parks-in-state">
+							<input type="radio" name="parkCode" id="parkID"
+								value="${park.getParkCode()}"> <label class="choice">${ park.getName() }</label>
+							<p>
+								Current Weather:
+								${isleRoyaleWeather.getSummary()}
+							</p>
+							<p>
+								Temperature:
+								${isleRoyaleWeather.getTemperature()}
+								F
+							</p>
+						</div>
+					</c:if>
+				</c:forEach> --%>
+			<%-- <div class="parkChoice">
+			<input type="radio" name="parkCode" id="parkID"
+				value="${isleRoyale.getData().get(0).getParkCode()}"> <label
+				class="choice">Isle Royale </label>
+			<p>Current Weather: ${isleRoyaleWeather.getSummary()}</p>
+			<p>Temperature: ${isleRoyaleWeather.getTemperature()} F</p>
+		</div>
 
-			<div class="parkChoice">
-				<input type="radio" name="parkCode" id="parkID"
-					value="${grandCanyon.getData().get(0).getParkCode()}"> <label
-					class="choice">Grand Canyon </label>
-				<p>Current Weather: ${grandCanyonWeather.getSummary()}</p>
-				<p>Temperature: ${grandCanyonWeather.getTemperature()} F</p>
-			</div>
+		<div class="parkChoice">
+			<input type="radio" name="parkCode" id="parkID"
+				value="${yellowstone.getData().get(0).getParkCode()}"> <label
+				class="choice">Yellowstone </label>
+			<p>Current Weather: ${yellowstoneWeather.getSummary()}</p>
+			<p>Temperature: ${yellowstoneWeather.getTemperature()} F</p>
+		</div>
+
+		<div class="parkChoice">
+			<input type="radio" name="parkCode" id="parkID"
+				value="${grandCanyon.getData().get(0).getParkCode()}"> <label
+				class="choice">Grand Canyon </label>
+			<p>Current Weather: ${grandCanyonWeather.getSummary()}</p>
+			<p>Temperature: ${grandCanyonWeather.getTemperature()} F</p>
+		</div> --%>
 		</div>
 
 		<button class="startButton">START GAME</button>
 	</form>
-
+	<script>
+	function toggleDropdownByName() {
+		document.getElementsByClassName("browse-by-name").classList
+				.toggle("show");
+	}
+	function toggleDropdownByState() {
+		document.getElementsByClassName("browse-by-state").classList
+				.toggle("show");
+	}
+		function toggleParkDisplay(change) {
+			let state = change.data.state;
+			document.getElementsByClassName("parks-in-state").classList
+					.toggle("show");
+		}
+	</script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
