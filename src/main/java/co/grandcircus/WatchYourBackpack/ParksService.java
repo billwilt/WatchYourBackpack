@@ -1,18 +1,20 @@
 package co.grandcircus.WatchYourBackpack;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import co.grandcircus.WatchYourBackpack.Daos.BeastEventDao;
 import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
-import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
+import co.grandcircus.WatchYourBackpack.Daos.WeatherEventDao;
+import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
 import co.grandcircus.WatchYourBackpack.Entities.DBPark;
-import co.grandcircus.WatchYourBackpack.Entities.Player;
+import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
 
 @Component
@@ -22,6 +24,10 @@ public class ParksService {
 	private ParksDao pDao;
 	@Autowired
 	private NPSApiService NPSapiServ;
+	@Autowired
+	private BeastEventDao bedao;
+	@Autowired
+	private WeatherEventDao wedao;
 
 	public void fillDatabase() {
 		// Creating a set of park codes from the campground endpoint
@@ -84,4 +90,24 @@ public class ParksService {
 			}
 		}
 	}
+	
+	public WeatherEvent findWeatherEvent(String triggerIcon) {
+		WeatherEvent we1 = new WeatherEvent();
+		
+		we1 = wedao.findByTriggerIconsContaining(triggerIcon);
+		
+		return we1;
+	}
+	
+	public BeastEvent findRandomBeastEvent() {
+		BeastEvent be1 = new BeastEvent();
+		Random r1 = new Random();
+
+		List<BeastEvent> list1 = bedao.findAll();
+		int index = r1.nextInt(list1.size() - 1);
+		be1 = list1.get(index);
+		
+		return be1;
+	}
+	
 }
