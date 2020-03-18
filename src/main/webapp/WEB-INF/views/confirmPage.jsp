@@ -36,6 +36,6 @@
 		<h6>Wallet after trip: $${walletAfter}</h6>
 	</div>
 	
-	<a href="/play" class="startButton">PLAY THE GAME</a>
+	<a href="/day1" class="startButton">PLAY THE GAME</a>
 </body>
 </html>

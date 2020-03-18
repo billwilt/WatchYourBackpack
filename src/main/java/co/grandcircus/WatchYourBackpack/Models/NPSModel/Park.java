@@ -87,12 +87,12 @@ public class Park {
 		this.images = images;
 	}
 
-	public String getStateCode() {
+	public String getStates() {
 		return states;
 	}
 
-	public void setStateCode(String stateCode) {
-		this.states = stateCode;
+	public void setStates(String states) {
+		this.states = states;
 	}
 
 }

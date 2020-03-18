@@ -70,14 +70,26 @@ public class NPSApiService {
 		Park responsePark = response.getData().get(0);
 		return responsePark;
 	}
+//	public Park findByStateCode(String stateCode) {
+//		String token = apiNPS;
+//		String url3 = "https://developer.nps.gov/api/v1/parks?parkCode=" + parkCode + "&api_key=" + token;
+//		NpsResponse response = null;
+//		response = rt.getForObject(url3, NpsResponse.class);
+//		Park responsePark = response.getData().get(0);
+//		return responsePark;
+//	}
 
 	public List<Park> getParks(){
-				  //  https://api.nps.gov/api/v1/parks?limit=1&start=8&api_key=GKRdDKf9YMfEFYsJ5SaTZfTWbqzjNz5ylf6TBcw2
-		String url = "https://api.nps.gov/api/v1/parks?limit=20&start=497&api_key=" + apiNPS;
-		NpsResponse response = rt.getForObject(url, NpsResponse.class);
-		return response.getData();
+		List<Park> parks = new ArrayList<>();
+		for (int i = 1; i < 498; i = i +20) {	  
+			String url = "https://api.nps.gov/api/v1/parks?limit=20&start=" + i + "&api_key=" + apiNPS;
+			NpsResponse response = rt.getForObject(url, NpsResponse.class);
+			parks.addAll(response.getData());
+		}
+		return parks;
 	}
 
+	
 	public Set<String> getParkCodesWithCampgrounds() {
 		
 		Set<String> parkCodes = new HashSet<>();
@@ -85,11 +97,10 @@ public class NPSApiService {
 			String url = "https://api.nps.gov/api/v1/campgrounds?limit=20&start=" + i + "&api_key=" + apiNPS;
 			CampgroundResponse response = rt.getForObject(url, CampgroundResponse.class);
 			for (Campground campground: response.getData()) {
-				parkCodes.add(campground.getParkCode());
-				
+				parkCodes.add(campground.getParkCode());				
 			}
 		}
-		System.out.println(parkCodes);
+		//System.out.println(parkCodes);
 		return parkCodes;
 	}
 }
