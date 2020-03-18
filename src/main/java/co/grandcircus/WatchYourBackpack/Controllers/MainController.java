@@ -39,44 +39,32 @@ public class MainController {
 
 	@Autowired
 	private PlayerDao playerDao;
-	
+
 	@Autowired
 	private WeatherEventDao WEDao;
-	
+
 	@Autowired
 	private ItemDao itemDao;
 
 	// This we will use later when we get the characters set up
 	// @Autowired
 	// private XDao xDao;
-	
+
 	@RequestMapping("/addEvent")
 	public ModelAndView addEvent() {
 		WeatherEvent we1 = new WeatherEvent();
-		
-		String name = "";
-		String description = "";
-		int rsrcThresh = 1;
-		
-		Outcome a = new Outcome();
-		Outcome b = new Outcome();
-		
-		a.setSurvived(true);
-		a.setDescription("");
-		
-		b.setSurvived(false);
-		b.setDescription("");
-		
-		List<String> triggerIcon = new ArrayList<>();
-		triggerIcon.add("");
-		triggerIcon.add("");
+
+		String name = "windy";
+		String description = "The wind is really picking up, hopefully notihing blows away.";
+		int rsrcThresh = 2;
+		String triggerIcons = "WIND";
 		
 		we1.setDescription(description);
 		we1.setName(name);
-		we1.setTriggerIcon(triggerIcon);
+		we1.setTriggerIcons(triggerIcons);
 		we1.setRsrcThresh(rsrcThresh);
 		we1.setOutcomes(null);
-		
+
 		WEDao.save(we1);
 		return new ModelAndView("redirect:/");
 	}
@@ -124,21 +112,21 @@ public class MainController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping("/newPlayer")
 	public ModelAndView newPlayer() {
 		return new ModelAndView("newPlayer");
 	}
-	
+
 	@PostMapping("/newPlayer")
 	public ModelAndView addNewPlayer(String name, String description, int type, Double money) {
-		
+
 		Player player = new Player();
-		
+
 		player.setName(name);
 		player.setDescription(description);
 		player.setMoney(money);
-		
+
 		if (type == 1) {
 			player.setAttack(1);
 			player.setFire(0);
@@ -146,93 +134,95 @@ public class MainController {
 		} else if (type == 2) {
 			player.setAttack(0);
 			player.setFire(1);
-			player.setResourcefulness(0);			
+			player.setResourcefulness(0);
 		} else {
 			player.setAttack(0);
 			player.setFire(0);
-			player.setResourcefulness(1);			
+			player.setResourcefulness(1);
 		}
-		
+
 		playerDao.save(player);
-		
+
 		return new ModelAndView("redirect:/");
 	}
 
 	@PostMapping("/start")
 	public ModelAndView startGame(String parkCode, Long id) {
 		ModelAndView mav = new ModelAndView("start");
-		
+
 		System.out.println(id);
-		//apparently id is a reserved word, at first we had id and it didnt work :(
+		// apparently id is a reserved word, at first we had id and it didnt work :(
 		Long id1 = id;
-				//Long.parseLong(id);
+		// Long.parseLong(id);
 		Player chosenPlayer = playerDao.findById(id1).orElse(null);
-		
+
 		System.out.println(chosenPlayer);
-		
+
 		if (chosenPlayer.equals(null)) {
 			return new ModelAndView("redirect:/");
 		}
-		
+
 		Park park = apiServ.findByParkCode(parkCode);
 		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
 		String cost = (park.getEntranceFees().get(0).getCost());
-		
+
 		System.out.println(currentWeather);
-		
+
 		sesh.setAttribute("currentWeather", currentWeather);
 		sesh.setAttribute("player1", chosenPlayer);
 		sesh.setAttribute("park", park);
-		
-		//creating the available players for team list
+
+		// creating the available players for team list
 		List<Player> allPlayers = new ArrayList<>();
 
-		//only adding players that arent the chosen player
-		for (Long i = 1L; i <= playerDao.count(); i ++) {
+		// only adding players that arent the chosen player
+		for (Long i = 1L; i <= playerDao.count(); i++) {
 			if (i != id) {
 				allPlayers.add(playerDao.getOne(i));
 			}
 		}
-		
+
 		List<Player> possibleTeam = allPlayers;
 		List<Item> items = itemDao.findAll();
-		
-		//testing the list of items
+
+		// testing the list of items
 		System.out.println(items);
-		
+
 		mav.addObject("items", items);
 		mav.addObject("availableTeam", possibleTeam);
 		mav.addObject("currentWeather", currentWeather);
 		mav.addObject("park", park);
 		mav.addObject("chosenPlayer", chosenPlayer);
 		mav.addObject("cost", cost);
-		
+
 		return mav;
 	}
-	
+
 	@PostMapping("/confirmSettings")
 	public ModelAndView confirmPage(double price, Long id, Long item1Id, Long item2Id, Long item3Id) {
 		ModelAndView mav = new ModelAndView("confirmPage");
-		
+
 		Item item1 = itemDao.findById(item1Id).orElse(null);
 		Item item2 = itemDao.findById(item2Id).orElse(null);
 		Item item3 = itemDao.findById(item3Id).orElse(null);
-		
+
 		Integer itemsAttack = item1.getAttackAdd() + item2.getAttackAdd() + item3.getAttackAdd();
 		Integer itemsFire = item1.getFireAdd() + item2.getFireAdd() + item3.getFireAdd();
-		Integer itemsResourcefulness = item1.getResourcefulnessAdd() + item2.getResourcefulnessAdd() + item3.getResourcefulnessAdd();
-		
+		Integer itemsResourcefulness = item1.getResourcefulnessAdd() + item2.getResourcefulnessAdd()
+				+ item3.getResourcefulnessAdd();
+
 		Player player2 = playerDao.findById(id).orElse(null);
 		sesh.setAttribute("player2", player2);
 		Double totalCost = 0.0;
 		Player player1 = (Player) sesh.getAttribute("player1");
-		
-		//getting the total levels to add to game status
+
+		// getting the total levels to add to game status
 		Integer totalAttack = player1.getAttack() + player2.getAttack() + itemsAttack;
 		Integer totalFire = player1.getFire() + player2.getFire() + itemsFire;
-		Integer totalResourcefulness = player1.getResourcefulness() + player2.getResourcefulness() + itemsResourcefulness;
-		
-		//if they don't have enough money, set price to 0 for sleeping in the leaves
+		Integer totalResourcefulness = player1.getResourcefulness() + player2.getResourcefulness()
+				+ itemsResourcefulness;
+
+		// if they don't have enough money, set price to 0 for sleeping in the leaves
 		if (player1.getMoney() < price || price == 0) {
 			price = 0;
 			mav.addObject("sleeping", "in the leaves");
@@ -243,12 +233,12 @@ public class MainController {
 			mav.addObject("sleeping", "in a cabin");
 			totalResourcefulness += 2;
 		}
-		
+
 		Park park = (Park) sesh.getAttribute("park");
-		
-		//making the game status
+
+		// making the game status
 		GameStatus gameStatus = new GameStatus();
-		
+
 		gameStatus.setMainPlayer((Player) sesh.getAttribute("player1"));
 		gameStatus.setPartner(player2);
 		gameStatus.setParkcode(park.getParkCode());
@@ -257,39 +247,39 @@ public class MainController {
 		gameStatus.setTotalAttack(totalAttack);
 		gameStatus.setTotalFire(totalFire);
 		gameStatus.setTotalResourcefulness(totalResourcefulness);
-		
+
 		sesh.setAttribute("gameStatus", gameStatus);
-		
-		//STRETCH GOAL: add the price of items as well
+
+		// STRETCH GOAL: add the price of items as well
 		totalCost += price;
 		sesh.setAttribute("totalCost", totalCost);
 		sesh.setAttribute("walletAfter", (player1.getMoney() - totalCost));
-		
+
 		mav.addObject("walletAfter", (player1.getMoney() - totalCost));
 		mav.addObject("totalCost", totalCost);
 		mav.addObject("player1", player1);
 		mav.addObject("player2", player2);
 		mav.addObject("park", sesh.getAttribute("park"));
 		mav.addObject("currentWeather", sesh.getAttribute("currentWeather"));
-		
+
 		return mav;
 	}
-	
+
 	@RequestMapping("/play")
 	public ModelAndView day1() {
 		ModelAndView mav = new ModelAndView("day1");
-		
-		//setting the players wallet to the new wallet amount
+
+		// setting the players wallet to the new wallet amount
 		Player player1 = (Player) sesh.getAttribute("player1");
 		Long player1Id = player1.getId();
 		Player player1b = playerDao.findById(player1Id).orElse(null);
 		player1.setMoney((double) sesh.getAttribute("walletAfter"));
-		
-		//adding the usual things to the model
+
+		// adding the usual things to the model
 		mav.addObject("player1", sesh.getAttribute("player1"));
 		mav.addObject("player2", sesh.getAttribute("player2"));
 		mav.addObject("gameStatus", sesh.getAttribute("gameStatus"));
-		
+
 		return mav;
 	}
 }

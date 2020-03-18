@@ -13,8 +13,10 @@ public class WeatherEvent extends Event{
 	
 	@OneToMany (mappedBy = "weatherEvent")
 	protected List<Outcome> outcomes;
-	private List<String> triggerIcon;
+	private String triggerIcons;
 
+	
+	
 	public List<Outcome> getOutcomes() {
 		return outcomes;
 	}
@@ -23,14 +25,13 @@ public class WeatherEvent extends Event{
 	}
 	@Override
 	public String toString() {
-		return "WeatherEvent [outcomes=" + outcomes + ", triggerIcon=" + triggerIcon + "]";
+		return "WeatherEvent [outcomes=" + outcomes + ", triggerIcon=" + triggerIcons + "]";
 	}
-	public List<String> getTriggerIcon() {
-		return triggerIcon;
+	public String getTriggerIcons() {
+		return triggerIcons;
 	}
-	public void setTriggerIcon(List<String> triggerIcon) {
-		this.triggerIcon = triggerIcon;
-	}
-	
+	public void setTriggerIcons(String triggerIcons) {
+		this.triggerIcons = triggerIcons;
+	}	
 	
 }
