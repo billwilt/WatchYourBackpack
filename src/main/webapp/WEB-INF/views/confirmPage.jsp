@@ -35,5 +35,7 @@
 		<h6>Sleeping: ${sleeping}</h6>
 		<h6>Wallet after trip: $${walletAfter}</h6>
 	</div>
+	
+	<a href="/day1" class="startButton">PLAY THE GAME</a>
 </body>
 </html>
