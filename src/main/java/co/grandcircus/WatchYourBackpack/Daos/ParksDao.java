@@ -13,5 +13,8 @@ public interface ParksDao extends JpaRepository<DBPark, Long>{
 	@Query(value = "SELECT DISTINCT entrance_fee FROM dbpark ORDER BY entrance_fee", nativeQuery = true)
 	List<Double> findDistinctEntranceFees();
 	
-
+	@Query(value = "SELECT DISTINCT state_code FROM dbpark ORDER BY state_code", nativeQuery = true)
+	List<String> findDistinctStateCodes();
+	
+	List<DBPark> findByStateCode(String stateCode);
 }

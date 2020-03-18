@@ -39,44 +39,77 @@
 			<div class="form-group">
 				<select name="id" class="custom-select" required>
 					<c:forEach items="${players}" var="player">
-						<option value="${player.getId()}">${player.getName()} Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness()}</option>
+						<option value="${player.getId()}">${player.getName()}
+							Attack: ${player.getAttack()} Fire: ${player.getFire()}
+							Resourcefulness: ${player.getResourcefulness()}</option>
 					</c:forEach>
 					<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
-				</select>
-				
-				<a href="/newPlayer">Add New Player</a>
+				</select> <a href="/newPlayer">Add New Player</a>
 			</div>
 		</div>
 
 		<div class="form-check disabled inputForm-right">
 			<h2>CHOOSE YOUR CAMPSITE</h2>
-			<div class="parkChoice">
-				<input type="radio" name="parkCode" id="parkID"
-					value="${isleRoyale.getData().get(0).getParkCode()}"> <label
-					class="choice">Isle Royale </label>
-				<p>Current Weather: ${isleRoyaleWeather.getSummary()}</p>
-				<p>Temperature: ${isleRoyaleWeather.getTemperature()} F</p>
-			</div>
+			
+				<div class="form-group">
+					<select class="custom-select" name="parkCode"> <!-- onchange="toggleParkDisplay({ "state" : state })" -->
+						<option selected="">Browse Parks</option>
+						<c:forEach var="park" items="${ parks }">
+							<option value="${ park.getParkCode() }">${ park.getName() }</option>
+						</c:forEach>
+					</select>
+				</div>
 
-			<div class="parkChoice">
-				<input type="radio" name="parkCode" id="parkID"
-					value="${yellowstone.getData().get(0).getParkCode()}"> <label
-					class="choice">Yellowstone </label>
-				<p>Current Weather: ${yellowstoneWeather.getSummary()}</p>
-				<p>Temperature: ${yellowstoneWeather.getTemperature()} F</p>
-			</div>
+				<%-- <c:forEach items="${ parks }" var="park">
+					<c:if test=" ${ park.getStateCode() == 'MI' }">
+						<div class="parkChoice parks-in-state">
+							<input type="radio" name="parkCode" id="parkID"
+								value="${park.getParkCode()}"> <label class="choice">${ park.getName() }</label>
+							<p>
+								Current Weather:
+								${isleRoyaleWeather.getSummary()}
+							</p>
+							<p>
+								Temperature:
+								${isleRoyaleWeather.getTemperature()}
+								F
+							</p>
+						</div>
+					</c:if>
+				</c:forEach> --%>
+			<%-- <div class="parkChoice">
+			<input type="radio" name="parkCode" id="parkID"
+				value="${isleRoyale.getData().get(0).getParkCode()}"> <label
+				class="choice">Isle Royale </label>
+			<p>Current Weather: ${isleRoyaleWeather.getSummary()}</p>
+			<p>Temperature: ${isleRoyaleWeather.getTemperature()} F</p>
+		</div>
 
-			<div class="parkChoice">
-				<input type="radio" name="parkCode" id="parkID"
-					value="${grandCanyon.getData().get(0).getParkCode()}"> <label
-					class="choice">Grand Canyon </label>
-				<p>Current Weather: ${grandCanyonWeather.getSummary()}</p>
-				<p>Temperature: ${grandCanyonWeather.getTemperature()} F</p>
-			</div>
+		<div class="parkChoice">
+			<input type="radio" name="parkCode" id="parkID"
+				value="${yellowstone.getData().get(0).getParkCode()}"> <label
+				class="choice">Yellowstone </label>
+			<p>Current Weather: ${yellowstoneWeather.getSummary()}</p>
+			<p>Temperature: ${yellowstoneWeather.getTemperature()} F</p>
+		</div>
+
+		<div class="parkChoice">
+			<input type="radio" name="parkCode" id="parkID"
+				value="${grandCanyon.getData().get(0).getParkCode()}"> <label
+				class="choice">Grand Canyon </label>
+			<p>Current Weather: ${grandCanyonWeather.getSummary()}</p>
+			<p>Temperature: ${grandCanyonWeather.getTemperature()} F</p>
+		</div> --%>
 		</div>
 
 		<button class="startButton">START GAME</button>
 	</form>
-
+	<script>
+		function toggleParkDisplay(change) {
+			let state = change.data.state;
+			document.getElementsByClassName("parks-in-state").classList
+					.toggle("show");
+		}
+	</script>
 </body>
 </html>
