@@ -32,7 +32,7 @@
 <body>
 	<form action="/confirmSettings" method="post">
 
-		<div class="card1" class="inputForm-right2">
+		<div class="center">
 			<h2>Current Settings: ${park.getName()}</h2>
 			<h3>You Are: ${chosenPlayer.getName()}</h3>
 			<h5>Current Weather: ${currentWeather.getSummary()}</h5>
@@ -40,50 +40,48 @@
 
 		</div>
 
-		<table style="width: 100%">
-			<tr>
-				<td class="grayColor">
-					<div class="form-check disabled">
-						<h2>CHOOSE YOUR FRIEND</h2>
-						<div class="form-group">
-							<select name="id" class="custom-select" required>
-								<c:forEach items="${availableTeam}" var="player">
+		<div class="center">
+			<table style="width: 100%">
+				<tr>
+					<td align="center" class="column">
+						<div class="form-check disabled">
+							<h2>CHOOSE YOUR FRIEND</h2>
+							<div class="form-group">
+								<select name="id" class="custom-select" required>
+									<c:forEach items="${availableTeam}" var="player">
 
-									<option value="${player.getId()}">${player.getName()}
-										Attack: ${player.getAttack()} Fire: ${player.getFire()}
-										Resourcefulness: ${player.getResourcefulness()}</option>
+										<option value="${player.getId()}">${player.getName()}
+											[Attack=${player.getAttack()}, Fire=${player.getFire()},
+											Resourcefulness=${player.getResourcefulness()}]</option>
 
-								</c:forEach>
-								<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
-							</select>
+									</c:forEach>
+									<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
+								</select>
+							</div>
 						</div>
-					</div>
-				</td>
+					</td>
 
-				<td class="grayColor">
-					<div class="card1">
-						<!--  	<form action="" method="post" class="card1"> -->
+
+					<td align="center" class="column">
 						<div>
+							<!--  	<form action="" method="post" class="card1"> -->
+							<div>
+
+								<div class="parkChoice">
+									<input type="radio" name="price" value=0> <label>In the Leaves</label>
+									<p>Price: FREE</p>
+								</div>
+
+								<div class="parkChoice">
+									<input type="radio" name="price" value=10> <label>Tent</label>
+									<p>Price: $10</p>
+								</div>
 
 							<div class="parkChoice">
-								<input type="radio" name="price" value=0> <label
-									class="choice">In the Leaves</label>
-								<p>Price: FREE</p>
+									<input type="radio" name="price" value=20> <label>Cabin</label>
+									<p>Price: $20</p>
 							</div>
 
-							<div class="parkChoice">
-								<input type="radio" name="price" value=10> <label
-									class="choice">Tent</label>
-								<p>Price: $10</p>
-							</div>
-
-							<div class="parkChoice">
-
-								<input type="radio" name="price" value=20> <label
-									class="choice">Cabin</label>
-								<p>Price: $20</p>
-
-							</div>
 						</div>
 					</div> <!-- </form> -->
 				</td>
@@ -136,5 +134,6 @@
 		</table>
 
 	</form>
+
 </body>
 </html>
