@@ -88,6 +88,10 @@ public class ParksService {
 		
 		we1 = wedao.findByTriggerIconsContaining(triggerIcon);
 		
+		if (we1 == null) {
+			we1 = wedao.findById(2L).orElse(null);
+		}
+		
 		return we1;
 	}
 	
