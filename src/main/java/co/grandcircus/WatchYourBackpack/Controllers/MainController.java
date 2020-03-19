@@ -19,6 +19,7 @@ import co.grandcircus.WatchYourBackpack.Daos.ItemDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Daos.WeatherEventDao;
 import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
+import co.grandcircus.WatchYourBackpack.Entities.Event;
 import co.grandcircus.WatchYourBackpack.Entities.GameStatus;
 import co.grandcircus.WatchYourBackpack.Entities.Item;
 import co.grandcircus.WatchYourBackpack.Entities.Outcome;
@@ -491,6 +492,23 @@ public class MainController {
 		mav.addObject("outcome", finalOutcome);
 		return mav;
 	}
+	
+	
+	@RequestMapping("/conclusion")
+	public ModelAndView conclusion() {
+		ModelAndView mav = new ModelAndView("conclusion");
+		Player player1 = (Player) sesh.getAttribute("player1");
+		mav.addObject("player1", player1);
+		Event event1 = (Event) sesh.getAttribute("event1");
+		mav.addObject("event1", event1);
+		Event event2 = (Event) sesh.getAttribute("event2");
+		mav.addObject("event2", event2);
+		Event event3 = (Event) sesh.getAttribute("event3");
+		mav.addObject("event3", event3);
+		return mav;
+	}
+	
+	
 	
 //	@RequestMapping("/testWeather")
 //	public ModelAndView testEvent() {
