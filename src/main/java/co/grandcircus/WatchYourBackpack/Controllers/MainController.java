@@ -481,6 +481,16 @@ public class MainController {
 		return mav;
 	}
 	
+	
+	@PostMapping("/conclusion")
+	public ModelAndView conclusion() {
+		ModelAndView mav = new ModelAndView("conclusion");
+
+		return mav;
+	}
+	
+	
+	
 //	@RequestMapping("/testWeather")
 //	public ModelAndView testEvent() {
 //		ModelAndView mav = new ModelAndView("test1");
