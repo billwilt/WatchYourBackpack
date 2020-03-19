@@ -15,6 +15,8 @@ import co.grandcircus.WatchYourBackpack.Daos.WeatherEventDao;
 import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
 import co.grandcircus.WatchYourBackpack.Entities.DBPark;
 import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
+import co.grandcircus.WatchYourBackpack.Models.CampgroundModel.Campground;
+import co.grandcircus.WatchYourBackpack.Models.CampgroundModel.CampgroundResponse;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
 
 @Component
@@ -104,6 +106,28 @@ public class ParksService {
 		be1 = list1.get(index);
 		
 		return be1;
+	}
+	
+	public void setRvOptionForParksInDatabase(List<DBPark> parks) {
+
+		for (DBPark park : parks) {
+			
+			for (Campground campground : NPSapiServ.getCampgroundsByPark(park)) {
+				if (park.getRvOption() == true) {
+					break;
+				}
+				// if number of rvonly sites + number of electrical hookup sites > 0, rvOption = true
+				Boolean rvOption = (Integer.parseInt(campground.getCampsites().getRvonly())
+						+ Integer.parseInt(campground.getCampsites().getElectricalhookups()) > 0 
+						? true : false);
+				park.setRvOption(rvOption);
+				//System.out.print(rvOption + " ");
+				pDao.save(park);
+			}
+			//System.out.println();
+
+		}
+
 	}
 	
 }
