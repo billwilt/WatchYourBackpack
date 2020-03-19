@@ -21,7 +21,9 @@ crossorigin="anonymous">
 		<h6>Day 2: ${event2.getName()} </h6>
 		<h6>Day 3: ${event3.getName()} </h6>
 	</div>
-
+	
+	<h1>While hiking out you found some money on the ground, turned out to be $${moneyFound}</h1>
+	
 	<!-- end of game stats  -->
 	<div class="confirmCube">
 		<h2>You: ${player1.getName()}</h2>
@@ -30,8 +32,15 @@ crossorigin="anonymous">
 		<h6>Resourcefulness: ${player1.getResourcefulness()}</h6>
 		<h6>Wallet after trip: $${player1.getMoney()}</h6>
 	</div>
-
-
+	<h1>You get to level up one skill for making it out, what do you want to increase?</h1>
+	<div class="confirmCube">
+	<form action="/backHome" method="post">
+		<p><label>Add to Attack</label><input type="radio" name="skill" value="1"></p>
+		<p><label>Add to Fire</label><input type="radio" name="skill" value="2"></p>
+		<p><label>Add to Resourcefulness</label><input type="radio" name="skill" value="3"></p>
+		<button>THIS IS THE SKILL I WANT</button>
+	</form>
+	</div>
 
 
 
