@@ -76,11 +76,12 @@
 									<input type="radio" name="price" value=10> <label>Tent</label>
 									<p>Price: $10</p>
 								</div>
-
-							<div class="parkChoice">
-									<input type="radio" name="price" value=20> <label>Cabin</label>
-									<p>Price: $20</p>
-							</div>
+								<c:if test="${ park.rvOption }">
+									<div class="parkChoice">
+											<input type="radio" name="price" value=20> <label>RV</label>
+											<p>Price: $20</p>
+									</div>
+								</c:if>
 
 						</div>
 					</div> <!-- </form> -->
