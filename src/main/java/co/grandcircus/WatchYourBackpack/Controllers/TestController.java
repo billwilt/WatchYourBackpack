@@ -40,52 +40,14 @@ public class TestController {
 		// grabbing the list of players from the database
 		List<Player> players = playerDao.findAll();
 		mav.addObject("players", players);
-
-		//getting parks into database
-		//only called this method once to fill and then it's done!
-		//pServ.fillDatabase();
-		
-		List<String> stateCodes = pDao.findDistinctStateCodes();
-		mav.addObject("stateCodes", stateCodes);
-		System.out.println(stateCodes);
 		
 		//getting parks from database ordered by name
-		List<DBPark> parksByName = pDao.findAllByOrderByName();
-		mav.addObject("parksByName", parksByName);
+		mav.addObject("parksByName", pDao.findAllByOrderByName());
 		//getting parks from database ordered by state code
-		List<DBPark> parksByState = pDao.findAllByOrderByStateCode();
-		mav.addObject("parksByState", parksByState);
+		mav.addObject("parksByState", pDao.findAllByOrderByStateCode());
+		//getting parks from database ordered by entrance fee
+		mav.addObject("parksByFee", pDao.findAllByOrderByEntranceFee());
 		
-		//getting parks by stateCode
-		List<DBPark> parksInState = pDao.findByStateCode("MI");
-		mav.addObject("parksInState", parksInState);
-		
-//		NpsResponse isleRoyale = NPSapiServ.isleRoyale();
-//		NpsResponse yellowstone = NPSapiServ.yellowstone();
-//		NpsResponse grandCanyon = NPSapiServ.grandCanyon();
-
-//		// getting weather with the parks lng and lat
-//		Currently isleRoyaleWeather = DSApiServ.getWeather(isleRoyale.getData().get(0).getLatitude(),
-//				isleRoyale.getData().get(0).getLongitude());
-//		Currently yellowstoneWeather = DSApiServ.getWeather(yellowstone.getData().get(0).getLatitude(),
-//				yellowstone.getData().get(0).getLongitude());
-//		Currently grandCanyonWeather = DSApiServ.getWeather(grandCanyon.getData().get(0).getLatitude(),
-//				grandCanyon.getData().get(0).getLongitude());
-//
-//		// testing the lng and lat
-//		System.out.println(isleRoyale.getData().get(0).getLatitude());
-//		System.out.println(isleRoyale.getData().get(0).getLongitude());
-//
-//		// adding the parks to the model
-//		mav.addObject("isleRoyale", isleRoyale);
-//		mav.addObject("yellowstone", yellowstone);
-//		mav.addObject("grandCanyon", grandCanyon);
-//
-//		// adding the weather for each park
-//		mav.addObject("isleRoyaleWeather", isleRoyaleWeather);
-//		mav.addObject("yellowstoneWeather", yellowstoneWeather);
-//		mav.addObject("grandCanyonWeather", grandCanyonWeather);
-
 		return mav;
 	}
 	
@@ -93,11 +55,14 @@ public class TestController {
 	public ModelAndView test() {
 		ModelAndView mav = new ModelAndView("test");
 		
+		//pServ.setRvOptionForParksInDatabase(pDao.findAll());
+		
+		//getting parks into database
+		//only called this method once to fill and then it's done!
+		//pServ.fillDatabase();
+		
 		//mav.addObject("parkCodes",
 		NPSapiServ.getParkCodesWithCampgrounds();
-		
-		//fill database. Only wanted to do this once to grab info, so commented out
-		//pServ.fillDatabase();
 		
 		//list possible entrance fee values
 		List<Double> distinctFees = pDao.findDistinctEntranceFees();
