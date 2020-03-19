@@ -56,7 +56,6 @@ public class MainController {
 	// @Autowired
 	// private XDao xDao;
 
-
 	@RequestMapping("/addEvent")
 	public ModelAndView addEvent() {
 		WeatherEvent we1 = new WeatherEvent();
@@ -74,6 +73,50 @@ public class MainController {
 
 		WEDao.save(we1);
 		return new ModelAndView("redirect:/");
+	}
+
+	@RequestMapping("/")
+	public ModelAndView showHome() {
+		ModelAndView mav = new ModelAndView("index");
+
+		// grabbing the list of players from the database
+		List<Player> players = playerDao.findAll();
+		System.out.println(players);
+//		for (Player player: players) {
+//			List<String> names
+//		}
+
+		// adding the players to the model
+		mav.addObject("players", players);
+
+		// getting parks
+		NpsResponse isleRoyale = apiServ.isleRoyale();
+		NpsResponse yellowstone = apiServ.yellowstone();
+		NpsResponse grandCanyon = apiServ.grandCanyon();
+
+		// getting weather with the parks lng and lat
+		Currently isleRoyaleWeather = DSApiServ.getWeather(isleRoyale.getData().get(0).getLatitude(),
+				isleRoyale.getData().get(0).getLongitude());
+		Currently yellowstoneWeather = DSApiServ.getWeather(yellowstone.getData().get(0).getLatitude(),
+				yellowstone.getData().get(0).getLongitude());
+		Currently grandCanyonWeather = DSApiServ.getWeather(grandCanyon.getData().get(0).getLatitude(),
+				grandCanyon.getData().get(0).getLongitude());
+
+		// testing the lng and lat
+		System.out.println(isleRoyale.getData().get(0).getLatitude());
+		System.out.println(isleRoyale.getData().get(0).getLongitude());
+
+		// adding the parks to the model
+		mav.addObject("isleRoyale", isleRoyale);
+		mav.addObject("yellowstone", yellowstone);
+		mav.addObject("grandCanyon", grandCanyon);
+
+		// adding the weather for each park
+		mav.addObject("isleRoyaleWeather", isleRoyaleWeather);
+		mav.addObject("yellowstoneWeather", yellowstoneWeather);
+		mav.addObject("grandCanyonWeather", grandCanyonWeather);
+
+		return mav;
 	}
 
 	@RequestMapping("/newPlayer")
@@ -431,10 +474,15 @@ public class MainController {
 	@PostMapping("/day3")
 	public ModelAndView day3results(String choice) {
 		ModelAndView mav = new ModelAndView("day3results");
+		Random rand = new Random();
 		
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		BeastEvent event = (BeastEvent) sesh.getAttribute("event1");
 		Player player1 = (Player) sesh.getAttribute("player1");
+		
+		Double money = player1.getMoney();
+		int moneyFound = rand.nextInt(15) + 10;
+		player1.setMoney(money + moneyFound);
 		
 		//creating outcomes
 		Outcome outcome1 = new Outcome();
@@ -476,7 +524,6 @@ public class MainController {
 			}
 			
 		} else {
-			Random rand = new Random();
 			int random1 = rand.nextInt(100);
 			
 			if (random1 > 50) {
@@ -486,11 +533,17 @@ public class MainController {
 				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		}
+		
 		sesh.setAttribute("gameStatus", gameStatus);
+		
 		System.out.println(finalOutcome);
+		
+		mav.addObject("moneyFound", moneyFound);
 		mav.addObject("outcome", finalOutcome);
 		return mav;
 	}
+	
+	
 	
 //	@RequestMapping("/testWeather")
 //	public ModelAndView testEvent() {
