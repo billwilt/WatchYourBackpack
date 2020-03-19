@@ -207,7 +207,7 @@ public class MainController {
 		gameStatus.setPartner(player2);
 		gameStatus.setParkcode(park.getParkCode());
 		gameStatus.setWeather((Currently) sesh.getAttribute("currentWeather"));
-		gameStatus.setHealth(3);
+		gameStatus.setHealth(2);
 		gameStatus.setTotalAttack(totalAttack);
 		gameStatus.setTotalFire(totalFire);
 		gameStatus.setTotalResourcefulness(totalResourcefulness);
@@ -302,6 +302,7 @@ public class MainController {
 				finalOutcome = outcome1;
 			} else {
 				finalOutcome = outcome4;
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 			
 		} else if (choice.equals("2")) {
@@ -312,6 +313,7 @@ public class MainController {
 				finalOutcome = outcome2;
 			} else {
 				finalOutcome = outcome4;
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 			
 		} else {
@@ -322,9 +324,10 @@ public class MainController {
 				finalOutcome = outcome3;
 			} else {
 				finalOutcome = outcome4;
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		}
-		
+		sesh.setAttribute("gameStatus", gameStatus);
 		mav.addObject("outcome", finalOutcome);
 		return mav;
 	}
@@ -360,6 +363,7 @@ public class MainController {
 		
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		WeatherEvent event = (WeatherEvent) sesh.getAttribute("event2");
+		Player player1 = (Player) sesh.getAttribute("player1");
 		
 		//getting sesh attributes to adjust them
 		GameStatus gs = (GameStatus) sesh.getAttribute("gameStatus");
@@ -386,6 +390,7 @@ public class MainController {
 				finalOutcome = outcome1;
 			} else {
 				finalOutcome = outcome3;
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		} else {
 			int yourSkill = gameStatus.getTotalResourcefulness();
@@ -395,9 +400,10 @@ public class MainController {
 				finalOutcome = outcome2;
 			} else {
 				finalOutcome = outcome3;
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		}
-		
+		sesh.setAttribute("gameStatus", gameStatus);
 		mav.addObject("outcome", finalOutcome);
 		return mav;
 	}
@@ -405,6 +411,7 @@ public class MainController {
 	@RequestMapping("/day3")
 	public ModelAndView day3() {
 		ModelAndView mav = new ModelAndView("day3");
+		Player player1 = (Player) sesh.getAttribute("player1");
 		
 		//adding a random beast event to the model
 		BeastEvent be1 = pService.findRandomBeastEvent();
@@ -428,6 +435,7 @@ public class MainController {
 		
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		BeastEvent event = (BeastEvent) sesh.getAttribute("event1");
+		Player player1 = (Player) sesh.getAttribute("player1");
 		
 		//creating outcomes
 		Outcome outcome1 = new Outcome();
@@ -442,7 +450,7 @@ public class MainController {
 		outcome4.setSurvived(false);
 		
 		outcome1.setDescription("You fought courageously and won");
-		outcome2.setDescription("You outsmarted the enemy and got away safely");
+		outcome2.setDescription("You lit them on fire you maniac");
 		outcome3.setDescription("You managed to run away, and thank your good luck");
 		outcome4.setDescription("You did not win, you lose 1 health");
 		
@@ -454,6 +462,7 @@ public class MainController {
 				finalOutcome = outcome1;
 			} else {
 				finalOutcome = outcome4;
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 			
 		} else if (choice.equals("2")) {
@@ -464,6 +473,7 @@ public class MainController {
 				finalOutcome = outcome2;
 			} else {
 				finalOutcome = outcome4;
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 			
 		} else {
@@ -474,9 +484,10 @@ public class MainController {
 				finalOutcome = outcome3;
 			} else {
 				finalOutcome = outcome4;
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		}
-		
+		sesh.setAttribute("gameStatus", gameStatus);
 		System.out.println(finalOutcome);
 		mav.addObject("outcome", finalOutcome);
 		return mav;
