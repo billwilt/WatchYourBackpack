@@ -35,24 +35,7 @@ public class ParksService {
 
 		// Load database of park names and entrance fees
 		List<Park> parks = NPSapiServ.getParks();
-		// used for undoing an accidental duplicate db add
-//				for (Long i = 349L; i < 425; i++) {
-//					pDao.deleteById(i);
-//				}
-
-		// List<String> parkCodes = Arrays.asList("fiis", "hale", "seki", "crla",
-		// "ciro", "chic", "tapr", "grpo", "band", "cebr", "neri", "fomr", "gumo",
-		// "dewa", "orpi", "dino", "badl", "cwdw", "blri", "ever", "cuis", "glca",
-		// "redw", "klgo", "care", "laro", "havo", "natr", "samo", "pore", "indu",
-		// "grsa", "labe", "wrst", "pinn", "prwi", "chir", "chis", "mora", "caco",
-		// "ozar", "slbe", "moja", "nabr", "cato", "zion", "arch", "katm", "buff",
-		// "crmo", "brca", "obed", "olym", "wica", "thro", "cany", "sagu", "rabr",
-		// "shen", "whis", "deto", "buis", "hosp", "gari", "elmo", "drto", "guis",
-		// "romo", "grte", "kefj", "nava", "jotr", "cuva", "yell", "apis", "grsm",
-		// "orca", "grca", "lake", "cana", "maca", "deva", "piro", "colm", "hove",
-		// "bica", "biso", "choh", "yose", "bicy", "glba", "bith", "isro", "dena",
-		// "lavo", "cuga", "bibe", "whsa", "lamr", "amme", "noca", "gett", "pais",
-		// "asis", "goga", "glac", "caha", "bisc", "gree", "gate", "niob", "ebla");
+		//System.out.println(parks);
 
 		Set<String> parkCodes = new HashSet<String>(Arrays.asList("fiis", "hale", "seki", "crla", "ciro", "chic",
 				"tapr", "grpo", "band", "cebr", "neri", "fomr", "gumo", "dewa", "orpi", "dino", "badl", "cwdw", "blri",
@@ -66,26 +49,35 @@ public class ParksService {
 				"niob", "ebla"));
 
 		for (Park park : parks) {
+			System.out.println(park);
 			if (parkCodes.contains(park.getParkCode())) {
 				
-				
-			
 			DBPark dbPark = new DBPark();
+			
+			//.isEmpty works for the following because entranceFees is a List
 			Double entranceFee = (!park.getEntranceFees().isEmpty()
 					? Double.parseDouble(park.getEntranceFees().get(0).getCost())
-					: null);
+					: null);			
 			dbPark.setEntranceFee(entranceFee);
+			
+			//.isEmpty does not work for the following because parkCode is a string. (it's not a null check)
+			//we're just going to assume it's not null
 			dbPark.setParkCode(park.getParkCode());
-			dbPark.setStateCode(park.getStateCode().substring(0, 2));
-			dbPark.setLongitude(park.getLongitude());
-			dbPark.setLatitude(park.getLatitude());
-			dbPark.setUrl(park.getUrl());
-			dbPark.setImageUrl(park.getImages().get(0).getUrl());
 			
+			//this one needs a null check because parks in DC don't have a state code XD		
+			String stateCode = (park.getStates() != null ? park.getStates().substring(0, 2) : null);
+			dbPark.setStateCode(stateCode);
 			
-			
-
-			dbPark.setName(park.getName());
+			//String lon = (!park.getLongitude().isEmpty() ? park.getLongitude() : null);			
+			dbPark.setLongitude(park.getLongitude());			
+			//String lat = (!park.getLatitude().isEmpty() ? park.getLatitude() : null);		
+			dbPark.setLatitude(park.getLatitude());			
+			//String url = (!park.getUrl().isEmpty() ? park.getLongitude() : null);		
+			dbPark.setUrl(park.getUrl());			
+			//String iUrl = (!park.getImages().get(0).getUrl().isEmpty() ? park.getImages().get(0).getUrl() : null);		
+			dbPark.setImageUrl(park.getImages().get(0).getUrl());			
+			//String name = (!park.getName().isEmpty() ? park.getName() : null);		
+			dbPark.setName(park.getName());		
 			pDao.save(dbPark);
 			}
 		}
