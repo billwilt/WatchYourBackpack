@@ -86,7 +86,7 @@ public class ParksService {
 	public WeatherEvent findWeatherEvent(String triggerIcon) {
 		WeatherEvent we1 = new WeatherEvent();
 		
-		we1 = wedao.findByTriggerIconsContaining(triggerIcon);
+		we1 = wedao.findByTriggerIconsContaining(triggerIcon).get(0);
 		
 		if (we1 == null) {
 			we1 = wedao.findById(2L).orElse(null);
