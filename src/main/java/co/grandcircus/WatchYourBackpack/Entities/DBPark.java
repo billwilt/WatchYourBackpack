@@ -21,8 +21,8 @@ public class DBPark {
 	private String url;
 	private String imageUrl;
 	private String imageAltText;
-	
-	
+	private Boolean rvOption;
+		
 	
 	public String getImageUrl() {
 		return imageUrl;
@@ -90,6 +90,12 @@ public class DBPark {
 		return "DBPark [id=" + id + ", name=" + name + ", entranceFee=" + entranceFee + ", stateCode=" + stateCode
 				+ ", parkCode=" + parkCode + ", longitude=" + longitude + ", latitude=" + latitude + ", url=" + url
 				+ ", imageUrl=" + imageUrl + ", imageAltText=" + imageAltText + "]";
+	}
+	public Boolean getRvOption() {
+		return rvOption;
+	}
+	public void setRvOption(Boolean rvOption) {
+		this.rvOption = rvOption;
 	}
 
 	

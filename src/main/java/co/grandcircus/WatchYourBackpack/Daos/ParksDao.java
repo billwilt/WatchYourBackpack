@@ -23,4 +23,6 @@ public interface ParksDao extends JpaRepository<DBPark, Long>{
 	List<DBPark> findAllByOrderByStateCode();
 	
 	List<DBPark> findAllByOrderByEntranceFee();
+	
+	DBPark findByParkCodeContaining(String parkCode);
 }

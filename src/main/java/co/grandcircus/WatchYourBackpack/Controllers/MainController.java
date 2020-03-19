@@ -16,16 +16,17 @@ import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.NPSApiService;
 import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.Daos.ItemDao;
+import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Daos.WeatherEventDao;
 import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
+import co.grandcircus.WatchYourBackpack.Entities.DBPark;
 import co.grandcircus.WatchYourBackpack.Entities.GameStatus;
 import co.grandcircus.WatchYourBackpack.Entities.Item;
 import co.grandcircus.WatchYourBackpack.Entities.Outcome;
 import co.grandcircus.WatchYourBackpack.Entities.Player;
 import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
 import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
-import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
 
 @Controller
@@ -51,6 +52,9 @@ public class MainController {
 
 	@Autowired
 	private ItemDao itemDao;
+	
+	@Autowired
+	private ParksDao pDao;
 
 	// This we will use later when we get the characters set up
 	// @Autowired
@@ -123,11 +127,13 @@ public class MainController {
 
 		if (chosenPlayer.equals(null)) {
 			return new ModelAndView("redirect:/");
-		}
-
-		Park park = apiServ.findByParkCode(parkCode);
+		} 
+		parkCode = parkCode.substring(0,4);
+		DBPark park = pDao.findByParkCodeContaining(parkCode);
+		System.out.println(park.getLatitude());
+		System.out.println(park.getLongitude());
 		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
-		String cost = (park.getEntranceFees().get(0).getCost());
+		Double cost = (park.getEntranceFee());
 
 		System.out.println(currentWeather);
 

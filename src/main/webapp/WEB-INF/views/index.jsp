@@ -49,40 +49,42 @@
 		</div>
 
 		<div class="form-check disabled inputForm-right">
+		
 			<h2>CHOOSE YOUR CAMPSITE</h2>
 			
 			<div class="btn-group-vertical">
+			<!-- Browse Parks by Name -->
 			<button href="#by-name" type="button" class="btn btn-primary"
 				data-toggle="collapse">Browse Parks by Name</button>
 				<div class="form-group collapse" id="by-name">
-				<select class="custom-select" name="parkCode">
+				<select class="custom-select" name="parkCode" onchange="this.form.submit()">
 					<!-- onchange="toggleParkDisplay({ "state" : state })" -->
-					<option selected="">Browse Parks by Name</option>
+					<option value=-1>Browse Parks by Name</option> 
 					<c:forEach var="park" items="${ parksByName }">
 						<option value="${ park.getParkCode() }">${ park.getName() },
 							(${ park.getStateCode() })</option>
 					</c:forEach>
 				</select>
 			</div>
-				
+			<!-- Browse Parks by State -->	
 			<button href="#by-state" type="button" class="btn btn-primary"
 				data-toggle="collapse">Browse Parks by State</button>
 							<div class="form-group collapse" id="by-state">
-				<select class="custom-select" name="parkCode">
-					<option selected="">Browse Parks by State</option>
+				<select class="custom-select" name="parkCode" onchange="this.form.submit()">
+					<option value=-1>Browse Parks by State</option> 
 					<c:forEach var="park" items="${ parksByState }">
 						<option value="${ park.getParkCode() }">${ park.getStateCode() },
 							${ park.getName() }</option>
 					</c:forEach>
 				</select>
 			</div>
-				
+			<!-- Browse Parks by Entrance Fee -->	
 			<button href="#by-fee" type="button" class="btn btn-primary"
 				data-toggle="collapse">Browse Parks by Entrance Fee</button>
 			</div>
 			<div class="form-group collapse" id="by-fee">
-				<select class="custom-select" name="parkCode">
-					<option selected="">Browse Parks by Fee</option>
+				<select class="custom-select" name="parkCode" onchange="this.form.submit()">
+					<option value=-1>Browse Parks by Fee</option><!--replaced selected="" with value  -->
 					<c:forEach var="park" items="${ parksByFee }">
 						<option value="${ park.getParkCode() }"><fmt:formatNumber value="${ park.getEntranceFee() }" type="currency" />,
 							${ park.getName() }</option>
@@ -134,6 +136,8 @@
 
 		<button class="startButton">START GAME</button>
 	</form>
+	<!-- Here is a link to STO that might help with collapsing the expanded divs when another is expanded -->
+	<!-- https://stackoverflow.com/questions/37753407/bootstrap-collapse-how-to-expand-only-one-div-at-a-time -->
 	<script>
 		function toggleDropdownByName() {
 			document.getElementsByClassName("browse-by-name").classList
