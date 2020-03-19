@@ -36,14 +36,14 @@ public class TestController {
 	@RequestMapping("/")
 	public ModelAndView showHome() {
 		ModelAndView mav = new ModelAndView("index");
+		
+		//getting parks into database
+		//only called this method once to fill and then it's done!
+		//pServ.fillDatabase();
 
 		// grabbing the list of players from the database
 		List<Player> players = playerDao.findAll();
 		mav.addObject("players", players);
-
-		//getting parks into database
-		//only called this method once to fill and then it's done!
-		//pServ.fillDatabase();
 		
 		List<String> stateCodes = pDao.findDistinctStateCodes();
 		mav.addObject("stateCodes", stateCodes);
@@ -55,6 +55,9 @@ public class TestController {
 		//getting parks from database ordered by state code
 		List<DBPark> parksByState = pDao.findAllByOrderByStateCode();
 		mav.addObject("parksByState", parksByState);
+		//getting parks from database ordered by entrance fee
+		List<DBPark> parksByFee = pDao.findAllByOrderByEntranceFee();
+		mav.addObject("parksByFee", parksByFee);
 		
 		//getting parks by stateCode
 		List<DBPark> parksInState = pDao.findByStateCode("MI");
