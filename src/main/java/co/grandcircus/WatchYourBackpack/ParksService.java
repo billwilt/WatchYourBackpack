@@ -3,6 +3,7 @@ package co.grandcircus.WatchYourBackpack;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
@@ -87,9 +88,11 @@ public class ParksService {
 	
 	public WeatherEvent findWeatherEvent(String triggerIcon) {
 		WeatherEvent we1 = new WeatherEvent();
-		
-		we1 = wedao.findByTriggerIconsContaining(triggerIcon);
-		
+		try {
+		we1 = (wedao.findByTriggerIconsContaining(triggerIcon).get(0));
+		} catch (Exception e) {
+			we1=wedao.findById(2L).orElse(null);
+		}
 		if (we1 == null) {
 			we1 = wedao.findById(2L).orElse(null);
 		}

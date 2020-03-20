@@ -18,7 +18,6 @@
 		<tr>
 			<td>
 				<h5>Team: ${player1.getName()} & ${player2.getName()}</h5>
-				<h5>Weather: ${gameStatus.getWeather().getSummary()}</h5>
 				<h6>Day 1</h6>
 			</td>
 			<td>
