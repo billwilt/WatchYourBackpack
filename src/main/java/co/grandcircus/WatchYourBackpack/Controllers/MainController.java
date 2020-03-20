@@ -20,15 +20,14 @@ import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Daos.WeatherEventDao;
 import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
-import co.grandcircus.WatchYourBackpack.Entities.Event;
 import co.grandcircus.WatchYourBackpack.Entities.DBPark;
+import co.grandcircus.WatchYourBackpack.Entities.Event;
 import co.grandcircus.WatchYourBackpack.Entities.GameStatus;
 import co.grandcircus.WatchYourBackpack.Entities.Item;
 import co.grandcircus.WatchYourBackpack.Entities.Outcome;
 import co.grandcircus.WatchYourBackpack.Entities.Player;
 import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
 import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
-import co.grandcircus.WatchYourBackpack.Models.NPSModel.Park;
 
 @Controller
 public class MainController {
@@ -53,7 +52,7 @@ public class MainController {
 
 	@Autowired
 	private ItemDao itemDao;
-	
+
 	@Autowired
 	private ParksDao pDao;
 
@@ -61,24 +60,24 @@ public class MainController {
 	// @Autowired
 	// private XDao xDao;
 
-	@RequestMapping("/addEvent")
-	public ModelAndView addEvent() {
-		WeatherEvent we1 = new WeatherEvent();
-
-		String name = "windy";
-		String description = "The wind is really picking up, hopefully notihing blows away.";
-		int rsrcThresh = 2;
-		String triggerIcons = "WIND";
-
-		we1.setDescription(description);
-		we1.setName(name);
-		we1.setTriggerIcons(triggerIcons);
-		we1.setRsrcThresh(rsrcThresh);
-		we1.setOutcomes(null);
-
-		WEDao.save(we1);
-		return new ModelAndView("redirect:/");
-	}
+//	@RequestMapping("/addEvent")
+//	public ModelAndView addEvent() {
+//		WeatherEvent we1 = new WeatherEvent();
+//
+//		String name = "windy";
+//		String description = "The wind is really picking up, hopefully notihing blows away.";
+//		int rsrcThresh = 2;
+//		String triggerIcons = "WIND";
+//
+//		we1.setDescription(description);
+//		we1.setName(name);
+//		we1.setTriggerIcons(triggerIcons);
+//		we1.setRsrcThresh(rsrcThresh);
+//		we1.setOutcomes(null);
+//
+//		WEDao.save(we1);
+//		return new ModelAndView("redirect:/");
+//	}
 
 //	@RequestMapping("/")
 //	public ModelAndView showHome() {
@@ -171,8 +170,8 @@ public class MainController {
 
 		if (chosenPlayer.equals(null)) {
 			return new ModelAndView("redirect:/");
-		} 
-		parkCode = parkCode.substring(0,4);
+		}
+		parkCode = parkCode.substring(0, 4);
 		DBPark park = pDao.findByParkCodeContaining(parkCode);
 		System.out.println(park.getLatitude());
 		System.out.println(park.getLongitude());
@@ -247,7 +246,7 @@ public class MainController {
 			totalResourcefulness += 2;
 		}
 
-		Park park = (Park) sesh.getAttribute("park");
+		DBPark park = (DBPark) sesh.getAttribute("park");
 
 		// making the game status
 		GameStatus gameStatus = new GameStatus();
@@ -285,7 +284,14 @@ public class MainController {
 		// setting the players wallet to the new wallet amount
 		Player player1 = (Player) sesh.getAttribute("player1");
 		Player updatedPlayer = new Player();
-
+		
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		int totalLevel = gameStatus.getTotalAttack() + gameStatus.getTotalFire() 
+		+ gameStatus.getMainPlayer().getResourcefulness() 
+		+ gameStatus.getPartner().getResourcefulness();
+		
+		int maxDays = totalLevel / 3;
+		
 		Long player1Id = player1.getId();
 		player1 = playerDao.findById(player1Id).orElse(null);
 
@@ -308,7 +314,7 @@ public class MainController {
 		// adding the usual things to the model
 		mav.addObject("player1", sesh.getAttribute("player1"));
 		mav.addObject("player2", sesh.getAttribute("player2"));
-		mav.addObject("gameStatus", sesh.getAttribute("gameStatus"));
+		mav.addObject("gameStatus", gameStatus);
 
 		// Here is a list of the items this model has
 		// player1 player1 gameStatus event
@@ -319,7 +325,7 @@ public class MainController {
 	@PostMapping("/day1")
 	public ModelAndView day1results(String choice) {
 		ModelAndView mav = new ModelAndView("day1results");
-
+		sesh.setAttribute("dayCount", 1);
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		BeastEvent event = (BeastEvent) sesh.getAttribute("event1");
 
@@ -569,9 +575,9 @@ public class MainController {
 			ModelAndView mav2 = new ModelAndView("conclusion2");
 			mav = mav2;
 		}
-		
+
 		int moneyFound = (int) sesh.getAttribute("moneyFound");
-		
+
 		mav.addObject("moneyFound", moneyFound);
 		mav.addObject("gameStatus", gameStatus);
 		mav.addObject("player1", player1);
@@ -580,12 +586,12 @@ public class MainController {
 		mav.addObject("event3", event3);
 		return mav;
 	}
-	
+
 	@PostMapping("/backHome")
 	public ModelAndView backHome(String skill) {
-		
+
 		Player player1 = (Player) sesh.getAttribute("player1");
-		
+
 		if (skill.equals("1")) {
 			player1.setAttack(player1.getAttack() + 1);
 		} else if (skill.equals("2")) {
@@ -593,7 +599,7 @@ public class MainController {
 		} else if (skill.equals("3")) {
 			player1.setResourcefulness(player1.getResourcefulness() + 1);
 		}
-		
+
 		playerDao.save(player1);
 		return new ModelAndView("redirect:/");
 	}
@@ -616,4 +622,159 @@ public class MainController {
 //		mav.addObject("Event3", be1);
 //		return mav;
 //	}
+
+///////////////////////////////////////////////////////////BEAST DAY///////////////////////////////////////////////////////////////////
+
+	@RequestMapping("/genericBeastDay")
+	public ModelAndView genericBeastDay() {
+		ModelAndView mav = new ModelAndView("genericBeastDay");
+
+		/////////// getting objects from sessison //////////
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		Player player1 = gameStatus.getMainPlayer();
+		Player player2 = gameStatus.getPartner();
+
+		///////// generating beast event and adding to session /////////////////
+		BeastEvent beastEvent = pService.findRandomBeastEvent();
+		sesh.setAttribute("event", beastEvent);
+
+		//////////// adding everything to model /////////////////////////
+		mav.addObject("player1", player1);
+		mav.addObject("player2", player2);
+		mav.addObject("event", beastEvent);
+		mav.addObject("gameStatus", gameStatus);
+
+		return mav;
+	}
+
+	@PostMapping("/genericBeastDay")
+	public ModelAndView genericBeastDayPost() {
+		ModelAndView mav = new ModelAndView("genericBeastDayPost");
+
+		/////////// getting objects from sessison //////////
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		BeastEvent event = (BeastEvent) sesh.getAttribute("event");
+		Player player1 = gameStatus.getMainPlayer();
+		Player player2 = gameStatus.getPartner();
+
+		///////////// creating outcomes //////////////////
+		Outcome outcome1 = new Outcome();
+		Outcome outcome2 = new Outcome();
+		Outcome outcome3 = new Outcome();
+		Outcome outcome4 = new Outcome();
+		Outcome finalOutcome = new Outcome();
+
+		outcome1.setSurvived(true);
+		outcome2.setSurvived(true);
+		outcome3.setSurvived(true);
+		outcome4.setSurvived(false);
+
+		outcome1.setDescription("You fought courageously and won.");
+		outcome2.setDescription("You lit them on fire you maniac!!");
+		outcome3.setDescription("You managed to run away, and thank your good luck!");
+		outcome4.setDescription("You did not win, you lose 1 health");
+
+		//////////// adding everything to model /////////////////////////
+		mav.addObject("player1", player1);
+		mav.addObject("player2", player2);
+		mav.addObject("event", event);
+		mav.addObject("gameStatus", gameStatus);
+
+		/////////////// adding to the day count ///////////////////
+		int dayCount = (int) sesh.getAttribute("dayCount");
+		dayCount += 1;
+		sesh.setAttribute("dayCount", dayCount);
+
+		return mav;
+	}
+
+	//////////////////////////////////////////////////////// WEATHER
+	//////////////////////////////////////////////////////// DAY//////////////////////////////////////////////////////
+
+	@RequestMapping("/genericWeatherDay")
+	public ModelAndView genericWeatherDay() {
+		ModelAndView mav = new ModelAndView("genericWeatherDay");
+
+		/////////// getting objects from sessison //////////
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		Player player1 = gameStatus.getMainPlayer();
+		Player player2 = gameStatus.getPartner();
+
+		///////// generating beast event and adding to session /////////////////
+		WeatherEvent weatherEvent = pService.findWeatherEvent(gameStatus.getWeather().getIcon());
+		sesh.setAttribute("event", weatherEvent);
+
+		//////////// adding everything to model /////////////////////////
+		mav.addObject("player1", player1);
+		mav.addObject("player2", player2);
+		mav.addObject("event", weatherEvent);
+		mav.addObject("gameStatus", gameStatus);
+
+		return mav;
+	}
+
+	@PostMapping("/genericWeatherDay")
+	public ModelAndView genericWeatherDayPost() {
+		ModelAndView mav = new ModelAndView("genericWeatherDay");
+
+		////////////////// getting objects from sessison //////////////////
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		WeatherEvent event = (WeatherEvent) sesh.getAttribute("event");
+		Player player1 = gameStatus.getMainPlayer();
+		Player player2 = gameStatus.getPartner();
+
+		//////////////// creating outcomes ////////////////////////////
+		Outcome outcome1 = new Outcome();
+		Outcome outcome2 = new Outcome();
+		Outcome outcome3 = new Outcome();
+		Outcome finalOutcome = new Outcome();
+
+		outcome1.setSurvived(true);
+		outcome2.setSurvived(true);
+		outcome3.setSurvived(false);
+
+		outcome1.setDescription("You safely made it through the day");
+		outcome2.setDescription("You successfully got food, health up by 1 for your hard work");
+		outcome3.setDescription("Your risk was not rewarded, you lost one health");
+
+		//////////// adding everything to model /////////////////////////
+		mav.addObject("player1", player1);
+		mav.addObject("player2", player2);
+		mav.addObject("event", event);
+		mav.addObject("gameStatus", gameStatus);
+
+		/////////////// adding to the day count ///////////////////
+		int dayCount = (int) sesh.getAttribute("dayCount");
+		dayCount += 1;
+		sesh.setAttribute("dayCount", dayCount);
+
+		return mav;
+	}
+
+	//////////////// DAY CONTROLLER /////////////////////////////////////
+
+	@PostMapping("/dayController")
+	public ModelAndView dayController() {
+		ModelAndView mav = new ModelAndView();
+		
+		//////////getting day count and max day from session /////////////////////
+		int dayCount = (int) sesh.getAttribute("dayCount");
+		int maxDays = (int) sesh.getAttribute("maxDays");
+		
+		///////// RETURNING THE WHATEVER EVENT THEY DIDNT GET ////////////
+		if (sesh.getAttribute("event").getClass() == WeatherEvent.class) {
+			ModelAndView mav1 = new ModelAndView("redirect:/genericBeastEvent");
+			mav = mav1;
+		} else if (sesh.getAttribute("event").getClass() == BeastEvent.class) {
+			ModelAndView mav2 = new ModelAndView("redirect:/genericWeatherEvent");
+			mav = mav2;
+		}
+		///////// if it's the last day send them to conclusion ////////////////
+		if (dayCount >= maxDays) {
+			ModelAndView mav3 = new ModelAndView ("/conclusion");
+			mav = mav3;
+		}
+		
+		return mav;
+	}
 }
