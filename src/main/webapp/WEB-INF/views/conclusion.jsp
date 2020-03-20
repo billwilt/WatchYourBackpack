@@ -13,14 +13,6 @@ crossorigin="anonymous">
 <link href="/style.css" rel="stylesheet" />
 </head>
 <body>
-
-	<!-- Results from 3 days  -->
-	<div class="confirmCube">
-		<h2>Results  </h2>
-		<h6>Day 1: ${event1.getName()} </h6>
-		<h6>Day 2: ${event2.getName()} </h6>
-		<h6>Day 3: ${event3.getName()} </h6>
-	</div>
 	
 	<h1>While hiking out you found some money on the ground, turned out to be $${moneyFound}</h1>
 	
