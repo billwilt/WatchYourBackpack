@@ -57,9 +57,9 @@
 			<button href="#by-name" type="button" class="btn btn-primary"
 				data-toggle="collapse">Browse Parks by Name</button>
 				<div class="form-group collapse" id="by-name">
-				<select class="custom-select" name="parkCode" onchange="this.form.submit()">
+				<select class="custom-select" name="parkCodeName" onchange="this.form.submit()">
 					<!-- onchange="toggleParkDisplay({ "state" : state })" -->
-					<option value=-1>Browse Parks by Name</option> 
+					<option value="">Browse Parks by Name</option> 
 					<c:forEach var="park" items="${ parksByName }">
 						<option value="${ park.getParkCode() }">${ park.getName() },
 							(${ park.getStateCode() })</option>
@@ -70,8 +70,8 @@
 			<button href="#by-state" type="button" class="btn btn-primary"
 				data-toggle="collapse">Browse Parks by State</button>
 							<div class="form-group collapse" id="by-state">
-				<select class="custom-select" name="parkCode" onchange="this.form.submit()">
-					<option value=-1>Browse Parks by State</option> 
+				<select class="custom-select" name="parkCodeState" onchange="this.form.submit()">
+					<option value="">Browse Parks by State</option> 
 					<c:forEach var="park" items="${ parksByState }">
 						<option value="${ park.getParkCode() }">${ park.getStateCode() },
 							${ park.getName() }</option>
@@ -83,8 +83,8 @@
 				data-toggle="collapse">Browse Parks by Entrance Fee</button>
 			</div>
 			<div class="form-group collapse" id="by-fee">
-				<select class="custom-select" name="parkCode" onchange="this.form.submit()">
-					<option value=-1>Browse Parks by Fee</option><!--replaced selected="" with value  -->
+				<select class="custom-select" name="parkCodeFee" onchange="this.form.submit()">
+					<option value="">Browse Parks by Fee</option><!--replaced selected="" with value  -->
 					<c:forEach var="park" items="${ parksByFee }">
 						<option value="${ park.getParkCode() }"><fmt:formatNumber value="${ park.getEntranceFee() }" type="currency" />,
 							${ park.getName() }</option>
