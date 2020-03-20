@@ -118,16 +118,10 @@ public class ParksService {
 				}
 				// if number of rvonly sites + number of electrical hookup sites > 0, rvOption = true
 				Boolean rvOption = (Integer.parseInt(campground.getCampsites().getRvonly())
-						+ Integer.parseInt(campground.getCampsites().getElectricalhookups()) > 0 
-						? true : false);
-				park.setRvOption(rvOption);
-				//System.out.print(rvOption + " ");
+						+ Integer.parseInt(campground.getCampsites().getElectricalhookups()) > 0);
+				park.setRvOption(rvOption);				
 				pDao.save(park);
 			}
-			//System.out.println();
-
 		}
-
-	}
-	
+	}	
 }

@@ -1,8 +1,11 @@
 package co.grandcircus.WatchYourBackpack.Controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpSession;
 
@@ -56,10 +59,6 @@ public class MainController {
 	
 	@Autowired
 	private ParksDao pDao;
-
-	// This we will use later when we get the characters set up
-	// @Autowired
-	// private XDao xDao;
 
 	@RequestMapping("/addEvent")
 	public ModelAndView addEvent() {
@@ -157,28 +156,46 @@ public class MainController {
 		return new ModelAndView("redirect:/");
 	}
 
-	@PostMapping("/start")
-	public ModelAndView startGame(String parkCode, Long id) {
+	@PostMapping("/start")//
+	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, Long id) {
 		ModelAndView mav = new ModelAndView("start");
 
-		System.out.println(id);
+		System.out.println("player id" + id);
 		// apparently id is a reserved word, at first we had id and it didnt work :(
 		Long id1 = id;
-		// Long.parseLong(id);
 		Player chosenPlayer = playerDao.findById(id1).orElse(null);
-
-		System.out.println(chosenPlayer);
-
 		if (chosenPlayer.equals(null)) {
+			//TODO add message here: please choose a player. Also I don't think it's possible to be null? 
+			//we should make it possible though, in case the user tries to pick a park first or something
 			return new ModelAndView("redirect:/");
 		} 
-		parkCode = parkCode.substring(0,4);
+		
+		String parkCode;
+		List<String> codes = Arrays.asList(parkCodeName, parkCodeState, parkCodeFee);
+		System.out.println(codes);
+		int emptyCount = (int) codes.stream().filter(str -> str.isEmpty()).count();
+		System.out.println(emptyCount);
+		switch (emptyCount) {
+			case 2:			
+				//still have to figure out which one is the real string. WILL THE REAL STRING STRINGY PLEASE STAND UP?
+				           
+				parkCode = codes.stream().filter(code -> !code.isEmpty()).collect(Collectors.toList()).get(0);
+				System.out.println(parkCode);
+				System.out.println("inside case 2");
+				break;
+			case 3:
+				System.out.println("inside case 0");
+				return new ModelAndView("redirect:/", "message", "No park chosen. Please choose a park!");
+			default:
+				System.out.println("inside case default");
+				return new ModelAndView("redirect:/", "message", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
+				//currently this case will never be reached since we have our form subbmitting onchange. But we might change that in the future
+		}		
+		System.out.println("Do we even get to this point?");	
 		DBPark park = pDao.findByParkCodeContaining(parkCode);
-		System.out.println(park.getLatitude());
-		System.out.println(park.getLongitude());
 		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
 		Double cost = (park.getEntranceFee());
-
+		
 		System.out.println(currentWeather);
 
 		sesh.setAttribute("currentWeather", currentWeather);
@@ -247,7 +264,7 @@ public class MainController {
 			totalResourcefulness += 2;
 		}
 
-		Park park = (Park) sesh.getAttribute("park");
+		DBPark park = (DBPark) sesh.getAttribute("park");
 
 		// making the game status
 		GameStatus gameStatus = new GameStatus();
