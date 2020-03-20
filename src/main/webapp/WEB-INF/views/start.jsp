@@ -35,6 +35,7 @@
 		<div class="center">
 			<h2>Current Settings: ${park.getName()}</h2>
 			<h3>You Are: ${chosenPlayer.getName()}</h3>
+			<h4>Current $$$: ${chosenPlayer.getMoney()}</h4>
 			<h5>Current Weather: ${currentWeather.getSummary()}</h5>
 			<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
 
@@ -68,7 +69,8 @@
 							<div>
 
 								<div class="parkChoice">
-									<input type="radio" name="price" value=0> <label>In the Leaves</label>
+									<input type="radio" name="price" value=0> <label>In
+										the Leaves</label>
 									<p>Price: FREE</p>
 								</div>
 
@@ -78,19 +80,19 @@
 								</div>
 								<c:if test="${ park.rvOption }">
 									<div class="parkChoice">
-											<input type="radio" name="price" value=20> <label>RV</label>
-											<p>Price: $20</p>
+										<input type="radio" name="price" value=20> <label>RV</label>
+										<p>Price: $20</p>
 									</div>
 								</c:if>
 
-						</div>
-					</div> <!-- </form> -->
-				</td>
+							</div>
+						</div> <!-- </form> -->
+					</td>
 
-				<!-- <form action="" method="post" class="card1"> -->
-				<td class="grayColor">
+					<!-- <form action="" method="post" class="card1"> -->
+					<td class="grayColor">
 						<div>
-						<!-- 	<label for="items">Choose three (3) items:</label>
+							<!-- 	<label for="items">Choose three (3) items:</label>
 						</div>
 						<select id="items" name="items" size="9" multiple>
 							<option value="matches">Matches</option>
@@ -104,36 +106,36 @@
 							<option value="tarp">Tarp</option>
 						</select><br> <br>
 						-->
-						<h4>Choose Three (3) items:</h4>
-						<p>
-							<select id="item1" name="item1Id" required>
-								<c:forEach items="${items}" var="item">
-									<option value="${item.getId()}">${item.getItemName()}</option>
-								</c:forEach>
-							</select>
-						</p>
-						<p>
-							<select id="item2" name="item2Id" required>
-								<c:forEach items="${items}" var="item">
-									<option value="${item.getId()}">${item.getItemName()}</option>
-								</c:forEach>
-							</select>
-						</p>
-						<p>
-							<select id="item3" name="item3Id" required>
-								<c:forEach items="${items}" var="item">
-									<option value="${item.getId()}">${item.getItemName()}</option>
-								</c:forEach>
-							</select>
-						</p>
+							<h4>Choose Three (3) items:</h4>
+							<p>
+								<select id="item1" name="item1Id" required>
+									<c:forEach items="${items}" var="item">
+										<option value="${item.getId()}">${item.getItemName()}</option>
+									</c:forEach>
+								</select>
+							</p>
+							<p>
+								<select id="item2" name="item2Id" required>
+									<c:forEach items="${items}" var="item">
+										<option value="${item.getId()}">${item.getItemName()}</option>
+									</c:forEach>
+								</select>
+							</p>
+							<p>
+								<select id="item3" name="item3Id" required>
+									<c:forEach items="${items}" var="item">
+										<option value="${item.getId()}">${item.getItemName()}</option>
+									</c:forEach>
+								</select>
+							</p>
 
-						<button>Confirm</button>
+							<button>Confirm</button>
 
-					</div></td>
-			</tr>
+						</div>
+					</td>
+				</tr>
 
-		</table>
-
+			</table>
 	</form>
 
 </body>

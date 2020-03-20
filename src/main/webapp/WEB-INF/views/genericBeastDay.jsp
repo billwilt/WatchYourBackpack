@@ -10,7 +10,6 @@
 	crossorigin="anonymous">
 <head>
 <meta charset="ISO-8859-1">
-<link href="/style.css" rel="stylesheet" />
 <title>Insert title here</title>
 </head>
 <body>
@@ -18,7 +17,8 @@
 		<tr>
 			<td>
 				<h5>Team: ${player1.getName()} & ${player2.getName()}</h5>
-				<h6>Day 1</h6>
+				<h5>Day : ${dayCount}</h5>
+				<h5>Day of Departure : ${maxDays}</h5>
 			</td>
 			<td>
 				<h5>Team Attack: ${gameStatus.getTotalAttack()}</h5>
@@ -36,12 +36,15 @@
 	<div>
 		<form method="post">
 			<select name="choice">
-				<option value="1">Try to fight it off</option>
-				<option value="2">Light it on fire</option>
-				<option value="3">Try to out smart it</option>
+				<option value="1">Try to fight it off (Your Attack Level vs
+					Their Attack Threshold)</option>
+				<option value="2">Light it on fire (Your Fire Level vs
+					Their Fire Threshold)</option>
+				<option value="3">Try to out smart it (50% chance)</option>
 			</select>
 			<button>Survive</button>
 		</form>
 	</div>
+
 </body>
 </html>
