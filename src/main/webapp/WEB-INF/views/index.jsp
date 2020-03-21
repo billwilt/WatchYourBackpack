@@ -10,7 +10,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<!-- Favicon It's a coffee cup right now. Change it to whatever you want-->
+<!-- Favicon-->
 <link rel="icon" type="image/png" href="/backpack-01.png">
 <!-- Bootstrap core CSS -->
 <link
@@ -37,7 +37,7 @@
 		<div class="form-check disabled inputForm-left">
 			<h2>CHOOSE YOUR PLAYER</h2>
 			<div class="form-group">
-				<select name="id" class="custom-select" required>
+				<select name="id" class="custom-select" required onchange="showDiv('choose-park')">
 					<c:forEach items="${players}" var="player">
 						<option value="${player.getId()}">${player.getName()}
 							Attack: ${player.getAttack()} Fire: ${player.getFire()}
@@ -48,9 +48,9 @@
 			</div>
 		</div>
 
-		<div class="form-check disabled inputForm-right">
+		<div class="form-check disabled inputForm-right" id="choose-park">
 		
-			<h2>CHOOSE YOUR CAMPSITE</h2>
+			<h2>CHOOSE YOUR NATIONAL PARK</h2>
 			
 			<div class="btn-group-vertical">
 			<!-- Browse Parks by Name -->
@@ -91,68 +91,14 @@
 					</c:forEach>
 				</select>
 			</div>
-
-			<%-- <c:forEach items="${ parks }" var="park">
-					<c:if test=" ${ park.getStateCode() == 'MI' }">
-						<div class="parkChoice parks-in-state">
-							<input type="radio" name="parkCode" id="parkID"
-								value="${park.getParkCode()}"> <label class="choice">${ park.getName() }</label>
-							<p>
-								Current Weather:
-								${isleRoyaleWeather.getSummary()}
-							</p>
-							<p>
-								Temperature:
-								${isleRoyaleWeather.getTemperature()}
-								F
-							</p>
-						</div>
-					</c:if>
-				</c:forEach> --%>
-			<%-- <div class="parkChoice">
-			<input type="radio" name="parkCode" id="parkID"
-				value="${isleRoyale.getData().get(0).getParkCode()}"> <label
-				class="choice">Isle Royale </label>
-			<p>Current Weather: ${isleRoyaleWeather.getSummary()}</p>
-			<p>Temperature: ${isleRoyaleWeather.getTemperature()} F</p>
-		</div>
-
-		<div class="parkChoice">
-			<input type="radio" name="parkCode" id="parkID"
-				value="${yellowstone.getData().get(0).getParkCode()}"> <label
-				class="choice">Yellowstone </label>
-			<p>Current Weather: ${yellowstoneWeather.getSummary()}</p>
-			<p>Temperature: ${yellowstoneWeather.getTemperature()} F</p>
-		</div>
-
-		<div class="parkChoice">
-			<input type="radio" name="parkCode" id="parkID"
-				value="${grandCanyon.getData().get(0).getParkCode()}"> <label
-				class="choice">Grand Canyon </label>
-			<p>Current Weather: ${grandCanyonWeather.getSummary()}</p>
-			<p>Temperature: ${grandCanyonWeather.getTemperature()} F</p>
-		</div> --%>
 		</div>
 
 		<button class="startButton">START GAME</button>
 	</form>
 	<!-- Here is a link to STO that might help with collapsing the expanded divs when another is expanded -->
 	<!-- https://stackoverflow.com/questions/37753407/bootstrap-collapse-how-to-expand-only-one-div-at-a-time -->
-	<script>
-		function toggleDropdownByName() {
-			document.getElementsByClassName("browse-by-name").classList
-					.toggle("show");
-		}
-		function toggleDropdownByState() {
-			document.getElementsByClassName("browse-by-state").classList
-					.toggle("show");
-		}
-		function toggleParkDisplay(change) {
-			let state = change.data.state;
-			document.getElementsByClassName("parks-in-state").classList
-					.toggle("show");
-		}
-	</script>
+	
+	<script src="/wyb.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 		crossorigin="anonymous"></script>

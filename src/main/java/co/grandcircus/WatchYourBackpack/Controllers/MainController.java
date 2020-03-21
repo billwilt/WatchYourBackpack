@@ -169,7 +169,7 @@ public class MainController {
 		System.out.println(emptyCount);
 		switch (emptyCount) {
 			case 2:			
-				//still have to figure out which one is the real string. WILL THE REAL STRING STRINGY PLEASE STAND UP?			           
+				//still have to figure out which one is the real string. WILL THE REAL STRING STRINGY PLEASE STAND UP?	
 				parkCode = codes.stream().filter(code -> !code.isEmpty()).collect(Collectors.toList()).get(0);
 				break;
 			case 3:
