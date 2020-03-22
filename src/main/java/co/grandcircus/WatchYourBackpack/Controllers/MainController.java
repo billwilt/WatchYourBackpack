@@ -70,49 +70,21 @@ public class MainController {
 //		return new ModelAndView("redirect:/");
 //	}
 
-//	@RequestMapping("/")
-//	public ModelAndView showHome() {
-//		ModelAndView mav = new ModelAndView("index");
-//
-//		// grabbing the list of players from the database
-//		List<Player> players = playerDao.findAll();
-//		System.out.println(players);
-////		for (Player player: players) {
-////			List<String> names
-////		}
-//
-//		// adding the players to the model
-//		mav.addObject("players", players);
-//
-//		// getting parks
-//		NpsResponse isleRoyale = apiServ.isleRoyale();
-//		NpsResponse yellowstone = apiServ.yellowstone();
-//		NpsResponse grandCanyon = apiServ.grandCanyon();
-//
-//		// getting weather with the parks lng and lat
-//		Currently isleRoyaleWeather = DSApiServ.getWeather(isleRoyale.getData().get(0).getLatitude(),
-//				isleRoyale.getData().get(0).getLongitude());
-//		Currently yellowstoneWeather = DSApiServ.getWeather(yellowstone.getData().get(0).getLatitude(),
-//				yellowstone.getData().get(0).getLongitude());
-//		Currently grandCanyonWeather = DSApiServ.getWeather(grandCanyon.getData().get(0).getLatitude(),
-//				grandCanyon.getData().get(0).getLongitude());
-//
-//		// testing the lng and lat
-//		System.out.println(isleRoyale.getData().get(0).getLatitude());
-//		System.out.println(isleRoyale.getData().get(0).getLongitude());
-//
-//		// adding the parks to the model
-//		mav.addObject("isleRoyale", isleRoyale);
-//		mav.addObject("yellowstone", yellowstone);
-//		mav.addObject("grandCanyon", grandCanyon);
-//
-//		// adding the weather for each park
-//		mav.addObject("isleRoyaleWeather", isleRoyaleWeather);
-//		mav.addObject("yellowstoneWeather", yellowstoneWeather);
-//		mav.addObject("grandCanyonWeather", grandCanyonWeather);
-//
-//		return mav;
-//	}
+	@RequestMapping("/")
+	public ModelAndView showHome() {
+		ModelAndView mav = new ModelAndView("index");
+
+		// grabbing the list of players from the database
+		List<Player> players = playerDao.findAll();
+		mav.addObject("players", players);
+		
+		//getting parks from database ordered by different fields
+		mav.addObject("parksByName", pDao.findAllByOrderByName());
+		mav.addObject("parksByState", pDao.findAllByOrderByStateCode());
+		mav.addObject("parksByFee", pDao.findAllByOrderByEntranceFee());
+		
+		return mav;
+	}
 
 	@RequestMapping("/newPlayer")
 	public ModelAndView newPlayer() {

@@ -33,23 +33,7 @@ public class TestController {
 	@Autowired
 	private DSApiService DSApiServ;
 	
-	@RequestMapping("/")
-	public ModelAndView showHome() {
-		ModelAndView mav = new ModelAndView("index");
 
-		// grabbing the list of players from the database
-		List<Player> players = playerDao.findAll();
-		mav.addObject("players", players);
-		
-		//getting parks from database ordered by name
-		mav.addObject("parksByName", pDao.findAllByOrderByName());
-		//getting parks from database ordered by state code
-		mav.addObject("parksByState", pDao.findAllByOrderByStateCode());
-		//getting parks from database ordered by entrance fee
-		mav.addObject("parksByFee", pDao.findAllByOrderByEntranceFee());
-		
-		return mav;
-	}
 	
 	@RequestMapping("/test")
 	public ModelAndView test() {
