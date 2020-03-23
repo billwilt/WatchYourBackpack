@@ -1,9 +1,15 @@
 package co.grandcircus.WatchYourBackpack.Entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Item {
@@ -11,10 +17,11 @@ public class Item {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	private String itemName;
-	private int attackAdd;
-	private int fireAdd;
-	private int resourcefulnessAdd;
+	private Integer attackAdd;
+	private Integer fireAdd;
+	private Integer resourcefulnessAdd;
 	
 	
 	public Long getId() {
@@ -41,7 +48,7 @@ public class Item {
 	public void setFireAdd(int fireAdd) {
 		this.fireAdd = fireAdd;
 	}
-	public int getResourcefulnessAdd() {
+	public int getResourcefulnessAdd() { 
 		return resourcefulnessAdd;
 	}
 	public void setResourcefulnessAdd(int resourcefulnessAdd) {
@@ -52,6 +59,7 @@ public class Item {
 		return "Item [id=" + id + ", itemName=" + itemName + ", attackAdd=" + attackAdd + ", fireAdd=" + fireAdd
 				+ ", resourcefulnessAdd=" + resourcefulnessAdd + "]";
 	}
+
 	
 	
 }

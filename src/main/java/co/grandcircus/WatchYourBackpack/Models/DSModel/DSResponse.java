@@ -1,9 +1,8 @@
-package co.grandcircus.WatchYourBackpack.DSModel;
+package co.grandcircus.WatchYourBackpack.Models.DSModel;
 
 public class DSResponse {
 	
-	//even though this class and its datapoint are called "currently", it is actually the requested time, 
-	//as per Dark Sky's Time Machine request documentation
+
 	private Currently currently;
 
 	public Currently getCurrently() {

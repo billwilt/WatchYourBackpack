@@ -1,0 +1,114 @@
+@charset "ISO-8859-1";
+
+.inputForm-left {
+	float: left;
+	border: 2px solid black;
+	border-radius: 10px;
+	color: black;
+	background: powderblue;
+	width: 25%;
+	height: 20%;
+	margin-left: 2%;
+	margin-top: 25%;
+	padding: 10px;
+}
+
+.inputForm-right2 {
+	border: 2px solid black;
+	float: right;
+	border-radius: 10px;
+	color: black;
+	background: powderblue;
+	width: 25%;
+	height: 20%;
+	margin-top: 15px;
+	padding: 10px;
+}
+
+.inputForm-right {
+	border: 2px solid black;
+	border-radius: 10px;
+	color: black;
+	background: powderblue;
+	width: 25%;
+	height: 20%;
+	margin-left: 73%;
+	margin-top: 15px;
+	padding: 10px;
+	display: none;
+}
+
+
+.startButton {
+	margin-top: 30px;
+	margin-left: 90%;
+	background: #d9b800;
+	color: black;
+	border: 1px solid black;
+	border-radius: 7px;
+	padding: 15px;
+}
+
+.parkChoice {
+	border: 2px solid black;
+	padding: 5px;
+	background: white;
+	border-radius: 10px;
+	width: 75%;
+}
+
+.parkChoice1 {
+	border: 2px solid black;
+	padding: 5px;
+	background: white;
+	border-radius: 10px;
+}
+
+.card1 {
+	margin-top: 2%;
+	margin-left: 2%;
+	border: 2px solid black;
+	background: powderblue;
+	color: black;
+	padding: 15px;
+	border-radius: 10px;
+}
+
+.confirmCube {
+	border: 2px solid black;
+	background: white;
+	color: black;
+	padding: 15px;
+	width: 25%;
+	margin-top: 3%;
+	margin-left: 3%;
+	border-radius: 10px;
+}
+
+.grayColor {
+	background-color: gray;
+	
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+}
+
+.center {
+  text-align: center;
+  	margin-top: 2%;
+	margin-left: 2%;
+	border: 2px solid black;
+	background: powderblue;
+	color: black;
+	padding: 15px;
+	margin: 15px;
+	border-radius: 10px;
+}
+
+/* table, th, td {
+  border: 1px solid black;
+} */
+
+
