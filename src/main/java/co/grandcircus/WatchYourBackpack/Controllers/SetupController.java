@@ -1,7 +1,6 @@
 package co.grandcircus.WatchYourBackpack.Controllers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.DSApiService;
+import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.PlayerService;
 import co.grandcircus.WatchYourBackpack.Daos.ItemDao;
 import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
@@ -44,6 +44,9 @@ public class SetupController {
 
 	@Autowired
 	private ParksDao pDao;
+	
+	@Autowired
+	private ParksService parksService;
 
 //	@RequestMapping("/addEvent")
 //	public ModelAndView addEvent() {
@@ -85,7 +88,7 @@ public class SetupController {
 	}
 
 	@PostMapping("/newPlayer")
-	public ModelAndView addNewPlayer(String name, String description, int type) {//, Double money this is default for new players
+	public ModelAndView addNewPlayer(String name, String description, Integer type) {//, Double money this is default for new players
 
 		playerService.createPlayer(name, description, type);
 
@@ -96,39 +99,21 @@ public class SetupController {
 	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, Long id) {
 		ModelAndView mav = new ModelAndView("start");
 
-		//System.out.println("player id" + id);
-		// apparently id is a reserved word, at first we had id and it didnt work :(
-		Long id1 = id;
-		Player chosenPlayer = playerDao.findById(id1).orElse(null);
+		Player chosenPlayer = playerDao.findById(id).orElse(null);
 		if (chosenPlayer.equals(null)) {
-			//TODO add message here: please choose a player. Also I don't think it's possible to be null? 
-			//we should make it possible though, in case the user tries to pick a park first or something
-			return new ModelAndView("redirect:/");
-
-		} 
+			return new ModelAndView("redirect:/", "message", "No player was selected. Please choose or create a player first!");
+		}
 		
-		String parkCode;
-		List<String> codes = Arrays.asList(parkCodeName, parkCodeState, parkCodeFee);
-		//System.out.println(codes);
-		int emptyCount = (int) codes.stream().filter(str -> str.isEmpty()).count();
-		//System.out.println(emptyCount);
-		switch (emptyCount) {
-			case 2:			
-				//still have to figure out which one is the real string. WILL THE REAL STRING STRINGY PLEASE STAND UP?	
-				parkCode = codes.stream().filter(code -> !code.isEmpty()).collect(Collectors.toList()).get(0);
-				break;
-			case 3:
-				return new ModelAndView("redirect:/", "message", "No park chosen. Please choose a park!");
-			default:
-				return new ModelAndView("redirect:/", "message", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
-				//currently this case will never be reached since we have our form subbmitting onchange. But we might change that in the future
-		}		
-
-		DBPark park = pDao.findByParkCodeContaining(parkCode);
+		String parkCode = parksService.determineParkCode(parkCodeName, parkCodeState, parkCodeFee);
+		if (parkCode.equals("none")) {		
+			return new ModelAndView("redirect:/", "message", "No park chosen. Please choose a park!");
+		}else if (parkCode.equals("many")) {
+			return new ModelAndView("redirect:/", "message", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
+		}
+		
+		DBPark park = pDao.findByParkCodeContaining(parkCode);	
 		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
 		Double cost = (park.getEntranceFee());
-		
-		//System.out.println(currentWeather);
 
 		sesh.setAttribute("currentWeather", currentWeather);
 		sesh.setAttribute("player1", chosenPlayer);
