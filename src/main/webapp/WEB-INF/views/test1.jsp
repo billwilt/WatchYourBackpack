@@ -13,7 +13,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h2>${triggerIcon }</h2>
+	<h2>${summary }</h2>
 	<h1>${Event2.getName()}</h1>
 	<h1>${Event3.getName()}</h1>
+
 </body>
 </html>

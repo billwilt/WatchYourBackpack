@@ -2,6 +2,8 @@ package co.grandcircus.WatchYourBackpack.Controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +11,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.CampsiteApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
+import co.grandcircus.WatchYourBackpack.EventsService;
 import co.grandcircus.WatchYourBackpack.NPSApiService;
-import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
-import co.grandcircus.WatchYourBackpack.Entities.DBPark;
-import co.grandcircus.WatchYourBackpack.Entities.Player;
+import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
+import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
+import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
 
 @Controller
@@ -25,31 +28,17 @@ public class TestController {
 	@Autowired
 	private ParksDao pDao;
 	@Autowired
-	private ParksService pServ;
+	private EventsService eventsService;
 	@Autowired
 	private CampsiteApiService cServ;
 	@Autowired
 	private PlayerDao playerDao;
 	@Autowired
 	private DSApiService DSApiServ;
+	@Autowired
+	private HttpSession sesh;
 	
-	@RequestMapping("/")
-	public ModelAndView showHome() {
-		ModelAndView mav = new ModelAndView("index");
 
-		// grabbing the list of players from the database
-		List<Player> players = playerDao.findAll();
-		mav.addObject("players", players);
-		
-		//getting parks from database ordered by name
-		mav.addObject("parksByName", pDao.findAllByOrderByName());
-		//getting parks from database ordered by state code
-		mav.addObject("parksByState", pDao.findAllByOrderByStateCode());
-		//getting parks from database ordered by entrance fee
-		mav.addObject("parksByFee", pDao.findAllByOrderByEntranceFee());
-		
-		return mav;
-	}
 	
 	@RequestMapping("/test")
 	public ModelAndView test() {
@@ -74,6 +63,27 @@ public class TestController {
 		
 		//testing Campground endpoint
 		mav.addObject("campgrounds", cServ.getCampgrounds(20));
+		return mav;
+	}
+	@RequestMapping("/testWeather")
+	public ModelAndView testEvent() {
+		ModelAndView mav = new ModelAndView("test1");
+		///////////////////////////////////////////////////////////////////////////////
+		
+		Currently current = (Currently) sesh.getAttribute("currentWeather");
+
+		String triggerIcon = current.getIcon();
+		//System.out.println(triggerIcon);
+		WeatherEvent we1 = eventsService.findWeatherEvent(triggerIcon);
+		//System.out.println(pServ.findWeatherEvent(" rain,"));
+
+		mav.addObject("Event2", we1);
+		///////////////////////////////////////////////////////////////////////////////
+		BeastEvent be1 = new BeastEvent();
+		be1 = eventsService.findRandomBeastEvent();
+		mav.addObject("triggerIcon", triggerIcon);
+		mav.addObject("Event3", be1);
+		mav.addObject("summary", current.getSummary());
 		return mav;
 	}
 }

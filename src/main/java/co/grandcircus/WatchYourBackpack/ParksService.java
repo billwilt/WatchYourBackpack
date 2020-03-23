@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.Daos.BeastEventDao;
 import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
@@ -27,11 +29,25 @@ public class ParksService {
 	private ParksDao pDao;
 	@Autowired
 	private NPSApiService NPSapiServ;
-	@Autowired
-	private BeastEventDao bedao;
-	@Autowired
-	private WeatherEventDao wedao;
 
+	public String determineParkCode(String parkCodeName, String parkCodeState, String parkCodeFee) {
+		
+		List<String> codes = Arrays.asList(parkCodeName, parkCodeState, parkCodeFee);
+		int emptyCount = (int) codes.stream().filter(str -> str.isEmpty()).count();
+		switch (emptyCount) {
+			case 2:			
+				return codes.stream().filter(code -> !code.isEmpty()).collect(Collectors.toList()).get(0);
+			case 3:
+				return "none";
+			default:
+				return "many";		
+		}		
+
+		
+	}
+	
+	
+///////////// Single-use Methods////////////////////////////////////////////////////////////////
 	public void fillDatabase() {
 		// Creating a set of park codes from the campground endpoint
 		// List<String> parkCodes = NPSapiServ.getParkCodesWithCampgrounds();
@@ -52,7 +68,7 @@ public class ParksService {
 				"niob", "ebla"));
 
 		for (Park park : parks) {
-			System.out.println(park);
+			//System.out.println(park);
 			if (parkCodes.contains(park.getParkCode())) {
 				
 			DBPark dbPark = new DBPark();
@@ -86,31 +102,6 @@ public class ParksService {
 		}
 	}
 	
-	public WeatherEvent findWeatherEvent(String triggerIcon) {
-		WeatherEvent we1 = new WeatherEvent();
-		try {
-		we1 = (wedao.findByTriggerIconsContaining(triggerIcon).get(0));
-		} catch (Exception e) {
-			we1=wedao.findById(2L).orElse(null);
-		}
-		if (we1 == null) {
-			we1 = wedao.findById(2L).orElse(null);
-		}
-		
-		return we1;
-	}
-	
-	public BeastEvent findRandomBeastEvent() {
-		BeastEvent be1 = new BeastEvent();
-		Random r1 = new Random();
-
-		List<BeastEvent> list1 = bedao.findAll();
-		int index = r1.nextInt(list1.size() - 1);
-		be1 = list1.get(index);
-		
-		return be1;
-	}
-	
 	public void setRvOptionForParksInDatabase(List<DBPark> parks) {
 
 		for (DBPark park : parks) {
@@ -126,5 +117,7 @@ public class ParksService {
 				pDao.save(park);
 			}
 		}
-	}	
+	}
+	
+	
 }

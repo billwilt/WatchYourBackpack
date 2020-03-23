@@ -19,113 +19,129 @@ public class Player {
 	// to character's stats
 	// We will have to explain to user when creating their own character how the
 	// description will be shown
-	private String type; // only three possible values: "fighter", "pyromaniac", "strategist"
+	private Integer type; // only three possible values: "fighter", "pyromaniac", "strategist"
 	// so when the user chooses a type, that triggers different values for the
 	// stats? Would that be a switch case inside the setters?
-	private Integer attack;
-	private Integer fire;
-	private Integer resourcefulness;
-	private Double money;
+	private Integer attack = 0;
+	private Integer fire = 0;
+	private Integer resourcefulness = 0;
+	private Double money = 10.00;
 
-	//we don't actually need to store the items in the player since they get reset after each game.
-//	@ManyToMany
-//	private List<Item> items;
-
-
-	// @OneToOne (cascade = CascadeType.ALL)//I commented this out bc I don't think
-	// we need Currently to be an entity
-	// private Currently weather;//I don't think it needs to be stored in the
-	// Character at all because it is only called once, right?
 
 	public Long getId() {
 		return id;
 	}
 
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
 
 	public String getName() {
 		return name;
 	}
 
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public int getAttack() {
-		return attack;
-	}
-
-	public void setAttack(int attack) {
-		this.attack = attack;
-	}
-
-	public int getFire() {
-		return fire;
-	}
-
-	public void setFire(int fire) {
-		this.fire = fire;
-	}
-
-	public int getResourcefulness() {
-		return resourcefulness;
-	}
-
-	public void setResourcefulness(int resourcefulness) {
-		this.resourcefulness = resourcefulness;
-	}
-
-//	public List<Item> getItems() {
-//		return items;
-//	}
-//
-//	public void setItems(List<Item> items) {
-//		this.items = items;
-//	}
-
-	@Override
-	public String toString() {
-		return "Player [id=" + id + ", name=" + name + ", description=" + description + ", type=" + type + ", attack="
-				+ attack + ", fire=" + fire + ", resourcefulness=" + resourcefulness + ", money=" + money + "]";
-  }
 
 
 	public String getDescription() {
 		return description;
 	}
 
+
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public Double getMoney() {
-		return money;
+
+
+	public Integer getType() {
+		return type;
 	}
 
-	public void setMoney(Double money) {
-		this.money = money;
+
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
+
+
+
+	public Integer getAttack() {
+		return attack;
+	}
+
+
 
 	public void setAttack(Integer attack) {
 		this.attack = attack;
 	}
 
+
+
+	public Integer getFire() {
+		return fire;
+	}
+
+
+
 	public void setFire(Integer fire) {
 		this.fire = fire;
 	}
 
+
+
+	public Integer getResourcefulness() {
+		return resourcefulness;
+	}
+
+
+
 	public void setResourcefulness(Integer resourcefulness) {
 		this.resourcefulness = resourcefulness;
+	}
+
+
+
+	public Double getMoney() {
+		return money;
+	}
+
+
+
+	public void setMoney(Double money) {
+		this.money = money;
+	}
+	
+	public Player() {
+		
+	}
+	
+	public Player(String name, String description, Integer type) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.type = type;
+		switch (type) {
+		case 1:
+			attack = 1;
+			break;
+		case 2:
+			fire = 1;
+			break;
+		case 3:
+			resourcefulness = 1;
+			break;
+		}
 	}
 
 }
