@@ -36,6 +36,7 @@
 
 		<div class="form-check disabled inputForm-left">
 			<h2>CHOOSE YOUR PLAYER</h2>
+			<h6 class="error">${ noPlayerMessage }</h6>
 			<div class="form-group">
 				<select name="id" class="custom-select" required
 					onchange="showDiv('choose-park')">
@@ -49,7 +50,7 @@
 				</select> <a href="/newPlayer">Add New Player</a>
 			</div>
 		</div>
-
+<h6 class="error">${ parkMessage }</h6>
 		<div class="form-check disabled inputForm-right" id="choose-park">
 
 			<h2>CHOOSE YOUR NATIONAL PARK</h2>
