@@ -1,11 +1,6 @@
 package co.grandcircus.WatchYourBackpack.Controllers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,19 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.DSApiService;
+import co.grandcircus.WatchYourBackpack.EventsService;
 import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.Daos.ItemDao;
-import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
-import co.grandcircus.WatchYourBackpack.Entities.DBPark;
-import co.grandcircus.WatchYourBackpack.Entities.Event;
 import co.grandcircus.WatchYourBackpack.Entities.GameStatus;
-import co.grandcircus.WatchYourBackpack.Entities.Item;
 import co.grandcircus.WatchYourBackpack.Entities.Outcome;
 import co.grandcircus.WatchYourBackpack.Entities.Player;
 import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
-import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
 
 @Controller
 public class PlayController {
@@ -49,7 +40,7 @@ public class PlayController {
 	private ItemDao itemDao;
 
 	@Autowired
-	private ParksDao pDao;
+	private EventsService eventsService;
 
 
 	@RequestMapping("/day1")
@@ -85,7 +76,7 @@ public class PlayController {
 		playerDao.save(updatedPlayer);
 
 		// adding a random beast event to the model
-		BeastEvent be1 = pService.findRandomBeastEvent();
+		BeastEvent be1 = eventsService.findRandomBeastEvent();
 		sesh.setAttribute("event1", be1);
 		mav.addObject("event", be1);
 
@@ -175,7 +166,7 @@ public class PlayController {
 		gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 
 		// adding a weather event based on gameStatus
-		WeatherEvent we1 = pService.findWeatherEvent(gameStatus.getWeather().getIcon());
+		WeatherEvent we1 = eventsService.findWeatherEvent(gameStatus.getWeather().getIcon());
 		System.out.println(gameStatus.getWeather().getIcon());
 		mav.addObject("event", we1);
 		sesh.setAttribute("event2", we1);
@@ -248,7 +239,7 @@ public class PlayController {
 		Player player1 = (Player) sesh.getAttribute("player1");
 
 		// adding a random beast event to the model
-		BeastEvent be1 = pService.findRandomBeastEvent();
+		BeastEvent be1 = eventsService.findRandomBeastEvent();
 		mav.addObject("event", be1);
 		sesh.setAttribute("event3", be1);
 
@@ -394,7 +385,7 @@ public class PlayController {
 		Player player2 = (Player) sesh.getAttribute("player2");
 
 		///////// generating beast event and adding to session /////////////////
-		BeastEvent beastEvent = pService.findRandomBeastEvent();
+		BeastEvent beastEvent = eventsService.findRandomBeastEvent();
 		sesh.setAttribute("event", beastEvent);
 
 		//////////// adding everything to model /////////////////////////
@@ -502,7 +493,7 @@ public class PlayController {
 		Player player2 = (Player) sesh.getAttribute("player2");
 
 		///////// generating beast event and adding to session /////////////////
-		WeatherEvent weatherEvent = pService.findWeatherEvent(gameStatus.getWeather().getIcon());
+		WeatherEvent weatherEvent = eventsService.findWeatherEvent(gameStatus.getWeather().getIcon());
 		sesh.setAttribute("event", weatherEvent);
 
 		//////////// adding everything to model /////////////////////////

@@ -11,8 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.CampsiteApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
+import co.grandcircus.WatchYourBackpack.EventsService;
 import co.grandcircus.WatchYourBackpack.NPSApiService;
-import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
@@ -28,7 +28,7 @@ public class TestController {
 	@Autowired
 	private ParksDao pDao;
 	@Autowired
-	private ParksService pServ;
+	private EventsService eventsService;
 	@Autowired
 	private CampsiteApiService cServ;
 	@Autowired
@@ -74,13 +74,13 @@ public class TestController {
 
 		String triggerIcon = current.getIcon();
 		//System.out.println(triggerIcon);
-		WeatherEvent we1 = pServ.findWeatherEvent(triggerIcon);
+		WeatherEvent we1 = eventsService.findWeatherEvent(triggerIcon);
 		//System.out.println(pServ.findWeatherEvent(" rain,"));
 
 		mav.addObject("Event2", we1);
 		///////////////////////////////////////////////////////////////////////////////
 		BeastEvent be1 = new BeastEvent();
-		be1 = pServ.findRandomBeastEvent();
+		be1 = eventsService.findRandomBeastEvent();
 		mav.addObject("triggerIcon", triggerIcon);
 		mav.addObject("Event3", be1);
 		mav.addObject("summary", current.getSummary());
