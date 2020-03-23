@@ -34,8 +34,9 @@
 
 		<div class="center">
 			<h2>Current Settings: ${park.getName()}</h2>
-			<h3>You Are: ${chosenPlayer.getName()}</h3>
-			<h4>Current $$$: ${chosenPlayer.getMoney()}</h4>
+			<h3>You Are: ${player1.getName()}</h3>
+			<h3>${player1.getDescription()}</h3>
+			<h4>Current $$$: ${player1.getMoney()}</h4>
 			<h5>Current Weather: ${currentWeather.getSummary()}</h5>
 			<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
 
@@ -67,7 +68,7 @@
 						<div>
 							<!--  	<form action="" method="post" class="card1"> -->
 							<div>
-
+							<h5>If you don't have shelter, mother nature will smell your fear</h5>
 								<div class="parkChoice">
 									<input type="radio" name="price" value=0> <label>In
 										the Leaves</label>

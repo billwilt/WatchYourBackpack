@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.ParksService;
@@ -68,7 +69,7 @@ public class SetupController {
 //	}
 
 	@RequestMapping("/")
-	public ModelAndView showHome() {
+	public ModelAndView showHome(RedirectAttributes rd) {
 		ModelAndView mav = new ModelAndView("index");
 
 		// grabbing the list of players from the database
@@ -88,27 +89,28 @@ public class SetupController {
 	}
 
 	@PostMapping("/newPlayer")
-	public ModelAndView addNewPlayer(String name, String description, Integer type) {//, Double money this is default for new players
-
+	public ModelAndView addNewPlayer(String name, String description, Integer type) {
+		
 		playerService.createPlayer(name, description, type);
 
 		return new ModelAndView("redirect:/");
 	}
 
 	@PostMapping("/start")
-	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, Long id) {
+	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, Long id, RedirectAttributes rd) {
 		ModelAndView mav = new ModelAndView("start");
 
 		Player chosenPlayer = playerDao.findById(id).orElse(null);
 		if (chosenPlayer.equals(null)) {
-			return new ModelAndView("redirect:/", "message", "No player was selected. Please choose or create a player first!");
+			return new ModelAndView("redirect:/", "noPlayerMessage", "No player was selected. Please choose or create a player first!");
 		}
 		
 		String parkCode = parksService.determineParkCode(parkCodeName, parkCodeState, parkCodeFee);
-		if (parkCode.equals("none")) {		
-			return new ModelAndView("redirect:/", "message", "No park chosen. Please choose a park!");
+		if (parkCode.equals("none")) {	
+			rd.addFlashAttribute("parkMessage", "No park chosen. Please choose a park!");
+			return new ModelAndView("redirect:/");
 		}else if (parkCode.equals("many")) {
-			return new ModelAndView("redirect:/", "message", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
+			return new ModelAndView("redirect:/", "parkMessage", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
 		}
 		
 		DBPark park = pDao.findByParkCodeContaining(parkCode);	
@@ -129,17 +131,10 @@ public class SetupController {
 			}
 		}
 
-		List<Player> possibleTeam = allPlayers;
 		List<Item> items = itemDao.findAll();
-
-		// testing the list of items
-		//System.out.println(items);
-
+		
 		mav.addObject("items", items);
-		mav.addObject("availableTeam", possibleTeam);
-		mav.addObject("currentWeather", currentWeather);
-		mav.addObject("park", park);
-		mav.addObject("chosenPlayer", chosenPlayer);
+		mav.addObject("availableTeam", allPlayers);
 		mav.addObject("cost", cost);
 
 		return mav;
@@ -195,19 +190,12 @@ public class SetupController {
 		gameStatus.setTotalFire(totalFire);
 		gameStatus.setTotalResourcefulness(totalResourcefulness);
 
-		sesh.setAttribute("gameStatus", gameStatus);
-
 		// STRETCH GOAL: add the price of items as well
 		totalCost += price;
+		
 		sesh.setAttribute("totalCost", totalCost);
 		sesh.setAttribute("walletAfter", (player1.getMoney() - totalCost));
-
-		mav.addObject("walletAfter", (player1.getMoney() - totalCost));
-		mav.addObject("totalCost", totalCost);
-		mav.addObject("player1", player1);
-		mav.addObject("player2", player2);
-		mav.addObject("park", sesh.getAttribute("park"));
-		mav.addObject("currentWeather", sesh.getAttribute("currentWeather"));
+		sesh.setAttribute("gameStatus", gameStatus);
 
 		return mav;
 	}

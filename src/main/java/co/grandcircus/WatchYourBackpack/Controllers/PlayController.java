@@ -46,51 +46,28 @@ public class PlayController {
 	@RequestMapping("/day1")
 	public ModelAndView day1() {
 		ModelAndView mav = new ModelAndView("day1");
-		sesh.setAttribute("dayCount", 1);
-
-		System.out.println(sesh.toString());
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 
 		// setting the players wallet to the new wallet amount
-		Player player1 = (Player) sesh.getAttribute("player1");
-		Player updatedPlayer = new Player();
-
-		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		Player player1 = gameStatus.getMainPlayer();
+		Long player1Id = player1.getId();
+		player1.setMoney((double) sesh.getAttribute("walletAfter"));
+		
 		int totalLevel = gameStatus.getTotalAttack() + gameStatus.getTotalFire()
 				+ gameStatus.getMainPlayer().getResourcefulness() + gameStatus.getPartner().getResourcefulness();
 
+		//setting the max days for modular days
 		int maxDays = 3 + (totalLevel / 3);
 		sesh.setAttribute("maxDays", maxDays);
-
-		Long player1Id = player1.getId();
-		player1 = playerDao.findById(player1Id).orElse(null);
-
-		updatedPlayer.setMoney((double) sesh.getAttribute("walletAfter"));
-		updatedPlayer.setAttack(player1.getAttack());
-		updatedPlayer.setFire(player1.getFire());
-		updatedPlayer.setDescription(player1.getDescription());
-		updatedPlayer.setId(player1.getId());
-		updatedPlayer.setName(player1.getName());
-		updatedPlayer.setResourcefulness(player1.getResourcefulness());
-		updatedPlayer.setType(player1.getType());
-
-		playerDao.save(updatedPlayer);
+		sesh.setAttribute("dayCount", 1);
 
 		// adding a random beast event to the model
 		BeastEvent be1 = eventsService.findRandomBeastEvent();
-		sesh.setAttribute("event1", be1);
-
-		mav.addObject("event", be1);
-
-		// adding the usual things to the model
-		mav.addObject("player1", sesh.getAttribute("player1"));
-		mav.addObject("player2", sesh.getAttribute("player2"));
-		mav.addObject("gameStatus", gameStatus);
-		mav.addObject("dayCount", 1);
-		mav.addObject("maxDays", maxDays);
-
-		// Here is a list of the items this model has
-		// player1 player1 gameStatus event
-
+		sesh.setAttribute("event", be1);
+		
+		//re-setting the game status with the new changes
+		sesh.setAttribute("gameStatus", gameStatus);
+		
 		return mav;
 	}
 
@@ -119,7 +96,9 @@ public class PlayController {
 		outcome2.setDescription("You outsmarted the enemy and got away safely");
 		outcome3.setDescription("You managed to run away, and thank your good luck");
 		outcome4.setDescription("You did not win, you lose 1 health");
-
+		
+		System.out.println(event);
+		
 		if (choice.equals("1")) {
 			int theirSkill = gameStatus.getTotalAttack();
 			int testSkill = event.getAttackThresh();
@@ -163,23 +142,13 @@ public class PlayController {
 		ModelAndView mav = new ModelAndView("day2");
 
 		// getting the gameStatus
-		GameStatus gameStatus = new GameStatus();
-		gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 
 		// adding a weather event based on gameStatus
 		WeatherEvent we1 = eventsService.findWeatherEvent(gameStatus.getWeather().getIcon());
-		System.out.println(gameStatus.getWeather().getIcon());
 		mav.addObject("event", we1);
 		sesh.setAttribute("event2", we1);
-
-		// adding the usual things to the model
-		mav.addObject("player1", sesh.getAttribute("player1"));
-		mav.addObject("player2", sesh.getAttribute("player2"));
-		mav.addObject("gameStatus", gameStatus);
-
-		// Here is the list of objects this model has
-		// player1 player2 gamestatus event
-
+		
 		return mav;
 	}
 
@@ -207,9 +176,10 @@ public class PlayController {
 		outcome2.setDescription("You successfully got food, health up by 1 for your hard work");
 		outcome3.setDescription("Your risk was not rewarded, you lost one health");
 
+		int yourSkill = gameStatus.getTotalResourcefulness();
+		int requiredSkill = event.getRsrcThresh();
+		
 		if (choice.equals("1")) {
-			int yourSkill = gameStatus.getTotalResourcefulness();
-			int requiredSkill = event.getRsrcThresh();
 
 			if (yourSkill >= requiredSkill) {
 				finalOutcome = outcome1;
@@ -218,8 +188,6 @@ public class PlayController {
 				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		} else {
-			int yourSkill = gameStatus.getTotalResourcefulness();
-			int requiredSkill = event.getRsrcThresh();
 
 			if (yourSkill > requiredSkill) {
 				finalOutcome = outcome2;
@@ -237,21 +205,12 @@ public class PlayController {
 	@RequestMapping("/day3")
 	public ModelAndView day3() {
 		ModelAndView mav = new ModelAndView("day3");
-		Player player1 = (Player) sesh.getAttribute("player1");
 
 		// adding a random beast event to the model
 		BeastEvent be1 = eventsService.findRandomBeastEvent();
 		mav.addObject("event", be1);
 		sesh.setAttribute("event3", be1);
-
-		// adding the usual things to the model
-		mav.addObject("player1", player1);
-		mav.addObject("player2", sesh.getAttribute("player2"));
-		mav.addObject("gameStatus", sesh.getAttribute("gameStatus"));
-
-		// Here is the list of objects the model has
-		// player1 player2 gameStatus event
-
+		
 		return mav;
 	}
 
@@ -259,11 +218,10 @@ public class PlayController {
 	public ModelAndView day3results(String choice) {
 		ModelAndView mav = new ModelAndView("day3results");
 		Random rand = new Random();
+		BeastEvent event = (BeastEvent) sesh.getAttribute("event3");
 
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
-		BeastEvent event = (BeastEvent) sesh.getAttribute("event1");
-		Player player1 = (Player) sesh.getAttribute("player1");
-
+		Player player1 = gameStatus.getMainPlayer();
 		Double money = player1.getMoney();
 		int moneyFound = rand.nextInt(15) + 10;
 		sesh.setAttribute("moneyFound", moneyFound);
@@ -286,9 +244,10 @@ public class PlayController {
 		outcome3.setDescription("You managed to run away, and thank your good luck");
 		outcome4.setDescription("You did not win, you lose 1 health");
 
+		int theirSkill = gameStatus.getTotalAttack();
+		int testSkill = event.getAttackThresh();
+		
 		if (choice.equals("1")) {
-			int theirSkill = gameStatus.getTotalAttack();
-			int testSkill = event.getAttackThresh();
 
 			if (theirSkill >= testSkill) {
 				finalOutcome = outcome1;
@@ -298,9 +257,7 @@ public class PlayController {
 			}
 
 		} else if (choice.equals("2")) {
-			int theirSkill = gameStatus.getTotalFire();
-			int testSkill = event.getFireThresh();
-
+			
 			if (theirSkill >= testSkill) {
 				finalOutcome = outcome2;
 			} else {
@@ -320,9 +277,6 @@ public class PlayController {
 		}
 
 		sesh.setAttribute("gameStatus", gameStatus);
-		sesh.setAttribute("player1", player1);
-
-		System.out.println(finalOutcome);
 
 		mav.addObject("moneyFound", moneyFound);
 		mav.addObject("outcome", finalOutcome);
@@ -330,33 +284,28 @@ public class PlayController {
 	}
 
 	@RequestMapping("/conclusion")
-	public ModelAndView conclusion() {
-
-		ModelAndView mav = new ModelAndView();
-
-		Player player1 = (Player) sesh.getAttribute("player1");
+	public ModelAndView conclusion() {		
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
-
+		Random rand = new Random();
+		
+		Player player1 = gameStatus.getMainPlayer();
+		Double money = player1.getMoney();
+		int moneyFound = rand.nextInt(15) + 10;
+		sesh.setAttribute("moneyFound", moneyFound);
+		player1.setMoney(money + moneyFound);
+		
 		if (gameStatus.getHealth() > 0) {
-			ModelAndView mav1 = new ModelAndView("conclusion");
-			mav = mav1;
+			return new ModelAndView("conclusion");
 		} else {
-			ModelAndView mav2 = new ModelAndView("conclusion2");
-			mav = mav2;
+			return new ModelAndView("conclusion2");
 		}
-
-		int moneyFound = (int) sesh.getAttribute("moneyFound");
-
-		mav.addObject("moneyFound", moneyFound);
-		mav.addObject("gameStatus", gameStatus);
-		mav.addObject("player1", player1);
-		return mav;
 	}
 
 	@PostMapping("/backHome")
 	public ModelAndView backHome(String skill) {
 
-		Player player1 = (Player) sesh.getAttribute("player1");
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		Player player1 = gameStatus.getMainPlayer();
 
 		if (skill.equals("1")) {
 			player1.setAttack(player1.getAttack() + 1);
@@ -510,7 +459,7 @@ public class PlayController {
 
 	@PostMapping("/genericWeatherDay")
 	public ModelAndView genericWeatherDayPost(String choice) {
-		ModelAndView mav = new ModelAndView("genericWeatherDay");
+		ModelAndView mav = new ModelAndView("genericWeatherDayPost");
 		int maxDays = (int) sesh.getAttribute("maxDays");
 
 		////////////////// getting objects from sessison //////////////////
