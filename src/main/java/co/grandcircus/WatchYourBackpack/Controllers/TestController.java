@@ -2,6 +2,8 @@ package co.grandcircus.WatchYourBackpack.Controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +15,9 @@ import co.grandcircus.WatchYourBackpack.NPSApiService;
 import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
-import co.grandcircus.WatchYourBackpack.Entities.DBPark;
-import co.grandcircus.WatchYourBackpack.Entities.Player;
+import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
+import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
+import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
 
 @Controller
@@ -32,6 +35,8 @@ public class TestController {
 	private PlayerDao playerDao;
 	@Autowired
 	private DSApiService DSApiServ;
+	@Autowired
+	private HttpSession sesh;
 	
 
 	
@@ -58,6 +63,27 @@ public class TestController {
 		
 		//testing Campground endpoint
 		mav.addObject("campgrounds", cServ.getCampgrounds(20));
+		return mav;
+	}
+	@RequestMapping("/testWeather")
+	public ModelAndView testEvent() {
+		ModelAndView mav = new ModelAndView("test1");
+		///////////////////////////////////////////////////////////////////////////////
+		
+		Currently current = (Currently) sesh.getAttribute("currentWeather");
+
+		String triggerIcon = current.getIcon();
+		//System.out.println(triggerIcon);
+		WeatherEvent we1 = pServ.findWeatherEvent(triggerIcon);
+		//System.out.println(pServ.findWeatherEvent(" rain,"));
+
+		mav.addObject("Event2", we1);
+		///////////////////////////////////////////////////////////////////////////////
+		BeastEvent be1 = new BeastEvent();
+		be1 = pServ.findRandomBeastEvent();
+		mav.addObject("triggerIcon", triggerIcon);
+		mav.addObject("Event3", be1);
+		mav.addObject("summary", current.getSummary());
 		return mav;
 	}
 }

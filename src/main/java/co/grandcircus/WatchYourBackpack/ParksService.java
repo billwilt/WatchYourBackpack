@@ -52,7 +52,7 @@ public class ParksService {
 				"niob", "ebla"));
 
 		for (Park park : parks) {
-			System.out.println(park);
+			//System.out.println(park);
 			if (parkCodes.contains(park.getParkCode())) {
 				
 			DBPark dbPark = new DBPark();
@@ -88,8 +88,9 @@ public class ParksService {
 	
 	public WeatherEvent findWeatherEvent(String triggerIcon) {
 		WeatherEvent we1 = new WeatherEvent();
+		//System.out.println(wedao.findByTriggerIconsContaining(triggerIcon));
 		try {
-		we1 = (wedao.findByTriggerIconsContaining(triggerIcon).get(0));
+		we1 = (wedao.findByTriggerIconsContaining(triggerIcon));
 		} catch (Exception e) {
 			we1=wedao.findById(2L).orElse(null);
 		}

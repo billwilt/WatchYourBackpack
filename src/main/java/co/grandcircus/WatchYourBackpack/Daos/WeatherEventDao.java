@@ -8,6 +8,9 @@ import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
 
 public interface WeatherEventDao extends JpaRepository<WeatherEvent, Long> {
 	
-	List<WeatherEvent> findByTriggerIconsContaining(String triggerIcon);
+	List<WeatherEvent> findAllByTriggerIconsContaining(String triggerIcon);
+	
+	WeatherEvent findByTriggerIconsContaining(String triggerIcon);
+	
 
 }

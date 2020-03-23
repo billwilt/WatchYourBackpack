@@ -17,7 +17,7 @@ public class Currently {
 		return icon;
 	}
 	public void setIcon(String icon) {
-		this.icon = icon;
+		this.icon = " " + icon + ",";
 	}
 	public Double getTemperature() {
 		return temperature;
