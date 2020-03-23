@@ -15,6 +15,10 @@
 <body>
 	<h1>Did you win?: ${outcome.getSurvived()}</h1>
 	<h1>${outcome.getDescription()}</h1>
-	<a href="/day2" class="startButton">Continue</a>
+	<!-- <a href="/day2" class="startButton">Continue</a>  -->
+		<form action="/dayController" method="post">
+	<button>NEXT DAY</button>
+	</form>
+	
 </body>
 </html>
