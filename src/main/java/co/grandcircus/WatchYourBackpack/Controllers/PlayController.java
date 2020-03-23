@@ -78,6 +78,7 @@ public class PlayController {
 		// adding a random beast event to the model
 		BeastEvent be1 = eventsService.findRandomBeastEvent();
 		sesh.setAttribute("event1", be1);
+
 		mav.addObject("event", be1);
 
 		// adding the usual things to the model
@@ -97,7 +98,7 @@ public class PlayController {
 	public ModelAndView day1results(String choice) {
 		ModelAndView mav = new ModelAndView("day1results");
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
-		BeastEvent event = (BeastEvent) sesh.getAttribute("event1");
+		BeastEvent event = (BeastEvent) sesh.getAttribute("event");
 
 		// getting sesh attributes to adjust them
 		GameStatus gs = (GameStatus) sesh.getAttribute("gameStatus");
@@ -591,10 +592,10 @@ public class PlayController {
 
 		///////// RETURNING THE WHATEVER EVENT THEY DIDNT GET ////////////
 		if (sesh.getAttribute("event").getClass() == WeatherEvent.class) {
-			return new ModelAndView("redirect:/genericBeastEvent");
+			return new ModelAndView("redirect:/genericBeastDay");
 
 		} else {
-			return new ModelAndView("redirect:/genericWeatherEvent");
+			return new ModelAndView("redirect:/genericWeatherDay");
 			
 		}
 	}
