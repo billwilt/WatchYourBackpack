@@ -1,11 +1,6 @@
 package co.grandcircus.WatchYourBackpack.Controllers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,22 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.WatchYourBackpack.DSApiService;
+import co.grandcircus.WatchYourBackpack.EventsService;
 import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.Daos.ItemDao;
-import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
-import co.grandcircus.WatchYourBackpack.Entities.DBPark;
-import co.grandcircus.WatchYourBackpack.Entities.Event;
 import co.grandcircus.WatchYourBackpack.Entities.GameStatus;
-import co.grandcircus.WatchYourBackpack.Entities.Item;
 import co.grandcircus.WatchYourBackpack.Entities.Outcome;
 import co.grandcircus.WatchYourBackpack.Entities.Player;
 import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
-import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
 
 @Controller
-public class MainController {
+public class PlayController {
 
 	@Autowired
 	private HttpSession sesh;
@@ -49,238 +40,8 @@ public class MainController {
 	private ItemDao itemDao;
 
 	@Autowired
-	private ParksDao pDao;
+	private EventsService eventsService;
 
-//	@RequestMapping("/addEvent")
-//	public ModelAndView addEvent() {
-//		WeatherEvent we1 = new WeatherEvent();
-//
-//		String name = "windy";
-//		String description = "The wind is really picking up, hopefully notihing blows away.";
-//		int rsrcThresh = 2;
-//		String triggerIcons = "WIND";
-//
-//		we1.setDescription(description);
-//		we1.setName(name);
-//		we1.setTriggerIcons(triggerIcons);
-//		we1.setRsrcThresh(rsrcThresh);
-//		we1.setOutcomes(null);
-//
-//		WEDao.save(we1);
-//		return new ModelAndView("redirect:/");
-//	}
-
-//	@RequestMapping("/")
-//	public ModelAndView showHome() {
-//		ModelAndView mav = new ModelAndView("index");
-//
-//		// grabbing the list of players from the database
-//		List<Player> players = playerDao.findAll();
-//		System.out.println(players);
-////		for (Player player: players) {
-////			List<String> names
-////		}
-//
-//		// adding the players to the model
-//		mav.addObject("players", players);
-//
-//		// getting parks
-//		NpsResponse isleRoyale = apiServ.isleRoyale();
-//		NpsResponse yellowstone = apiServ.yellowstone();
-//		NpsResponse grandCanyon = apiServ.grandCanyon();
-//
-//		// getting weather with the parks lng and lat
-//		Currently isleRoyaleWeather = DSApiServ.getWeather(isleRoyale.getData().get(0).getLatitude(),
-//				isleRoyale.getData().get(0).getLongitude());
-//		Currently yellowstoneWeather = DSApiServ.getWeather(yellowstone.getData().get(0).getLatitude(),
-//				yellowstone.getData().get(0).getLongitude());
-//		Currently grandCanyonWeather = DSApiServ.getWeather(grandCanyon.getData().get(0).getLatitude(),
-//				grandCanyon.getData().get(0).getLongitude());
-//
-//		// testing the lng and lat
-//		System.out.println(isleRoyale.getData().get(0).getLatitude());
-//		System.out.println(isleRoyale.getData().get(0).getLongitude());
-//
-//		// adding the parks to the model
-//		mav.addObject("isleRoyale", isleRoyale);
-//		mav.addObject("yellowstone", yellowstone);
-//		mav.addObject("grandCanyon", grandCanyon);
-//
-//		// adding the weather for each park
-//		mav.addObject("isleRoyaleWeather", isleRoyaleWeather);
-//		mav.addObject("yellowstoneWeather", yellowstoneWeather);
-//		mav.addObject("grandCanyonWeather", grandCanyonWeather);
-//
-//		return mav;
-//	}
-
-	@RequestMapping("/newPlayer")
-	public ModelAndView newPlayer() {
-		return new ModelAndView("newPlayer");
-	}
-
-	@PostMapping("/newPlayer")
-	public ModelAndView addNewPlayer(String name, String description, int type, Double money) {
-
-		Player player = new Player();
-
-		player.setName(name);
-		player.setDescription(description);
-		player.setMoney(money);
-
-		if (type == 1) {
-			player.setAttack(1);
-			player.setFire(0);
-			player.setResourcefulness(0);
-		} else if (type == 2) {
-			player.setAttack(0);
-			player.setFire(1);
-			player.setResourcefulness(0);
-		} else {
-			player.setAttack(0);
-			player.setFire(0);
-			player.setResourcefulness(1);
-		}
-
-		playerDao.save(player);
-
-		return new ModelAndView("redirect:/");
-	}
-
-	@PostMapping("/start")//
-	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, Long id) {
-		ModelAndView mav = new ModelAndView("start");
-
-		System.out.println("player id" + id);
-		// apparently id is a reserved word, at first we had id and it didnt work :(
-		Long id1 = id;
-		Player chosenPlayer = playerDao.findById(id1).orElse(null);
-		if (chosenPlayer.equals(null)) {
-			//TODO add message here: please choose a player. Also I don't think it's possible to be null? 
-			//we should make it possible though, in case the user tries to pick a park first or something
-			return new ModelAndView("redirect:/");
-
-		} 
-		
-		String parkCode;
-		List<String> codes = Arrays.asList(parkCodeName, parkCodeState, parkCodeFee);
-		System.out.println(codes);
-		int emptyCount = (int) codes.stream().filter(str -> str.isEmpty()).count();
-		System.out.println(emptyCount);
-		switch (emptyCount) {
-			case 2:			
-				//still have to figure out which one is the real string. WILL THE REAL STRING STRINGY PLEASE STAND UP?			           
-				parkCode = codes.stream().filter(code -> !code.isEmpty()).collect(Collectors.toList()).get(0);
-				break;
-			case 3:
-				return new ModelAndView("redirect:/", "message", "No park chosen. Please choose a park!");
-			default:
-				return new ModelAndView("redirect:/", "message", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
-				//currently this case will never be reached since we have our form subbmitting onchange. But we might change that in the future
-		}		
-
-		DBPark park = pDao.findByParkCodeContaining(parkCode);
-		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
-		Double cost = (park.getEntranceFee());
-		
-		System.out.println(currentWeather);
-
-		sesh.setAttribute("currentWeather", currentWeather);
-		sesh.setAttribute("player1", chosenPlayer);
-		sesh.setAttribute("park", park);
-
-		// creating the available players for team list
-		List<Player> allPlayers = new ArrayList<>();
-
-		// only adding players that arent the chosen player
-		for (Long i = 1L; i <= playerDao.count(); i++) {
-			if (i != id) {
-				allPlayers.add(playerDao.getOne(i));
-			}
-		}
-
-		List<Player> possibleTeam = allPlayers;
-		List<Item> items = itemDao.findAll();
-
-		// testing the list of items
-		System.out.println(items);
-
-		mav.addObject("items", items);
-		mav.addObject("availableTeam", possibleTeam);
-		mav.addObject("currentWeather", currentWeather);
-		mav.addObject("park", park);
-		mav.addObject("chosenPlayer", chosenPlayer);
-		mav.addObject("cost", cost);
-
-		return mav;
-	}
-
-	@PostMapping("/confirmSettings")
-	public ModelAndView confirmPage(double price, Long id, Long item1Id, Long item2Id, Long item3Id) {
-		ModelAndView mav = new ModelAndView("confirmPage");
-
-		Item item1 = itemDao.findById(item1Id).orElse(null);
-		Item item2 = itemDao.findById(item2Id).orElse(null);
-		Item item3 = itemDao.findById(item3Id).orElse(null);
-
-		Integer itemsAttack = item1.getAttackAdd() + item2.getAttackAdd() + item3.getAttackAdd();
-		Integer itemsFire = item1.getFireAdd() + item2.getFireAdd() + item3.getFireAdd();
-		Integer itemsResourcefulness = item1.getResourcefulnessAdd() + item2.getResourcefulnessAdd()
-				+ item3.getResourcefulnessAdd();
-
-		Player player2 = playerDao.findById(id).orElse(null);
-		sesh.setAttribute("player2", player2);
-		Double totalCost = 0.0;
-		Player player1 = (Player) sesh.getAttribute("player1");
-
-		// getting the total levels to add to game status
-		Integer totalAttack = player1.getAttack() + player2.getAttack() + itemsAttack;
-		Integer totalFire = player1.getFire() + player2.getFire() + itemsFire;
-		Integer totalResourcefulness = player1.getResourcefulness() + player2.getResourcefulness()
-				+ itemsResourcefulness;
-
-		// if they don't have enough money, set price to 0 for sleeping in the leaves
-		if (player1.getMoney() < price || price == 0) {
-			price = 0;
-			mav.addObject("sleeping", "in the leaves");
-		} else if (price == 10) {
-			mav.addObject("sleeping", "in a nice tent");
-			totalResourcefulness += 1;
-		} else {
-			mav.addObject("sleeping", "in a cabin");
-			totalResourcefulness += 2;
-		}
-
-		DBPark park = (DBPark) sesh.getAttribute("park");
-
-		// making the game status
-		GameStatus gameStatus = new GameStatus();
-
-		gameStatus.setMainPlayer((Player) sesh.getAttribute("player1"));
-		gameStatus.setPartner(player2);
-		gameStatus.setParkcode(park.getParkCode());
-		gameStatus.setWeather((Currently) sesh.getAttribute("currentWeather"));
-		gameStatus.setHealth(2);
-		gameStatus.setTotalAttack(totalAttack);
-		gameStatus.setTotalFire(totalFire);
-		gameStatus.setTotalResourcefulness(totalResourcefulness);
-
-		sesh.setAttribute("gameStatus", gameStatus);
-
-		// STRETCH GOAL: add the price of items as well
-		totalCost += price;
-		sesh.setAttribute("totalCost", totalCost);
-		sesh.setAttribute("walletAfter", (player1.getMoney() - totalCost));
-
-		mav.addObject("walletAfter", (player1.getMoney() - totalCost));
-		mav.addObject("totalCost", totalCost);
-		mav.addObject("player1", player1);
-		mav.addObject("player2", player2);
-		mav.addObject("park", sesh.getAttribute("park"));
-		mav.addObject("currentWeather", sesh.getAttribute("currentWeather"));
-
-		return mav;
-	}
 
 	@RequestMapping("/day1")
 	public ModelAndView day1() {
@@ -315,8 +76,9 @@ public class MainController {
 		playerDao.save(updatedPlayer);
 
 		// adding a random beast event to the model
-		BeastEvent be1 = pService.findRandomBeastEvent();
-		sesh.setAttribute("event", be1);
+		BeastEvent be1 = eventsService.findRandomBeastEvent();
+		sesh.setAttribute("event1", be1);
+
 		mav.addObject("event", be1);
 
 		// adding the usual things to the model
@@ -405,7 +167,7 @@ public class MainController {
 		gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 
 		// adding a weather event based on gameStatus
-		WeatherEvent we1 = pService.findWeatherEvent(gameStatus.getWeather().getIcon());
+		WeatherEvent we1 = eventsService.findWeatherEvent(gameStatus.getWeather().getIcon());
 		System.out.println(gameStatus.getWeather().getIcon());
 		mav.addObject("event", we1);
 		sesh.setAttribute("event2", we1);
@@ -478,7 +240,7 @@ public class MainController {
 		Player player1 = (Player) sesh.getAttribute("player1");
 
 		// adding a random beast event to the model
-		BeastEvent be1 = pService.findRandomBeastEvent();
+		BeastEvent be1 = eventsService.findRandomBeastEvent();
 		mav.addObject("event", be1);
 		sesh.setAttribute("event3", be1);
 
@@ -608,24 +370,7 @@ public class MainController {
 		return new ModelAndView("redirect:/");
 	}
 
-//	@RequestMapping("/testWeather")
-//	public ModelAndView testEvent() {
-//		ModelAndView mav = new ModelAndView("test1");
-//		///////////////////////////////////////////////////////////////////////////////
-//		Currently current = (Currently) sesh.getAttribute("currentWeather");
-//
-//		String triggerIcon = current.getIcon();
-//		System.out.println(triggerIcon);
-//		WeatherEvent we1 = pService.findWeatherEvent(triggerIcon);
-//
-//		mav.addObject("Event2", we1);
-//		///////////////////////////////////////////////////////////////////////////////
-//		BeastEvent be1 = new BeastEvent();
-//		be1 = pService.findRandomBeastEvent();
-//
-//		mav.addObject("Event3", be1);
-//		return mav;
-//	}
+
 
 ///////////////////////////////////////////////////////////BEAST DAY///////////////////////////////////////////////////////////////////
 
@@ -641,7 +386,7 @@ public class MainController {
 		Player player2 = (Player) sesh.getAttribute("player2");
 
 		///////// generating beast event and adding to session /////////////////
-		BeastEvent beastEvent = pService.findRandomBeastEvent();
+		BeastEvent beastEvent = eventsService.findRandomBeastEvent();
 		sesh.setAttribute("event", beastEvent);
 
 		//////////// adding everything to model /////////////////////////
@@ -749,7 +494,7 @@ public class MainController {
 		Player player2 = (Player) sesh.getAttribute("player2");
 
 		///////// generating beast event and adding to session /////////////////
-		WeatherEvent weatherEvent = pService.findWeatherEvent(gameStatus.getWeather().getIcon());
+		WeatherEvent weatherEvent = eventsService.findWeatherEvent(gameStatus.getWeather().getIcon());
 		sesh.setAttribute("event", weatherEvent);
 
 		//////////// adding everything to model /////////////////////////
