@@ -48,24 +48,6 @@ public class SetupController {
 	@Autowired
 	private ParksService parksService;
 
-//	@RequestMapping("/addEvent")
-//	public ModelAndView addEvent() {
-//		WeatherEvent we1 = new WeatherEvent();
-//
-//		String name = "windy";
-//		String description = "The wind is really picking up, hopefully notihing blows away.";
-//		int rsrcThresh = 2;
-//		String triggerIcons = "WIND";
-//
-//		we1.setDescription(description);
-//		we1.setName(name);
-//		we1.setTriggerIcons(triggerIcons);
-//		we1.setRsrcThresh(rsrcThresh);
-//		we1.setOutcomes(null);
-//
-//		WEDao.save(we1);
-//		return new ModelAndView("redirect:/");
-//	}
 
 	@RequestMapping("/")
 	public ModelAndView showHome() {
@@ -98,11 +80,6 @@ public class SetupController {
 	@PostMapping("/start")
 	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, Long id) {
 		ModelAndView mav = new ModelAndView("start");
-
-		Player chosenPlayer = playerDao.findById(id).orElse(null);
-		if (chosenPlayer.equals(null)) {
-			return new ModelAndView("redirect:/", "message", "No player was selected. Please choose or create a player first!");
-		}
 		
 		String parkCode = parksService.determineParkCode(parkCodeName, parkCodeState, parkCodeFee);
 		if (parkCode.equals("none")) {		
@@ -115,11 +92,17 @@ public class SetupController {
 		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
 		Double cost = (park.getEntranceFee());
 
+		Player chosenPlayer = playerDao.findById(id).orElse(null);
+		if (chosenPlayer.equals(null)) {
+			return new ModelAndView("redirect:/", "message", "No player was selected. Please choose or create a player first!");
+		}
+
 		sesh.setAttribute("currentWeather", currentWeather);
 		sesh.setAttribute("player1", chosenPlayer);
 		sesh.setAttribute("park", park);
 
 		// creating the available players for team list
+		List<Item> items = itemDao.findAll();
 		List<Player> allPlayers = new ArrayList<>();
 
 		// only adding players that arent the chosen player
@@ -129,14 +112,8 @@ public class SetupController {
 			}
 		}
 
-		List<Player> possibleTeam = allPlayers;
-		List<Item> items = itemDao.findAll();
-
-		// testing the list of items
-		//System.out.println(items);
-
 		mav.addObject("items", items);
-		mav.addObject("availableTeam", possibleTeam);
+		mav.addObject("availableTeam", allPlayers);
 		mav.addObject("currentWeather", currentWeather);
 		mav.addObject("park", park);
 		mav.addObject("chosenPlayer", chosenPlayer);
@@ -177,7 +154,7 @@ public class SetupController {
 			mav.addObject("sleeping", "in a nice tent");
 			totalResourcefulness += 1;
 		} else {
-			mav.addObject("sleeping", "in a cabin");
+			mav.addObject("sleeping", "in an RV");
 			totalResourcefulness += 2;
 		}
 
