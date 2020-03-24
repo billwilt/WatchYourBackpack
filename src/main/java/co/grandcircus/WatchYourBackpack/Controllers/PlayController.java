@@ -14,6 +14,7 @@ import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.EventsService;
 import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.Daos.ItemDao;
+import co.grandcircus.WatchYourBackpack.Daos.OutcomesDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
 import co.grandcircus.WatchYourBackpack.Entities.GameStatus;
@@ -38,6 +39,9 @@ public class PlayController {
 
 	@Autowired
 	private ItemDao itemDao;
+
+	@Autowired
+	private  OutcomesDao oDao;
 
 	@Autowired
 	private EventsService eventsService;
@@ -136,27 +140,25 @@ public class PlayController {
 		
 		if (choice.equals("1")) {
 			if (winOrNot(theirAttackSkill, testAttackSkill)) {
-				finalOutcome = outcome1;
+				finalOutcome = oDao.findById(3L).orElse(null);
 			} else {
-				finalOutcome = outcome4;
+				finalOutcome = oDao.findById(5L).orElse(null);
 				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 
 		} else if (choice.equals("2")) {
 			if (winOrNot(theirFireSkill, testFireSkill)) {
-				finalOutcome = outcome2;
+				finalOutcome = oDao.findById(6L).orElse(null);
 			} else {
-				finalOutcome = outcome4;
+				finalOutcome = oDao.findById(7L).orElse(null);
 				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 
 		} else {
-			int random1 = rand.nextInt(100);
-
-			if (random1 > 50) {
-				finalOutcome = outcome3;
+			if (winOrNot(theirAttackSkill, (testAttackSkill + 2))) {
+				finalOutcome = oDao.findById(8L).orElse(null);
 			} else {
-				finalOutcome = outcome4;
+				finalOutcome = oDao.findById(9L).orElse(null);
 				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		}
@@ -188,12 +190,6 @@ public class PlayController {
 		/////////// getting objects from sessison //////////
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		BeastEvent event = (BeastEvent) sesh.getAttribute("event");
-
-		///////////// creating outcomes //////////////////
-		Outcome outcome1 = new Outcome(true, "You fought courageously and won.");
-		Outcome outcome2 = new Outcome(true, "You lit them on fire you maniac!!");
-		Outcome outcome3 = new Outcome(true, "You managed to run away, and thank your good luck!");
-		Outcome outcome4 = new Outcome(false, "You did not win, you lose 1 health");
 		Outcome finalOutcome = new Outcome();
 
 
@@ -204,31 +200,29 @@ public class PlayController {
 		
 		if (choice.equals("1")) {
 			if (winOrNot(theirAttackSkill, testAttackSkill)) {
-				finalOutcome = outcome1;
+				finalOutcome = oDao.findById(3L).orElse(null);
 			} else {
-				finalOutcome = outcome4;
+				finalOutcome = oDao.findById(5L).orElse(null);
 				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 
 		} else if (choice.equals("2")) {
 			if (winOrNot(theirFireSkill, testFireSkill)) {
-				finalOutcome = outcome2;
+				finalOutcome = oDao.findById(6L).orElse(null);
 			} else {
-				finalOutcome = outcome4;
+				finalOutcome = oDao.findById(7L).orElse(null);
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
+			}
+
+		} else {
+			if (winOrNot(theirAttackSkill, (testAttackSkill + 2))) {
+				finalOutcome = oDao.findById(8L).orElse(null);
+			} else {
+				finalOutcome = oDao.findById(9L).orElse(null);
 				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		}
 
-		 else {
-			int random1 = rand.nextInt(100);
-
-			if (random1 > 50) {
-				finalOutcome = outcome3;
-			} else {
-				finalOutcome = outcome4;
-				gameStatus.setHealth(gameStatus.getHealth() - 1);
-			}
-		}
 		sesh.setAttribute("gameStatus", gameStatus);
 		int dayCount = (int) sesh.getAttribute("dayCount");
 
@@ -262,11 +256,6 @@ public class PlayController {
 		////////////////// getting objects from sessison //////////////////
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		WeatherEvent event = (WeatherEvent) sesh.getAttribute("event");
-
-		//////////////// creating outcomes ////////////////////////////
-		Outcome outcome1 = new Outcome(true, "You safely made it through the day");
-		Outcome outcome2 = new Outcome(true, "You successfully got food, health up by 1 for your hard work");
-		Outcome outcome3 = new Outcome(false, "Your risk was not rewarded, you lost one health");
 		Outcome finalOutcome = new Outcome();
 
 		int yourSkill = gameStatus.getTotalResourcefulness();
@@ -274,17 +263,17 @@ public class PlayController {
 
 		if (choice.equals("1")) {
 			if (winOrNot(yourSkill, requiredSkill)) {
-				finalOutcome = outcome1;
+				finalOutcome = oDao.findById(10L).orElse(null);
 			} else {
-				finalOutcome = outcome3;
+				finalOutcome = oDao.findById(11L).orElse(null);
 				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		} else {
 			if (yourSkill > requiredSkill) {
-				finalOutcome = outcome2;
+				finalOutcome = oDao.findById(12L).orElse(null);
 				gameStatus.setHealth(gameStatus.getHealth() + 1);
 			} else {
-				finalOutcome = outcome3;
+				finalOutcome = oDao.findById(13L).orElse(null);
 				gameStatus.setHealth(gameStatus.getHealth() - 1);
 			}
 		}
