@@ -8,7 +8,7 @@ public class GameStatus {
 	
 	private Player mainPlayer;
 	private Player partner;
-	private int health = 3;
+	private int health = 2;
 	private List<Item> items;
 	private Currently weather;
 	private String parkcode;

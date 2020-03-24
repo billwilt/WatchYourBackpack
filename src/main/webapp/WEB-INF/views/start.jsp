@@ -52,9 +52,9 @@
 								<select name="id" class="custom-select" required>
 									<c:forEach items="${availableTeam}" var="player">
 
-										<option value="${gameStatus.mainPlayer.getId()}">${gameStatus.mainPlayer.getName()}
-											[Attack=${gameStatus.mainPlayer.getAttack()}, Fire=${gameStatus.mainPlayer.getFire()},
-											Resourcefulness=${gameStatus.mainPlayer.getResourcefulness()}]</option>
+										<option value="${player.getId()}">${player.getName()}
+											[Attack=${player.getAttack()}, Fire=${player.getFire()},
+											Resourcefulness=${player.getResourcefulness()}]</option>
 
 									</c:forEach>
 									<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
@@ -68,8 +68,13 @@
 						<div>
 							<!--  	<form action="" method="post" class="card1"> -->
 							<div>
+<<<<<<< HEAD
+
+								<div class="parkChoice" >
+=======
 							<h5>If you don't have shelter, mother nature will smell your fear</h5>
 								<div class="parkChoice">
+>>>>>>> 6126319ecc4221ac8490cfb9552fd9190987ef8c
 									<input type="radio" name="price" value=0> <label>In
 										the Leaves</label>
 									<p>Price: FREE</p>
@@ -78,19 +83,24 @@
 								<div class="parkChoice">
 									<input 
 										<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
-										disabled
+										disabled 
 										</c:if>
 									type="radio" name="price" value=10> <label>Tent</label>
+									<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
+											<p class="expensive"> You cannot afford this </p>
+											</c:if>
 									<p>Price: $10</p>
 								</div>
 								<c:if test="${ park.rvOption }">
-									<div class="parkChoice">
+									<div class="parkChoice" >
 										<input 
 											<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
 											disabled
 											</c:if>
 										type="radio" name="price" value=20> <label>RV</label>
-										<p>Price: $20</p>
+										<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
+											<p class="expensive"> You cannot afford this </p>
+											</c:if><p>Price: $20</p>
 									</div>
 								</c:if>
 
