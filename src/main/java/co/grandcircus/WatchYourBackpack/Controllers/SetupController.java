@@ -48,25 +48,6 @@ public class SetupController {
 	@Autowired
 	private ParksService parksService;
 
-//	@RequestMapping("/addEvent")
-//	public ModelAndView addEvent() {
-//		WeatherEvent we1 = new WeatherEvent();
-//
-//		String name = "windy";
-//		String description = "The wind is really picking up, hopefully notihing blows away.";
-//		int rsrcThresh = 2;
-//		String triggerIcons = "WIND";
-//
-//		we1.setDescription(description);
-//		we1.setName(name);
-//		we1.setTriggerIcons(triggerIcons);
-//		we1.setRsrcThresh(rsrcThresh);
-//		we1.setOutcomes(null);
-//
-//		WEDao.save(we1);
-//		return new ModelAndView("redirect:/");
-//	}
-
 	@RequestMapping("/")
 	public ModelAndView showHome() {
 		ModelAndView mav = new ModelAndView("index");
