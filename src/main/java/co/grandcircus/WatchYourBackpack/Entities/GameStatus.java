@@ -15,6 +15,7 @@ public class GameStatus {
 	private Integer totalAttack;
 	private Integer totalFire;
 	private Integer	totalResourcefulness;
+	private DBPark park;
 	
 	public Player getMainPlayer() {
 		return mainPlayer;
@@ -52,7 +53,8 @@ public class GameStatus {
 	public String toString() {
 		return "GameStatus [mainPlayer=" + mainPlayer + ", partner=" + partner + ", health=" + health + ", items="
 				+ items + ", weather=" + weather + ", parkcode=" + parkcode + ", totalAttack=" + totalAttack
-				+ ", totalFire=" + totalFire + ", totalResourcefulness=" + totalResourcefulness + "]";
+				+ ", totalFire=" + totalFire + ", totalResourcefulness=" + totalResourcefulness + ", park=" + park
+				+ "]";
 	}
 	public String getParkcode() {
 		return parkcode;
@@ -77,6 +79,12 @@ public class GameStatus {
 	}
 	public void setTotalResourcefulness(Integer totalResourcefulness) {
 		this.totalResourcefulness = totalResourcefulness;
+	}
+	public DBPark getPark() {
+		return park;
+	}
+	public void setPark(DBPark park) {
+		this.park = park;
 	}
 
 
