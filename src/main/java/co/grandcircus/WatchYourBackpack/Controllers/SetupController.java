@@ -2,7 +2,6 @@ package co.grandcircus.WatchYourBackpack.Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -63,6 +62,21 @@ public class SetupController {
 		
 		return mav;
 	}
+	
+	@PostMapping("/setPlayer")
+	public ModelAndView setPlayer(Long id) {
+		ModelAndView mav = new ModelAndView("redirect:/");
+		
+		//checking if gamestatus is already added to session, then adding gameStatus object
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		if (sesh.getAttribute("gameStatus") == null) {
+			gameStatus = new GameStatus();
+		sesh.setAttribute("gameStatus", gameStatus);
+		}
+		Player mainPlayer = playerDao.findById(id).orElse(null);
+		gameStatus.setMainPlayer(mainPlayer);
+		return mav;
+	}
 
 	@RequestMapping("/newPlayer")
 	public ModelAndView newPlayer() {
@@ -71,53 +85,69 @@ public class SetupController {
 
 	@PostMapping("/newPlayer")
 	public ModelAndView addNewPlayer(String name, String description, Integer type) {
-		
-		playerService.createPlayer(name, description, type);
 
+		Player newPlayer = playerService.createPlayer(name, description, type);
+		GameStatus gameStatus = new GameStatus();
+		gameStatus.setMainPlayer(newPlayer);
+		sesh.setAttribute("gameStatus", gameStatus);
+		//rd.addAttribute("newPlayer", newPlayer);
 		return new ModelAndView("redirect:/");
 	}
 
 	@PostMapping("/start")
 	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, Long id, RedirectAttributes rd) {
 		ModelAndView mav = new ModelAndView("start");
-
-		Player chosenPlayer = playerDao.findById(id).orElse(null);
-		if (chosenPlayer.equals(null)) {
-			return new ModelAndView("redirect:/", "noPlayerMessage", "No player was selected. Please choose or create a player first!");
+		ModelAndView mavRd = new ModelAndView("redirect:/");
+		
+		//checking if gamestatus is already added to session, then adding gameStatus object
+		//System.out.println(sesh.getAttribute("gameStatus"));
+		GameStatus gameStatus;
+		if (sesh.getAttribute("gameStatus") == null) {
+			gameStatus = new GameStatus();
+			sesh.setAttribute("gameStatus", gameStatus);
+		}else {
+			gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		}
+		//Adding Player to GameStatus
+		
+		if (gameStatus.getMainPlayer() == null) {
+			rd.addFlashAttribute("noPlayerMessage", "No player was selected. Please choose or create a player first!");
+			return mavRd;
 		}
 		
+		//Adding Park to GameStatus
 		String parkCode = parksService.determineParkCode(parkCodeName, parkCodeState, parkCodeFee);
 		if (parkCode.equals("none")) {	
 			rd.addFlashAttribute("parkMessage", "No park chosen. Please choose a park!");
-			return new ModelAndView("redirect:/");
+			return mavRd;
 		}else if (parkCode.equals("many")) {
-			return new ModelAndView("redirect:/", "parkMessage", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
-		}
+			rd.addFlashAttribute("parkMessage", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
+			return mavRd;
+		}		
+		DBPark park = pDao.findByParkCodeContaining(parkCode);
+		gameStatus.setPark(park);
 		
-		DBPark park = pDao.findByParkCodeContaining(parkCode);	
-		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
-		Double cost = (park.getEntranceFee());
+		//Adding Weather to GameStatus
+		gameStatus.setWeather(DSApiServ.getWeather(park.getLatitude(), park.getLongitude()));
+		
+		//Adjusting Player's Wallet
+		gameStatus.getMainPlayer().setMoney(gameStatus.getMainPlayer().getMoney()-park.getEntranceFee());
+		System.out.println(gameStatus.getMainPlayer().getMoney());
 
-		sesh.setAttribute("currentWeather", currentWeather);
-		sesh.setAttribute("player1", chosenPlayer);
-		sesh.setAttribute("park", park);
-
-		// creating the available players for team list
-		List<Player> allPlayers = new ArrayList<>();
-
-		// only adding players that arent the chosen player
+		// creating the available players for team list--only adding players that arent the chosen player
+		List<Player> availableTeam = new ArrayList<>();
 		for (Long i = 1L; i <= playerDao.count(); i++) {
 			if (i != id) {
-				allPlayers.add(playerDao.getOne(i));
+				availableTeam.add(playerDao.getOne(i));
 			}
 		}
-
-		List<Item> items = itemDao.findAll();
+    
+		mav.addObject("availableTeam", availableTeam);
 		
+		//adding list of items to mav
+		List<Item> items = itemDao.findAll();
 		mav.addObject("items", items);
-		mav.addObject("availableTeam", allPlayers);
-		mav.addObject("cost", cost);
-
+    
 		return mav;
 	}
 

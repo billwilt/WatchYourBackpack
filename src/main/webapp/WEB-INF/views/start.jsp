@@ -33,12 +33,12 @@
 	<form action="/confirmSettings" method="post">
 
 		<div class="center">
-			<h2>Current Settings: ${park.getName()}</h2>
-			<h3>You Are: ${player1.getName()}</h3>
-			<h3>${player1.getDescription()}</h3>
-			<h4>Current $$$: ${player1.getMoney()}</h4>
-			<h5>Current Weather: ${currentWeather.getSummary()}</h5>
-			<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
+
+			<h2>Current Settings: ${gameStatus.park.getName()}</h2>
+			<h3>You Are: ${gameStatus.mainPlayer.getName()}</h3>
+			<h4>Current $$$: ${gameStatus.mainPlayer.getMoney()}</h4>
+			<h5>Current Weather: ${gameStatus.weather.getSummary()}</h5>
+			<h5>Current Temp: ${gameStatus.weather.getTemperature()}</h5>
 
 		</div>
 
@@ -52,9 +52,9 @@
 								<select name="id" class="custom-select" required>
 									<c:forEach items="${availableTeam}" var="player">
 
-										<option value="${player.getId()}">${player.getName()}
-											[Attack=${player.getAttack()}, Fire=${player.getFire()},
-											Resourcefulness=${player.getResourcefulness()}]</option>
+										<option value="${gameStatus.mainPlayer.getId()}">${gameStatus.mainPlayer.getName()}
+											[Attack=${gameStatus.mainPlayer.getAttack()}, Fire=${gameStatus.mainPlayer.getFire()},
+											Resourcefulness=${gameStatus.mainPlayer.getResourcefulness()}]</option>
 
 									</c:forEach>
 									<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
@@ -76,12 +76,20 @@
 								</div>
 
 								<div class="parkChoice">
-									<input type="radio" name="price" value=10> <label>Tent</label>
+									<input 
+										<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
+										disabled
+										</c:if>
+									type="radio" name="price" value=10> <label>Tent</label>
 									<p>Price: $10</p>
 								</div>
 								<c:if test="${ park.rvOption }">
 									<div class="parkChoice">
-										<input type="radio" name="price" value=20> <label>RV</label>
+										<input 
+											<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
+											disabled
+											</c:if>
+										type="radio" name="price" value=20> <label>RV</label>
 										<p>Price: $20</p>
 									</div>
 								</c:if>
