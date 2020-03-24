@@ -33,6 +33,7 @@
 	<form action="/confirmSettings" method="post">
 
 		<div class="center">
+
 			<h2>Current Settings: ${gameStatus.park.getName()}</h2>
 			<h3>You Are: ${gameStatus.mainPlayer.getName()}</h3>
 			<h4>Current $$$: ${gameStatus.mainPlayer.getMoney()}</h4>
@@ -67,7 +68,7 @@
 						<div>
 							<!--  	<form action="" method="post" class="card1"> -->
 							<div>
-
+							<h5>If you don't have shelter, mother nature will smell your fear</h5>
 								<div class="parkChoice">
 									<input type="radio" name="price" value=0> <label>In
 										the Leaves</label>

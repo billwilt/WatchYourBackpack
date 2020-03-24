@@ -19,6 +19,16 @@ public class Outcome {
 	@ManyToOne 
 	private BeastEvent beastEvent;
 	
+	
+	
+	public Outcome(Boolean survived, String description) {
+		super();
+		this.survived = survived;
+		this.description = description;
+	}
+	public Outcome() {
+		super();
+	}
 	public Long getId() {
 		return id;
 	}

@@ -18,8 +18,8 @@
 		<tr>
 			<td>
 				<h5>Team: ${player1.getName()} & ${player2.getName()}</h5>
-				<h6>Day 1</h6>
-			</td>
+				<h5>Day : ${dayCount}</h5>
+				<h5>Day of Departure : ${maxDays}</h5>			</td>
 			<td>
 				<h5>Team Attack: ${gameStatus.getTotalAttack()}</h5>
 				<h5>Team Fire: ${gameStatus.getTotalFire()}</h5>
