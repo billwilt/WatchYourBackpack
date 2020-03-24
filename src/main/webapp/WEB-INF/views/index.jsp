@@ -39,6 +39,7 @@
 			<h6 class="error">${ noPlayerMessage }</h6>
 			
 			<div class="form-group">
+
 			
 				<select name="id" class="custom-select" required onchange="this.form.submit()"><!-- onchange="showDiv('choose-park')" -->
 				<option value="0">Choose your player</option> 
@@ -55,6 +56,7 @@
 						</option>						
 					</c:forEach>					
 					
+
 					<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
 				</select> <a href="/newPlayer">Add New Player</a>
 			</div>
@@ -64,48 +66,55 @@
 		<div class="form-check disabled inputForm-right" id="choose-park">
 		
 		<form action ="/start" method ="post">
+
 			<h2>CHOOSE YOUR NATIONAL PARK</h2>
-			
+
 			<div class="btn-group-vertical">
-			<!-- Browse Parks by Name -->
-			<button href="#by-name" type="button" class="btn btn-primary"
-				data-toggle="collapse">Browse Parks by Name</button>
+				<!-- Browse Parks by Name -->
+				<button href="#by-name" type="button" class="btn btn-primary"
+					data-toggle="collapse">Browse Parks by Name</button>
 				<div class="form-group collapse" id="by-name">
-				<select class="custom-select" name="parkCodeName" onchange="this.form.submit()">
-					<!-- onchange="toggleParkDisplay({ "state" : state })" -->
-					<option value="">Browse Parks by Name</option> 
-					<c:forEach var="park" items="${ parksByName }">
-						<option value="${ park.getParkCode() }">${ park.getName() },
-							(${ park.getStateCode() })</option>
-					</c:forEach>
-				</select>
-			</div>
-			<!-- Browse Parks by State -->	
-			<button href="#by-state" type="button" class="btn btn-primary"
-				data-toggle="collapse">Browse Parks by State</button>
-							<div class="form-group collapse" id="by-state">
-				<select class="custom-select" name="parkCodeState" onchange="this.form.submit()">
-					<option value="">Browse Parks by State</option> 
-					<c:forEach var="park" items="${ parksByState }">
-						<option value="${ park.getParkCode() }">${ park.getStateCode() },
-							${ park.getName() }</option>
-					</c:forEach>
-				</select>
-			</div>
-			<!-- Browse Parks by Entrance Fee -->	
-			<button href="#by-fee" type="button" class="btn btn-primary"
-				data-toggle="collapse">Browse Parks by Entrance Fee</button>
+					<select class="custom-select" name="parkCodeName"
+						onchange="this.form.submit()">
+						<!-- onchange="toggleParkDisplay({ "state" : state })" -->
+						<option value="">Browse Parks by Name</option>
+						<c:forEach var="park" items="${ parksByName }">
+							<option value="${ park.getParkCode() }">${ park.getName() },
+								(${ park.getStateCode() })</option>
+						</c:forEach>
+					</select>
+				</div>
+				<!-- Browse Parks by State -->
+				<button href="#by-state" type="button" class="btn btn-primary"
+					data-toggle="collapse">Browse Parks by State</button>
+				<div class="form-group collapse" id="by-state">
+					<select class="custom-select" name="parkCodeState"
+						onchange="this.form.submit()">
+						<option value="">Browse Parks by State</option>
+						<c:forEach var="park" items="${ parksByState }">
+							<option value="${ park.getParkCode() }">${ park.getStateCode() },
+								${ park.getName() }</option>
+						</c:forEach>
+					</select>
+				</div>
+				<!-- Browse Parks by Entrance Fee -->
+				<button href="#by-fee" type="button" class="btn btn-primary"
+					data-toggle="collapse">Browse Parks by Entrance Fee</button>
 			</div>
 			<div class="form-group collapse" id="by-fee">
-				<select class="custom-select" name="parkCodeFee" onchange="this.form.submit()">
-					<option value="">Browse Parks by Fee</option><!--replaced selected="" with value  -->
+				<select class="custom-select" name="parkCodeFee"
+					onchange="this.form.submit()">
+					<option value="">Browse Parks by Fee</option>
+					<!--replaced selected="" with value  -->
 					<c:forEach var="park" items="${ parksByFee }">
+
 						<option 
 						<c:if test="${ gameStatus.mainPlayer.money lt park.entranceFee }">
 								disabled
 						</c:if>
 						value="${ park.getParkCode() }"><fmt:formatNumber value="${ park.getEntranceFee() }" type="currency" />,
 							${ park.getName() }</option>
+
 					</c:forEach>
 				</select>
 			</div>
@@ -115,7 +124,6 @@
 	</form>
 	<!-- Here is a link to STO that might help with collapsing the expanded divs when another is expanded -->
 	<!-- https://stackoverflow.com/questions/37753407/bootstrap-collapse-how-to-expand-only-one-div-at-a-time -->
-
 	
 
 
@@ -125,6 +133,7 @@
 	showDiv('choose-park');
 	</script>
 	</c:if>	
+
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 		crossorigin="anonymous"></script>
