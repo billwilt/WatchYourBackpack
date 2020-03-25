@@ -13,6 +13,7 @@ import co.grandcircus.WatchYourBackpack.CampsiteApiService;
 import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.EventsService;
 import co.grandcircus.WatchYourBackpack.NPSApiService;
+import co.grandcircus.WatchYourBackpack.ParksService;
 import co.grandcircus.WatchYourBackpack.Daos.ParksDao;
 import co.grandcircus.WatchYourBackpack.Daos.PlayerDao;
 import co.grandcircus.WatchYourBackpack.Entities.BeastEvent;
@@ -37,6 +38,8 @@ public class TestController {
 	private DSApiService DSApiServ;
 	@Autowired
 	private HttpSession sesh;
+	@Autowired
+	private ParksService pServ;
 	
 
 	
@@ -44,11 +47,13 @@ public class TestController {
 	public ModelAndView test() {
 		ModelAndView mav = new ModelAndView("test");
 		
+		pServ.setReceptionForParksInDatabase(pDao.findAll());
 		//pServ.setRvOptionForParksInDatabase(pDao.findAll());
 		
 		//getting parks into database
 		//only called this method once to fill and then it's done!
 		//pServ.fillDatabase();
+		
 		
 		//mav.addObject("parkCodes",
 		NPSapiServ.getParkCodesWithCampgrounds();
