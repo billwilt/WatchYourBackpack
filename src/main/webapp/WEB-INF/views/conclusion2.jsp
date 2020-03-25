@@ -12,5 +12,6 @@
 <h1>You did not make it through the trip, but dont worry you can try again!</h1>
 
 <a href="/" class="startButton">Back to main menu</a>
+
 </body>
 </html>
