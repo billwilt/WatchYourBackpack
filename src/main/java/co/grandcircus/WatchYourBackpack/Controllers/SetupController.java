@@ -137,8 +137,9 @@ public class SetupController {
 		gameStatus.setWeather(DSApiServ.getWeather(park.getLatitude(), park.getLongitude()));
 		
 		//Adjusting Player's Wallet
-		gameStatus.getMainPlayer().setMoney(gameStatus.getMainPlayer().getMoney()-park.getEntranceFee());
-
+		if ((gameStatus.getMainPlayer().getMoney()-park.getEntranceFee()) >= 0) {
+			gameStatus.getMainPlayer().setMoney(gameStatus.getMainPlayer().getMoney()-park.getEntranceFee());
+		}
 		// creating the available players for team list--only adding players that arent the chosen player
 		//List<Player> availableTeam = playerService.getAvailableTeam(gameStatus.getMainPlayer().getId());
 		mav.addObject("availableTeam", playerService.getAvailableTeam(gameStatus.getMainPlayer().getId()));
@@ -193,6 +194,10 @@ public class SetupController {
 			mav.addObject("sleeping", "in an RV");
 			totalResourcefulness += 2;
 		}
+		
+		Integer totalLevel = totalResourcefulness + totalFire + totalAttack;
+		Integer maxDays = 3 + (totalLevel / 3);
+		sesh.setAttribute("maxDays", maxDays);
 
 		totalCost += price;	
 		sesh.setAttribute("totalCost", totalCost);

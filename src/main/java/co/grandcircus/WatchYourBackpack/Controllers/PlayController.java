@@ -142,6 +142,7 @@ public class PlayController {
 	@PostMapping("/genericBeastDay")
 	public ModelAndView genericBeastDayPost(Integer choice) {
 		ModelAndView mav = new ModelAndView("genericBeastDayPost");
+		ModelAndView mavLoss = new ModelAndView("conclusion2");
 		Random rand = new Random();
 
 		/////////// getting objects from sessison //////////
@@ -196,6 +197,10 @@ public class PlayController {
 		mav.addObject("outcome", finalOutcome);
 		//mav.addObject("dayCount", dayCount);
 
+		if (gameStatus.getHealth() == 0) {
+			return mavLoss;
+		}
+		
 		return mav;
 	}
 
@@ -216,6 +221,7 @@ public class PlayController {
 	@PostMapping("/genericWeatherDay")
 	public ModelAndView genericWeatherDayPost(String choice) {
 		ModelAndView mav = new ModelAndView("genericWeatherDayPost");
+		ModelAndView mavLoss = new ModelAndView("conclusion2");
 
 		////////////////// getting objects from sessison //////////////////
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
@@ -250,6 +256,10 @@ public class PlayController {
 		mav.addObject("outcome", finalOutcome);
 		mav.addObject("dayCount", dayCount);
 
+		if (gameStatus.getHealth() == 0) {
+			return mavLoss;
+		}
+		
 		return mav;
 	}
 
@@ -264,10 +274,7 @@ public class PlayController {
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		int totalLevel = gameStatus.getTotalAttack() + gameStatus.getTotalFire()
 		+ gameStatus.getMainPlayer().getResourcefulness() + gameStatus.getPartner().getResourcefulness();
-		Integer maxDays = 3 + (totalLevel / 3);
-		sesh.setAttribute("maxDays", maxDays);
-		System.out.println(dayCount + "" + maxDays);
-		
+		Integer maxDays = (Integer) sesh.getAttribute("maxDays");
 //		///////// if it's the first day send them to Beast Event ////////////////
 //		if (dayCount == null) {
 //			
