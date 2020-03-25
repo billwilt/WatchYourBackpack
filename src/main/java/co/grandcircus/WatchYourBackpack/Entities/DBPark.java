@@ -22,6 +22,7 @@ public class DBPark {
 	private String imageUrl;
 	private String imageAltText;
 	private Boolean rvOption;
+	private Boolean reception;
 		
 	
 	public String getImageUrl() {
@@ -96,6 +97,12 @@ public class DBPark {
 	}
 	public void setRvOption(Boolean rvOption) {
 		this.rvOption = rvOption;
+	}
+	public Boolean getReception() {
+		return reception;
+	}
+	public void setReception(Boolean reception) {
+		this.reception = reception;
 	}
 
 	
