@@ -116,4 +116,17 @@ public class ParksService {
 			}
 		}
 	}
+	public void setReceptionForParksInDatabase(List<DBPark> parks) {
+
+		for (DBPark park : parks) {
+			for (Campground campground : NPSapiServ.getCampgroundsByPark(park)) {
+				if (park.getReception() == true) {
+					break;
+				}
+				Boolean reception = (campground.getAmenities().getCellphonereception() == "Yes") ? true : false;
+				park.setReception(reception);				
+				pDao.save(park);
+			}
+		}
+	}
 }
