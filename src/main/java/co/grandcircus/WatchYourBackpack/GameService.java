@@ -46,7 +46,9 @@ public Outcome getFinalOutcome(GameStatus gameStatus, BeastEvent event, Integer 
 		finalOutcome = oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, runAway);
 		break;
 	}
-	gameStatus.setHealth(gameStatus.getHealth() - finalOutcome.getHealthChange());
+	System.out.println(gameStatus.getHealth());
+	System.out.println(finalOutcome.getHealthChange());
+	gameStatus.setHealth(gameStatus.getHealth() + finalOutcome.getHealthChange());
 	
 	return finalOutcome;
 }
