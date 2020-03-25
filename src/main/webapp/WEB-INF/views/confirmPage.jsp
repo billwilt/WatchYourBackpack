@@ -9,10 +9,12 @@
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
 <head>
+<!-- Favicon-->
+<link rel="icon" type="image/png" href="/backpack-01.png">
 <link href="/style.css" rel="stylesheet" />
 
 <meta charset="ISO-8859-1">
-<title>Are you sure about that?</title>
+<title>Watch Your BackPack</title>
 </head>
 <body>
 	<div class="confirmCube">
@@ -36,6 +38,6 @@
 		<h6>Wallet after trip: $${walletAfter}</h6>
 	</div>
 	
-	<a href="/day1" class="startButton">PLAY THE GAME</a>
+	<a href="/genericBeastDay" class="startButton">PLAY THE GAME</a>
 </body>
 </html>

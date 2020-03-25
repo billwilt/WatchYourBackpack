@@ -18,11 +18,11 @@ crossorigin="anonymous">
 	
 	<!-- end of game stats  -->
 	<div class="confirmCube">
-		<h2>You: ${player1.getName()}</h2>
-		<h6>Attack: ${player1.getAttack()}</h6>
-		<h6>Fire: ${player1.getFire()}</h6>
-		<h6>Resourcefulness: ${player1.getResourcefulness()}</h6>
-		<h6>Wallet after trip: $${player1.getMoney()}</h6>
+		<h2>You: ${gameStatus.mainPlayer.getName()}</h2>
+		<h6>Attack: ${gameStatus.mainPlayer.getAttack()}</h6>
+		<h6>Fire: ${gameStatus.mainPlayer.getFire()}</h6>
+		<h6>Resourcefulness: ${gameStatus.mainPlayer.getResourcefulness()}</h6>
+		<h6>Wallet after trip: $${gameStatus.mainPlayer.getMoney()}</h6>
 	</div>
 	<h1>You get to level up one skill for making it out, what do you want to increase?</h1>
 	<div class="confirmCube">
