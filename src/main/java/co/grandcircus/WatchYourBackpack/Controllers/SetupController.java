@@ -50,6 +50,7 @@ public class SetupController {
 	@Autowired
 	private PlayerService playerService;
 
+
 	@RequestMapping("/")
 	public ModelAndView showHome(RedirectAttributes rd) {
 		ModelAndView mav = new ModelAndView("index");
@@ -101,6 +102,7 @@ public class SetupController {
 	@PostMapping("/start")
 	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, RedirectAttributes rd) {
 		ModelAndView mav = new ModelAndView("start");
+
 		ModelAndView mavRd = new ModelAndView("redirect:/");
 		
 		//checking if gamestatus is already added to session, then adding gameStatus object
@@ -135,8 +137,9 @@ public class SetupController {
 		gameStatus.setWeather(DSApiServ.getWeather(park.getLatitude(), park.getLongitude()));
 		
 		//Adjusting Player's Wallet
-		gameStatus.getMainPlayer().setMoney(gameStatus.getMainPlayer().getMoney()-park.getEntranceFee());
-
+		if ((gameStatus.getMainPlayer().getMoney()-park.getEntranceFee()) >= 0) {
+			gameStatus.getMainPlayer().setMoney(gameStatus.getMainPlayer().getMoney()-park.getEntranceFee());
+		}
 		// creating the available players for team list--only adding players that arent the chosen player
 		//List<Player> availableTeam = playerService.getAvailableTeam(gameStatus.getMainPlayer().getId());
 		mav.addObject("availableTeam", playerService.getAvailableTeam(gameStatus.getMainPlayer().getId()));
@@ -144,7 +147,6 @@ public class SetupController {
 		//adding list of items to mav
 		List<Item> items = itemDao.findAll();
 		mav.addObject("items", items);
-    
 		return mav;
 	}
 
@@ -189,9 +191,13 @@ public class SetupController {
 			mav.addObject("sleeping", "in a nice tent");
 			totalResourcefulness += 1;
 		} else {
-			mav.addObject("sleeping", "in a cabin");
+			mav.addObject("sleeping", "in an RV");
 			totalResourcefulness += 2;
 		}
+		
+		Integer totalLevel = totalResourcefulness + totalFire + totalAttack;
+		Integer maxDays = 3 + (totalLevel / 3);
+		sesh.setAttribute("maxDays", maxDays);
 
 		totalCost += price;	
 		sesh.setAttribute("totalCost", totalCost);
