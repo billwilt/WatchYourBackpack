@@ -117,11 +117,9 @@ public class PlayController {
 		//mav.addObject("outcome", finalOutcome);
 		//mav.addObject("dayCount", dayCount);
 
-		if (gameStatus.getHealth() == 0) {
-			return mavLoss;
-		}
+
 		
-		return mav;
+		
 	}
 
 	///////////////////////////////// WEATHER DAY ////////////////////////////////////////////
