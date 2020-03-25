@@ -2,7 +2,6 @@ package co.grandcircus.WatchYourBackpack.Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.grandcircus.WatchYourBackpack.DSApiService;
 import co.grandcircus.WatchYourBackpack.ParksService;
@@ -49,7 +49,7 @@ public class SetupController {
 	private ParksService parksService;
 
 	@RequestMapping("/")
-	public ModelAndView showHome() {
+	public ModelAndView showHome(RedirectAttributes rd) {
 		ModelAndView mav = new ModelAndView("index");
 
 		// grabbing the list of players from the database
@@ -62,6 +62,21 @@ public class SetupController {
 		
 		return mav;
 	}
+	
+	@PostMapping("/setPlayer")
+	public ModelAndView setPlayer(Long id) {
+		ModelAndView mav = new ModelAndView("redirect:/");
+		
+		//checking if gamestatus is already added to session, then adding gameStatus object
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		if (sesh.getAttribute("gameStatus") == null) {
+			gameStatus = new GameStatus();
+		sesh.setAttribute("gameStatus", gameStatus);
+		}
+		Player mainPlayer = playerDao.findById(id).orElse(null);
+		gameStatus.setMainPlayer(mainPlayer);
+		return mav;
+	}
 
 	@RequestMapping("/newPlayer")
 	public ModelAndView newPlayer() {
@@ -69,60 +84,79 @@ public class SetupController {
 	}
 
 	@PostMapping("/newPlayer")
-	public ModelAndView addNewPlayer(String name, String description, Integer type) {//, Double money this is default for new players
+	public ModelAndView addNewPlayer(String name, String description, Integer type) {
 
-		playerService.createPlayer(name, description, type);
-
+		Player newPlayer = playerService.createPlayer(name, description, type);
+		GameStatus gameStatus = new GameStatus();
+		gameStatus.setMainPlayer(newPlayer);
+		sesh.setAttribute("gameStatus", gameStatus);
+		//rd.addAttribute("newPlayer", newPlayer);
 		return new ModelAndView("redirect:/");
 	}
 
 	@PostMapping("/start")
-	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, Long id) {
+	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, RedirectAttributes rd) {
 		ModelAndView mav = new ModelAndView("start");
-
-		Player chosenPlayer = playerDao.findById(id).orElse(null);
-		if (chosenPlayer.equals(null)) {
-			return new ModelAndView("redirect:/", "message", "No player was selected. Please choose or create a player first!");
+		ModelAndView mavRd = new ModelAndView("redirect:/");
+		
+		//checking if gamestatus is already added to session, then adding gameStatus object
+		//System.out.println(sesh.getAttribute("gameStatus"));
+		GameStatus gameStatus;
+		if (sesh.getAttribute("gameStatus") == null) {
+			gameStatus = new GameStatus();
+			sesh.setAttribute("gameStatus", gameStatus);
+		}else {
+			gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		}
+		//Adding Player to GameStatus
+		
+		if (gameStatus.getMainPlayer() == null) {
+			rd.addFlashAttribute("noPlayerMessage", "No player was selected. Please choose or create a player first!");
+			return mavRd;
 		}
 		
+		//Adding Park to GameStatus
 		String parkCode = parksService.determineParkCode(parkCodeName, parkCodeState, parkCodeFee);
-		if (parkCode.equals("none")) {		
-			return new ModelAndView("redirect:/", "message", "No park chosen. Please choose a park!");
+		if (parkCode.equals("none")) {	
+			rd.addFlashAttribute("parkMessage", "No park chosen. Please choose a park!");
+			return mavRd;
 		}else if (parkCode.equals("many")) {
-			return new ModelAndView("redirect:/", "message", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
-		}
+			rd.addFlashAttribute("parkMessage", "Okay, it's virtual, but it's not THAT virtual. You can't be in two places at once! Please choose just one park!");
+			return mavRd;
+		}		
+		DBPark park = pDao.findByParkCodeContaining(parkCode);
+		gameStatus.setPark(park);
 		
-		DBPark park = pDao.findByParkCodeContaining(parkCode);	
-		Currently currentWeather = DSApiServ.getWeather(park.getLatitude(), park.getLongitude());
-		Double cost = (park.getEntranceFee());
+		//Adding Weather to GameStatus
+		gameStatus.setWeather(DSApiServ.getWeather(park.getLatitude(), park.getLongitude()));
+		
+		//Adjusting Player's Wallet
+		gameStatus.getMainPlayer().setMoney(gameStatus.getMainPlayer().getMoney()-park.getEntranceFee());
 
-		sesh.setAttribute("currentWeather", currentWeather);
-		sesh.setAttribute("player1", chosenPlayer);
-		sesh.setAttribute("park", park);
-
-		// creating the available players for team list
-		List<Player> allPlayers = new ArrayList<>();
-
-		// only adding players that arent the chosen player
+		// creating the available players for team list--only adding players that arent the chosen player
+		List<Player> availableTeam = new ArrayList<>();
+		System.out.println(gameStatus.getMainPlayer().getId());
 		for (Long i = 1L; i <= playerDao.count(); i++) {
-			if (i != id) {
-				allPlayers.add(playerDao.getOne(i));
+			
+			if (i != gameStatus.getMainPlayer().getId()) {
+				availableTeam.add(playerDao.getOne(i));
 			}
 		}
 
-		List<Item> items = itemDao.findAll();
+		mav.addObject("availableTeam", availableTeam);
 		
+		//adding list of items to mav
+		List<Item> items = itemDao.findAll();
 		mav.addObject("items", items);
-		mav.addObject("availableTeam", allPlayers);
-		mav.addObject("cost", cost);
-
+    
 		return mav;
 	}
 
 	@PostMapping("/confirmSettings")
 	public ModelAndView confirmPage(double price, Long id, Long item1Id, Long item2Id, Long item3Id) {
 		ModelAndView mav = new ModelAndView("confirmPage");
-
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		
 		Item item1 = itemDao.findById(item1Id).orElse(null);
 		Item item2 = itemDao.findById(item2Id).orElse(null);
 		Item item3 = itemDao.findById(item3Id).orElse(null);
@@ -131,11 +165,12 @@ public class SetupController {
 		Integer itemsFire = item1.getFireAdd() + item2.getFireAdd() + item3.getFireAdd();
 		Integer itemsResourcefulness = item1.getResourcefulnessAdd() + item2.getResourcefulnessAdd()
 				+ item3.getResourcefulnessAdd();
-
+		Double totalCost = 0.0;//for future use if items cost money later
+		
 		Player player2 = playerDao.findById(id).orElse(null);
-		sesh.setAttribute("player2", player2);
-		Double totalCost = 0.0;
-		Player player1 = (Player) sesh.getAttribute("player1");
+		gameStatus.setPartner(player2);
+	
+		Player player1 = (Player) gameStatus.getMainPlayer();
 
 		// getting the total levels to add to game status
 		Integer totalAttack = player1.getAttack() + player2.getAttack() + itemsAttack;
@@ -155,26 +190,29 @@ public class SetupController {
 			totalResourcefulness += 2;
 		}
 
-		DBPark park = (DBPark) sesh.getAttribute("park");
+		//DBPark park = (DBPark) sesh.getAttribute("park");
 
 		// making the game status
-		GameStatus gameStatus = new GameStatus();
+		//GameStatus gameStatus = new GameStatus();
 
-		gameStatus.setMainPlayer((Player) sesh.getAttribute("player1"));
+		//gameStatus.setMainPlayer((Player) sesh.getAttribute("player1"));
 		gameStatus.setPartner(player2);
-		gameStatus.setParkcode(park.getParkCode());
-		gameStatus.setWeather((Currently) sesh.getAttribute("currentWeather"));
-		gameStatus.setHealth(2);
+		//gameStatus.setParkcode(park.getParkCode());
+		//gameStatus.setWeather((Currently) sesh.getAttribute("currentWeather"));
+		//gameStatus.setHealth(2);
 		gameStatus.setTotalAttack(totalAttack);
 		gameStatus.setTotalFire(totalFire);
 		gameStatus.setTotalResourcefulness(totalResourcefulness);
+
+		//sesh.setAttribute("gameStatus", gameStatus);
+
 
 		// STRETCH GOAL: add the price of items as well
 		totalCost += price;
 		
 		sesh.setAttribute("totalCost", totalCost);
 		sesh.setAttribute("walletAfter", (player1.getMoney() - totalCost));
-		sesh.setAttribute("gameStatus", gameStatus);
+
 
 		return mav;
 	}

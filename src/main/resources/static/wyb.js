@@ -3,6 +3,7 @@
  */
 	function showDiv(divId){
 		document.getElementById(divId).style.display="block";
+		console.log("showing the div doo doo doo dee doo doo");
 	}
 		function toggleDropdownByName() {
 			document.getElementsByClassName("browse-by-name").classList
