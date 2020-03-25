@@ -132,6 +132,7 @@ public class SetupController {
 		}		
 		DBPark park = parksDao.findByParkCodeContaining(parkCode);
 		gameStatus.setPark(park);
+		gameStatus.setHealth(2);
 		
 		//Adding Weather to GameStatus
 		gameStatus.setWeather(DSApiServ.getWeather(park.getLatitude(), park.getLongitude()));

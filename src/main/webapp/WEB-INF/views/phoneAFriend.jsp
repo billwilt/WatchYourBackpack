@@ -9,17 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Did you win?: ${outcome.getSurvived()}</h1>
-	<h1>${outcome.getDescription()}</h1>
-	<c:if test="${outcome.getSurvived() eq 'false'}">
-	<p>Would you like to try and phone a friend to see if they can help you out of this mess??</p>
-	<a href="/phoneAFriend">Phone a friend</a>
-	</c:if>
-	
-	<h6>${ message }</h6>
-	
-	<form action="/dayController" method="post">
-	<button>NEXT DAY</button>
-	</form>
+<h6>${ message }</h6>
+<form action="/dayController" method="post"> <button>Next Day</button></form>
 </body>
 </html>
