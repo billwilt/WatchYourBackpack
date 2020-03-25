@@ -32,7 +32,7 @@
 	<div>
 		<form method="post">
 			<select name="choice">
-				<option value="1">Stay inside and </option>
+				<option value="1">Stay inside and stay safe</option>
 				<option value="2">Go out for food</option>
 			</select>
 			<button>Survive</button>

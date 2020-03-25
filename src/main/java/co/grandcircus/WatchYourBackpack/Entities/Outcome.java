@@ -18,7 +18,18 @@ public class Outcome {
 	private WeatherEvent weatherEvent;
 	@ManyToOne 
 	private BeastEvent beastEvent;
+	private Integer choice;
 	
+	
+	
+	public Outcome(Boolean survived, String description) {
+		super();
+		this.survived = survived;
+		this.description = description;
+	}
+	public Outcome() {
+		super();
+	}
 	public Long getId() {
 		return id;
 	}
@@ -40,6 +51,12 @@ public class Outcome {
 	@Override
 	public String toString() {
 		return "Outcome [id=" + id + ", survived=" + survived + ", description=" + description + "]";
+	}
+	public Integer getChoice() {
+		return choice;
+	}
+	public void setChoice(Integer choice) {
+		this.choice = choice;
 	}
 	
 	

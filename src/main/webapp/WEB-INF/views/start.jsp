@@ -33,12 +33,12 @@
 	<form action="/confirmSettings" method="post">
 
 		<div class="center">
-			<h2>Current Settings: ${park.getName()}</h2>
-			<h3>You Are: ${player1.getName()}</h3>
-			<h3>${player1.getDescription()}</h3>
-			<h4>Current $$$: ${player1.getMoney()}</h4>
-			<h5>Current Weather: ${currentWeather.getSummary()}</h5>
-			<h5>Current Temp: ${currentWeather.getTemperature()}</h5>
+
+			<h2>Current Settings: ${gameStatus.park.getName()}</h2>
+			<h3>You Are: ${gameStatus.mainPlayer.getName()}</h3>
+			<h4>Current $$$: ${gameStatus.mainPlayer.getMoney()}</h4>
+			<h5>Current Weather: ${gameStatus.weather.getSummary()}</h5>
+			<h5>Current Temp: ${gameStatus.weather.getTemperature()}</h5>
 
 		</div>
 
@@ -70,19 +70,33 @@
 							<div>
 							<h5>If you don't have shelter, mother nature will smell your fear</h5>
 								<div class="parkChoice">
+
 									<input type="radio" name="price" value=0> <label>In
 										the Leaves</label>
 									<p>Price: FREE</p>
 								</div>
 
 								<div class="parkChoice">
-									<input type="radio" name="price" value=10> <label>Tent</label>
+									<input 
+										<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
+										disabled 
+										</c:if>
+									type="radio" name="price" value=10> <label>Tent</label>
+									<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
+											<p class="expensive"> You cannot afford this </p>
+											</c:if>
 									<p>Price: $10</p>
 								</div>
 								<c:if test="${ park.rvOption }">
-									<div class="parkChoice">
-										<input type="radio" name="price" value=20> <label>RV</label>
-										<p>Price: $20</p>
+									<div class="parkChoice" >
+										<input 
+											<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
+											disabled
+											</c:if>
+										type="radio" name="price" value=20> <label>RV</label>
+										<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
+											<p class="expensive"> You cannot afford this </p>
+											</c:if><p>Price: $20</p>
 									</div>
 								</c:if>
 
