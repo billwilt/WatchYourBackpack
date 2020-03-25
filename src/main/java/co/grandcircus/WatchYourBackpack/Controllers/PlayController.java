@@ -69,7 +69,12 @@ public class PlayController {
 		Outcome finalOutcome = gameService.getFinalOutcome(gameStatus, event, choice);
 		mav.addObject("outcome", finalOutcome);
 		
+		if (gameStatus.getHealth() == 0) {
+			return mavLoss;
+		}
+		
 		return mav;
+	}
 
 
 //		int theirAttackSkill = gameStatus.getTotalAttack();
@@ -117,11 +122,6 @@ public class PlayController {
 		//mav.addObject("outcome", finalOutcome);
 		//mav.addObject("dayCount", dayCount);
 
-
-		
-		
-	}
-
 	///////////////////////////////// WEATHER DAY ////////////////////////////////////////////
 
 	@RequestMapping("/genericWeatherDay")
@@ -136,7 +136,7 @@ public class PlayController {
 		return mav;
 	}
 
-	@PostMapping("/genericWeatherDay")
+	@PostMapping("/genericWeatherDayPost")
 	public ModelAndView genericWeatherDayPost(String choice) {
 		ModelAndView mav = new ModelAndView("genericWeatherDayPost");
 		ModelAndView mavLoss = new ModelAndView("conclusion2");
@@ -257,6 +257,24 @@ public class PlayController {
 
 		playerDao.save(player1);
 		return new ModelAndView("redirect:/");
+	}
+	
+	@RequestMapping("/phoneAFriend")
+	public ModelAndView phoneAFriend() {
+		ModelAndView mav = new ModelAndView("phoneAFriend");
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		System.out.println(gameStatus.getPark());
+		System.out.println(gameStatus.getPark().getReception());
+		boolean reception = gameStatus.getPark().getReception();
+		
+		if (reception) {
+			mav.addObject("message", "You walk around and around until you finally find reception and get the chance to call for a friend, you don't lose any health after all.");
+			gameStatus.setHealth(gameStatus.getHealth() + 1);
+		} else {
+			mav.addObject("message", "You try to find reception but you can't. Maybe you should have picked a park with cellphone reception.");
+		}
+		
+		return mav;
 	}
 //////////////////////DAY 1 /////////////////////////////////////
 

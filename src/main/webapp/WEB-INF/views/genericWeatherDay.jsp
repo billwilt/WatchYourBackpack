@@ -30,7 +30,7 @@
 		<h4>${event.getDescription()}</h4>
 	</div>
 	<div>
-		<form method="post">
+		<form method="post" action="/genericWeatherDayPost">
 			<select name="choice">
 				<option value="1">Stay inside and stay safe</option>
 				<option value="2">Go out for food</option>
