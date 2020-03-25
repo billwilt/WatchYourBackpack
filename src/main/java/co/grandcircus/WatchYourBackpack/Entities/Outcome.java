@@ -18,6 +18,7 @@ public class Outcome {
 	private WeatherEvent weatherEvent;
 	@ManyToOne 
 	private BeastEvent beastEvent;
+	private Integer choice;
 	
 	
 	
@@ -50,6 +51,12 @@ public class Outcome {
 	@Override
 	public String toString() {
 		return "Outcome [id=" + id + ", survived=" + survived + ", description=" + description + "]";
+	}
+	public Integer getChoice() {
+		return choice;
+	}
+	public void setChoice(Integer choice) {
+		this.choice = choice;
 	}
 	
 	

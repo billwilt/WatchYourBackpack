@@ -49,16 +49,14 @@
 								selected
 
 							</c:if>>
-							${player.getName()}
-								Attack: ${player.getAttack()} Fire: ${player.getFire()}
-								Resourcefulness: ${player.getResourcefulness()} 
-								Money: <fmt:formatNumber value="${ player.money }" type="currency"/>
+							<pre>${player.getName()}  ||  
+								Attack:${player.getAttack()}:  Fire:${player.getFire()}:  
+								Resourcefulness:${player.getResourcefulness()}:  
+								Money:<fmt:formatNumber value="${ player.money }" type="currency"/></pre>
 						</option>						
 					</c:forEach>					
 					
-
-					<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
-				</select> <a href="/newPlayer">Add New Player</a>
+				</select> <a href="/newPlayer"><h5>Add New Player</h5></a>
 			</div>
 		</div>
 		</form>
@@ -68,6 +66,7 @@
 		<form action ="/start" method ="post">
 
 			<h2>CHOOSE YOUR NATIONAL PARK</h2>
+			<p>The park will only be an option if you can afford the entrance fee.</p>
 
 			<div class="btn-group-vertical">
 				<!-- Browse Parks by Name -->
@@ -76,10 +75,13 @@
 				<div class="form-group collapse" id="by-name">
 					<select class="custom-select" name="parkCodeName"
 						onchange="this.form.submit()">
-						<!-- onchange="toggleParkDisplay({ "state" : state })" -->
 						<option value="">Browse Parks by Name</option>
 						<c:forEach var="park" items="${ parksByName }">
-							<option value="${ park.getParkCode() }">${ park.getName() },
+							<option 
+							<c:if test="${ gameStatus.mainPlayer.money lt park.entranceFee }">
+								disabled
+							</c:if>
+							value="${ park.getParkCode() }">${ park.getName() },
 								(${ park.getStateCode() })</option>
 						</c:forEach>
 					</select>
@@ -92,7 +94,11 @@
 						onchange="this.form.submit()">
 						<option value="">Browse Parks by State</option>
 						<c:forEach var="park" items="${ parksByState }">
-							<option value="${ park.getParkCode() }">${ park.getStateCode() },
+							<option 
+							<c:if test="${ gameStatus.mainPlayer.money lt park.entranceFee }">
+								disabled
+							</c:if>
+							value="${ park.getParkCode() }">${ park.getStateCode() },
 								${ park.getName() }</option>
 						</c:forEach>
 					</select>
@@ -105,7 +111,6 @@
 				<select class="custom-select" name="parkCodeFee"
 					onchange="this.form.submit()">
 					<option value="">Browse Parks by Fee</option>
-					<!--replaced selected="" with value  -->
 					<c:forEach var="park" items="${ parksByFee }">
 
 						<option 

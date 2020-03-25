@@ -16,7 +16,7 @@
 	<table class="stats-table">
 		<tr>
 			<td>
-				<h5>Team: ${player1.getName()} & ${player2.getName()}</h5>
+				<h5>Team: ${gameStatus.mainPlayer.getName()} & ${gameStatus.partner.getName()}</h5>
 				<h5>Day : ${dayCount}</h5>
 				<h5>Day of Departure : ${maxDays}</h5>
 			</td>
@@ -36,9 +36,9 @@
 	<div>
 		<form method="post">
 			<select name="choice">
-				<option value="1">Try to fight it off</option>
+				<option value="1">Fight it off</option>
 				<option value="2">Light it on fire</option>
-				<option value="3">Try to out run away</option>
+				<option value="3">Try to run away</option>
 			</select>
 			<button>Survive</button>
 		</form>

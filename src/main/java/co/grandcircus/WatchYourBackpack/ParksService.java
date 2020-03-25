@@ -42,8 +42,6 @@ public class ParksService {
 			default:
 				return "many";		
 		}		
-
-		
 	}
 	
 	
@@ -118,6 +116,4 @@ public class ParksService {
 			}
 		}
 	}
-	
-	
 }
