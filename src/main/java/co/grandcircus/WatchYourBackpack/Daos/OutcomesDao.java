@@ -12,7 +12,7 @@ public interface OutcomesDao extends JpaRepository<Outcome, Long> {
 	List<Outcome> findAllByBeastEventId(Long EventId);
 	List<Outcome> findAllByWeatherEventId(Long EventId);
 	Outcome findByBeastEventIdAndChoiceAndSurvived(Long EventId, Integer choice, boolean survived);
-	
+	Outcome findByWeatherEventIdAndChoiceAndSurvived(Long EventId, Integer choice, boolean survied);
 	
 
 }

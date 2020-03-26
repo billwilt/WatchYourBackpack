@@ -39,13 +39,14 @@
 
 				<h5>${gameStatus.mainPlayer.getName()}</h5>
 				<h5> ${gameStatus.partner.getName()}</h5>
-				<br><span style="font-size: 2rem; color: darkgray;"><i class="far fa-calendar-alt"></i> ${dayCount}</span>
-				<br><span style="font-size: 1rem; color: darkgray;"><i class="fas fa-calendar-alt"></i><i class="fas fa-sign-out-alt"></i></span><span style="font-size: 2rem; color: darkgray;"> ${maxDays}</span>
+				<br><span style="font-size: 2rem; color: red;"><i class="fas fa-heart"></i> ${gameStatus.getHealth()}</span>
+				<br><span style="font-size: 2rem; color: #585758;"><i class="far fa-calendar-alt"></i> ${dayCount}</span>
+				<br><span style="font-size: 1rem; color: #585758;"><i class="fas fa-calendar-alt"></i><i class="fas fa-sign-out-alt"></i></span><span style="font-size: 2rem; color: #585758;"> ${maxDays}</span>
 				<br><span style="font-size: 2rem; color: darkred;"><i class="fas fa-bomb" ></i> ${gameStatus.getTotalAttack()}</span>
 				<br><span style="font-size: 2rem; color: darkorange;"><i class="fas fa-fire" ></i> ${gameStatus.getTotalFire()}</span>
 				<br><span style="font-size: 2rem; color: darkblue;"><i class="fas fa-tools" ></i>
 					${gameStatus.getTotalResourcefulness()}</span>
-				<br><span style="font-size: 2rem; color: red;"><i class="fas fa-heart"></i> ${gameStatus.getHealth()}</span>
+				
 
 	
 	</div>
@@ -53,7 +54,8 @@
 	<div class="center-space-tall">
 	
 		<div>
-		<h3>You were attacked by: ${event.getName()}</h3>
+		<h3>${event.getName()}</h3>
+		
 		<h5>${event.getDescription()}</h5>
 		
 			<div>

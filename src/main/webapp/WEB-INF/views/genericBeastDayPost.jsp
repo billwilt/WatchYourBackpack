@@ -30,18 +30,29 @@
 <title>Watch your Back!pack</title>
 </head>
 <body>
+<div class="background4">
 
-	<h1>${outcome.getDescription()}</h1>
+	<div class="left-space-tall-2up">
+		<h5>${outcome.getDescription()}</h5>
 		<c:choose>
 	<c:when test="${outcome.getSurvived()}">
-	 <h1>Success!</h1>
+	 <h1 class="success">Success!</h1>
 	</c:when>
 	<c:otherwise>
-	<h1>Womp Womp!</h1>
+	<h1 class="error">Womp Womp!</h1>
 	</c:otherwise>
 	</c:choose>
 	<form action="/dayController" method="post">
-	<button>NEXT DAY</button>
+	<button class="startButton">NEXT DAY</button>
 	</form>
+	</div>
+	
+	<div class="right-space-tall-2up">
+	<p>Beast Image</p>
+	</div>
+	
+</div>
+
+
 </body>
 </html>

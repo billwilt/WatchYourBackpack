@@ -247,7 +247,7 @@ div.left-space-tall {
   background-color: #c8e4f9;
   top: 186px;
   left: 51px;
-  width: 276px;
+  width: 15em;
   height: 450px;
   padding: 10px;
   border-radius: 10px;
@@ -268,8 +268,8 @@ div.center-space-tall {
   position: absolute;
   background-color: #c8e4f9;
   top: 186px;
-  left: 373px;
-  width: 276px;
+  left: 300px;
+  width: 370px;
   height: 450px;
   padding: 10px;
   border-radius: 10px;
