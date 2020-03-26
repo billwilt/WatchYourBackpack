@@ -71,8 +71,7 @@ public class PlayController {
 		
 		if (gameStatus.getHealth() == 0) {
 			return mavLoss;
-		}
-		
+		}		
 		return mav;
 	}
 
