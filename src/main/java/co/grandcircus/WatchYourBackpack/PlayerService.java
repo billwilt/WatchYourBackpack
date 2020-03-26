@@ -25,11 +25,9 @@ public class PlayerService {
 
 	public List<Player> getAvailableTeam(Long id) {
 		List<Player> availableTeam = new ArrayList<>();
-		for (Long i = 1L; i <= playerDao.count(); i++) {
-			if (i != id) {
-				availableTeam.add(playerDao.getOne(i));
-			}
-		}
+		availableTeam.addAll(playerDao.findAllByIdNot(id));
+//		availableTeam.addAll(playerDao.findAll());
+//		availableTeam.remove(playerDao.findById(id));
 		return availableTeam;
 	}
 }
