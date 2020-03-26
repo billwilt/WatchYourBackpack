@@ -64,6 +64,7 @@ public class PlayController {
 		BeastEvent event = (BeastEvent) sesh.getAttribute("event");
 		
 		Outcome finalOutcome = gameService.getFinalOutcome(gameStatus, event, choice);
+		gameStatus.setHealth(gameStatus.getHealth() + finalOutcome.getHealthChange());
 		mav.addObject("outcome", finalOutcome);
 		
 		if (gameStatus.getHealth() == 0) {
@@ -96,7 +97,7 @@ public class PlayController {
 		WeatherEvent event = (WeatherEvent) sesh.getAttribute("event");
 
 		Outcome finalOutcome = gameService.getFinalOutcome(gameStatus, event, choice);
-
+		gameStatus.setHealth(gameStatus.getHealth() + finalOutcome.getHealthChange());
 		sesh.setAttribute("gameStatus", gameStatus);
 		int dayCount = (int) sesh.getAttribute("dayCount");
 
