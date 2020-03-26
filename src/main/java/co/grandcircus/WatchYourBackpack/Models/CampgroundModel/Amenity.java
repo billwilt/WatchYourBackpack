@@ -9,7 +9,6 @@ public class Amenity {
 	private List<String> potablewater;
 	private List<String> toilets;
 	
-	
 	public String getCellphonereception() {
 		return cellphonereception;
 	}
@@ -39,7 +38,5 @@ public class Amenity {
 		return "Amenity [cellphonereception=" + cellphonereception + ", firewoodforsale=" + firewoodforsale
 				+ ", potablewater=" + potablewater + ", toilets=" + toilets + "]";
 	}
-	
-	
 	
 }

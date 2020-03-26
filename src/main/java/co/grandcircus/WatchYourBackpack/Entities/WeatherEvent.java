@@ -18,8 +18,6 @@ public class WeatherEvent extends Event{
 	protected List<Outcome> outcomes;
 	private String triggerIcons;
 	
-	
-	
 	public List<Outcome> getOutcomes() {
 		return outcomes;
 	}
