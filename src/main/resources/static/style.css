@@ -115,6 +115,11 @@
 	color: darkred;
 }
 
+.expensive-div{
+	color: darkred;
+	border: 2px solid darkred;
+}
+
 div.relative {
   position: relative;
   width: 1200px;
