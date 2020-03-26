@@ -199,6 +199,17 @@ div.background4 {
   border-style: solid;
 }
 
+div.background5 {
+  position: relative;
+  width: 1024px;
+  height: 768px;
+  margin: 0 auto;
+  background-image: url(images/background-05.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-style: solid;
+}
+
 div.left-short {
   position: absolute;
   background-color: #c8e4f9;
