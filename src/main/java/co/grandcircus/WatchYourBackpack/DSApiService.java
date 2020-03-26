@@ -32,7 +32,6 @@ public class DSApiService {
 	public Currently getWeather(String lat, String lon) {
 		String url = "https://api.darksky.net/forecast/" + apiKeyDS + "/" + lat + "," + lon;
 		DSResponse response = rt.getForObject(url, DSResponse.class);
-		System.out.println(response.getCurrently());
 		return response.getCurrently();
 	}
 	
