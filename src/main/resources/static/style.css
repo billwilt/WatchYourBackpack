@@ -41,7 +41,7 @@
 
 .startButton {
 	margin-top: 30px;
-	margin-left: 90%;
+	margin-left: 85%;
 	background: #d9b800;
 	color: black;
 	border: 1px solid black;
@@ -115,6 +115,15 @@
 	color: darkred;
 }
 
+body,td,th {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.expensive-div{
+	color: darkred;
+	border: 2px solid darkred;
+}
+
 div.relative {
   position: relative;
   width: 1200px;
@@ -125,12 +134,116 @@ div.relative {
   background-position: center;
 }
 
+div.background1 {
+  position: relative;
+  width: 1024px;
+  height: 768px;
+  margin: 0 auto;
+  background-image: url(images/background-01.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-style: solid;
+}
+
+div.background2 {
+  position: relative;
+  width: 1024px;
+  height: 768px;
+  margin: 0 auto;
+  background-image: url(images/background-02.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-style: solid;
+}
+
+div.background3 {
+  position: relative;
+  width: 1024px;
+  height: 768px;
+  margin: 0 auto;
+  background-image: url(images/background-03.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-style: solid;
+}
+
+div.background4 {
+  position: relative;
+  width: 1024px;
+  height: 768px;
+  margin: 0 auto;
+  background-image: url(images/background-04.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-style: solid;
+}
+
+div.left-short {
+  position: absolute;
+  background-color: #e6e6e6;
+  top: 45%;
+  left: 3%;
+  width: 361px;
+  height: 350px;
+  padding: 10px;
+}
+
+div.right-short {
+  position: absolute;
+  background-color: #e6e6e6;
+  top: 45%;
+  left: 62%;
+  width: 361px;
+  height: 350px;
+  padding: 10px;
+}
+
 div.absolute {
   position: absolute;
   top: 70%;
   left: 0;
   width: 100%;
   height: 100px;
+}
+
+div.left-space {
+  position: absolute;
+  background-color: #e6e6e6;
+  top: 300px;
+  left: 51px;
+  width: 276px;
+  height: 325px;
+  padding: 10px;
+}
+
+div.right-space {
+  position: absolute;
+  background-color: #e6e6e6;
+  top: 300px;
+  left: 695px;
+  width: 276px;
+  height: 325px;
+  padding: 10px;
+}
+
+div.center-space {
+  position: absolute;
+  background-color: #e6e6e6;
+  top: 300px;
+  left: 373px;
+  width: 276px;
+  height: 325px;
+  padding: 10px;
+}
+
+div.top-space {
+  position: absolute;
+  background-color: #e6e6e6;
+  top: 37px;
+  left: 549px;
+  width: 391px;
+  height: 227px;
+  padding: 10px;
 }
 
 .column {
@@ -174,9 +287,4 @@ width: 90%;
   width: 100%;
   
 }
-
-/* table, th, td {
-  border: 1px solid black;
-} */
-
 

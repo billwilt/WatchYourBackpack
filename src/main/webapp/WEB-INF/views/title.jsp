@@ -25,17 +25,17 @@ integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9If
   		<div class="column goldLine">
     		<h3>Jeannie Mccarthy</h3>
     		<hr class="lines">
-    		<p>Email Address</p>
+    		<p><a href="mailto:bean.mccarthy@gmail.com" target="_top">bean.mccarthy@gmail.com</a></p>
   		</div>
   		<div class="column goldLine">
    	 		<h3>Sean Warchuck</h3>
     		<hr class="lines">
-    		<p>Email Address</p>
+    		<p><a href="mailto:s.warchuck16@gmail.com" target="_top">s.warchuck16@gmail.com</a></p>
   		</div>
   		<div class="column goldLine">
     		<h3>William Wilt</h3>
     		<hr class="lines">
-    		<p>billwilt@gmail.com</p>
+    		<p><a href="mailto:billwilt@gmail.com" target="_top">billwilt@gmail.com</a></p>
 		</div>
 	</div>
 

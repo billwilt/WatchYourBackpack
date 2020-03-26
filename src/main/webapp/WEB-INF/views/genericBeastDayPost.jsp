@@ -30,7 +30,9 @@
 <title>Watch your Back!pack</title>
 </head>
 <body>
-	<c:choose>
+
+	<h1>${outcome.getDescription()}</h1>
+		<c:choose>
 	<c:when test="${outcome.getSurvived()}">
 	 <h1>Success!</h1>
 	</c:when>
@@ -38,7 +40,6 @@
 	<h1>Womp Womp!</h1>
 	</c:otherwise>
 	</c:choose>
-	<h1>${outcome.getDescription()}</h1>
 	<form action="/dayController" method="post">
 	<button>NEXT DAY</button>
 	</form>

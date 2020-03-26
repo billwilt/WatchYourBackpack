@@ -82,7 +82,7 @@
 								<div class="parkChoice">
 									<input
 										<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
-										disabled 
+										disabled class="expensive-div"
 										</c:if>
 										type="radio" name="price" value=10> <label>Tent</label>
 									<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
@@ -90,11 +90,12 @@
 									</c:if>
 									<p>Price: $10</p>
 								</div>
-								<c:if test="${ park.rvOption }">
+
+								<c:if test="${ gameStatus.park.rvOption }">
 									<div class="parkChoice">
-										<input
+										<input 
 											<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
-											disabled
+											disabled class="expensive"
 											</c:if>
 											type="radio" name="price" value=20> <label>RV</label>
 										<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
