@@ -59,7 +59,7 @@
 			<h5>Wallet after trip: $${walletAfter}</h5>
 		</div>
 
-		<a href="/genericBeastDay" class="startButton">PLAY THE GAME</a>
+		<a href="/genericBeastDay" class="start-button-confirm">PLAY THE GAME</a>
 	</div>
 </body>
 </html>
