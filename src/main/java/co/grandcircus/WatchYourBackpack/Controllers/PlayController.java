@@ -193,7 +193,7 @@ public class PlayController {
 			mav.addObject("message", "You walk around and around until you finally find reception and get the chance to call for a friend, you don't lose any health after all.");
 			gameStatus.setHealth(gameStatus.getHealth() + 1);
 		} else {
-			mav.addObject("message", "You try to find reception but you can't. Maybe you should have picked a park with cellphone reception.");
+			mav.addObject("message", "You try to find reception but you can't. Apparently " + gameStatus.getPark().getName() + "National Park does not have cellphone reception.");
 		}
 		
 		return mav;

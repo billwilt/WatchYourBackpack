@@ -26,27 +26,38 @@
 	crossorigin="anonymous">
 <!-- Your custom styles -->
 <link href="/style.css" rel="stylesheet" />
-
+<script src="https://kit.fontawesome.com/c66cb055e4.js"
+	crossorigin="anonymous"></script>
 <title>Watch your Back!pack</title>
 </head>
 <body>
+	<div class="background4">
+		<div class="left-space-tall-2up">
+			<h5>${outcome.getDescription()}</h5>
+			<c:choose>
+				<c:when test="${outcome.getSurvived()}">
+					<h5>You successfully went out for food!</h5>
+				</c:when>
+				<c:otherwise>
+					<h5>You were unprepared to face Mother Nature's mighty wrath.</h5>
 
-	<h1>${outcome.getDescription()}</h1>
-	<c:choose>
-	<c:when test="${outcome.getSurvived()}">
-	 <h1>You successfully went out for food!</h1>
-	</c:when>
-	<c:otherwise>
-	<h1>You were unprepared to face Mother Nature's mighty wrath.</h1>
-	
-	<p>Would you like to try and phone a friend to see if they can help you out of this mess?</p>
-	<a href="/phoneAFriend" type ="button" class="btn startButton"> Phone a friend</a>
-	</c:otherwise>
-	</c:choose>
-	<h6>${ message }</h6>
-	
-	<form action="/dayController" method="post">
-	<button class="btn startButton">NEXT DAY</button>
-	</form>
+					<p>Would you like to try and phone a friend to see if they can
+						help you out of this mess?</p>
+					<a href="/phoneAFriend" type="button" class="btn startButton">
+						<i class="fas fa-phone-volume" style="font-size: 2rem;"></i>  Phone a friend
+					</a>
+				</c:otherwise>
+			</c:choose>
+			<h6>${ message }</h6>
+
+			<form action="/dayController" method="post">
+				<button class="btn startButton">NEXT DAY</button>
+
+			</form>
+		</div>
+		<div class="right-space-tall-2up">
+			<p>Beast Image</p>
+		</div>
+	</div>
 </body>
 </html>

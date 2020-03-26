@@ -26,38 +26,54 @@
 	crossorigin="anonymous">
 <!-- Your custom styles -->
 <link href="/style.css" rel="stylesheet" />
-
+<script src="https://kit.fontawesome.com/c66cb055e4.js"
+	crossorigin="anonymous"></script>
 <title>Watch your Back!pack</title>
 </head>
 <body>
-<table class="stats-table">
-		<tr>
-			<td>
-				<h5>Team: ${player1.getName()} & ${player2.getName()}</h5>
-				<h5>Day : ${dayCount}</h5>
-				<h5>Day of Departure : ${maxDays}</h5>
-			</td>
-			<td>
-				<h5>Team Attack: ${gameStatus.getTotalAttack()}</h5>
-				<h5>Team Fire: ${gameStatus.getTotalFire()}</h5>
-				<h5>Team Resourcefulness:
-					${gameStatus.getTotalResourcefulness()}</h5>
-				<h6>Team Health: ${gameStatus.getHealth()}</h6>
-			<td>
-		</tr>
-	</table>
-	<div>
-		<h1>Weather isn't looking too good, currently it is: ${event.getName()}</h1>
-		<h4>${event.getDescription()}</h4>
+	<div class="background4">
+
+		<div class="left-space-tall">
+
+
+			<h5>${gameStatus.mainPlayer.getName()}</h5>
+			<h5>${gameStatus.partner.getName()}</h5>
+			<br> <span style="font-size: 2rem; color: red;"><i
+				class="fas fa-heart"></i> ${gameStatus.getHealth()}</span> <br> <span
+				style="font-size: 2rem; color: #585758;"><i
+				class="far fa-calendar-alt"></i> ${dayCount}</span> <br> <span
+				style="font-size: 1rem; color: #585758;"><i
+				class="fas fa-calendar-alt"></i><i class="fas fa-sign-out-alt"></i></span><span
+				style="font-size: 2rem; color: #585758;"> ${maxDays}</span> <br>
+			<span style="font-size: 2rem; color: darkred;"><i
+				class="fas fa-bomb"></i> ${gameStatus.getTotalAttack()}</span> <br> <span
+				style="font-size: 2rem; color: darkorange;"><i
+				class="fas fa-fire"></i> ${gameStatus.getTotalFire()}</span> <br> <span
+				style="font-size: 2rem; color: darkblue;"><i
+				class="fas fa-tools"></i> ${gameStatus.getTotalResourcefulness()}</span>
+
+
+
+		</div>
+
+		<div class="center-space-tall">
+			<div>
+				<h1>${event.getName()}</h1>
+				<h4>${event.getDescription()}</h4>
+			</div>
+			<div>
+				<form method="post" action="/genericWeatherDayPost">
+					<select name="choice">
+						<option value="1">Stay inside and stay safe</option>
+						<option value="2">Go out for food</option>
+					</select>
+					<button>Survive</button>
+				</form>
+			</div>
+		</div>
+		<div class="right-space-tall"></div>
+
 	</div>
-	<div>
-		<form method="post" action="/genericWeatherDayPost">
-			<select name="choice">
-				<option value="1">Stay inside and stay safe</option>
-				<option value="2">Go out for food</option>
-			</select>
-			<button>Survive</button>
-		</form>
-	</div>
+
 </body>
 </html>
