@@ -35,10 +35,12 @@
 		<div class="center">
 
 			<h2>Current Settings: ${gameStatus.park.getName()}</h2>
+			<h4>[Attack=${gameStatus.mainPlayer.getAttack()}, Fire=${gameStatus.mainPlayer.getFire()}, Resourcefulness=${gameStatus.mainPlayer.getResourcefulness()}]</h4>
 			<h3>You Are: ${gameStatus.mainPlayer.getName()}</h3>
 			<h4>Current $$$: ${gameStatus.mainPlayer.getMoney()}</h4>
 			<h5>Current Weather: ${gameStatus.weather.getSummary()}</h5>
 			<h5>Current Temp: ${gameStatus.weather.getTemperature()}</h5>
+			
 
 		</div>
 
@@ -68,7 +70,8 @@
 						<div>
 							<!--  	<form action="" method="post" class="card1"> -->
 							<div>
-							<h5>If you don't have shelter, mother nature will smell your fear</h5>
+								<h5>If you don't have shelter, mother nature will smell
+									your fear</h5>
 								<div class="parkChoice">
 
 									<input type="radio" name="price" value=0 checked="checked" > <label>In
@@ -77,26 +80,27 @@
 								</div>
 
 								<div class="parkChoice">
-									<input 
+									<input
 										<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
 										disabled 
 										</c:if>
-									type="radio" name="price" value=10> <label>Tent</label>
+										type="radio" name="price" value=10> <label>Tent</label>
 									<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
-											<p class="expensive"> You cannot afford this </p>
-											</c:if>
+										<p class="expensive">You cannot afford this</p>
+									</c:if>
 									<p>Price: $10</p>
 								</div>
 								<c:if test="${ park.rvOption }">
-									<div class="parkChoice" >
-										<input 
+									<div class="parkChoice">
+										<input
 											<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
 											disabled
 											</c:if>
-										type="radio" name="price" value=20> <label>RV</label>
+											type="radio" name="price" value=20> <label>RV</label>
 										<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
-											<p class="expensive"> You cannot afford this </p>
-											</c:if><p>Price: $20</p>
+											<p class="expensive">You cannot afford this</p>
+										</c:if>
+										<p>Price: $20</p>
 									</div>
 								</c:if>
 
