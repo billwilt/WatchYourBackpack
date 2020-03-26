@@ -80,7 +80,9 @@
 
 		</div>
 
-		<div class="right-space-tall"></div>
+		<div class="right-space-tall">
+		<img src="${event.eventImageUrl }"></div>
+		
 
 	</div>
 

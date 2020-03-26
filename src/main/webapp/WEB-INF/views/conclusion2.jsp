@@ -34,9 +34,17 @@
 <title>Uh Oh</title>
 </head>
 <body>
-<h1>You did not make it through the trip, but dont worry you can try again!</h1>
+	<div class="background1">
 
-<a href="/index" class="startButton">Back to main menu</a>
+		<div class="left-short">
+			<h4>You did not make it through the trip, but don't worry- you
+				can try again!</h4>
 
+			<a href="/index" class="btn startButton">Play again!</a> 
+			<a href="/title"
+				class="btn startButton">Take me home</a>
+		</div>
+		<div class="right-short">
+		</div>
 </body>
 </html>
