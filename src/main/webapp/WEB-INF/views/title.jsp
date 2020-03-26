@@ -40,9 +40,7 @@ integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9If
 	</div>
 
 <div class ="center-title" style="text-align: center">
-<form action="http://www.grandcircus.co">
-  <input type="submit" class="btn btn-danger btn-group-lg" value="Shall We Play A Game?">
-</form>
+<a href="/index">Menu</a>
 </div>
 
 	
