@@ -33,102 +33,84 @@
 	<div class="background2">
 
 		<form action="/confirmSettings" method="post">
-			<div class="top-space">
+		
+				<div class="top-space">
 
 
-<!-- 	<div class="center"> -->
+					<h5>Park: ${gameStatus.park.getName()}</h5>
 
-		<h2>Current Settings: ${gameStatus.park.getName()}</h2>
-		<h4>[Attack=${gameStatus.mainPlayer.getAttack()},
-			Fire=${gameStatus.mainPlayer.getFire()},
-			Resourcefulness=${gameStatus.mainPlayer.getResourcefulness()}]</h4>
-		<h3>You Are: ${gameStatus.mainPlayer.getName()}</h3>
-		<h4>Current $$$: ${gameStatus.mainPlayer.getMoney()}</h4>
-		<h5>Current Weather: ${gameStatus.weather.getSummary()}</h5>
-		<h5>Current Temp: ${gameStatus.weather.getTemperature()}</h5>
+					<h5>You Are: ${gameStatus.mainPlayer.getName()}</h5>
+					<h6>[Attack=${gameStatus.mainPlayer.getAttack()},
+						Fire=${gameStatus.mainPlayer.getFire()},
+						Resourcefulness=${gameStatus.mainPlayer.getResourcefulness()}]</h6>
+					<h5>Current $$$: ${gameStatus.mainPlayer.getMoney()}</h5>
+					<h5>Current Weather: ${gameStatus.weather.getSummary()}</h5>
+					<h5>Current Temp: ${gameStatus.weather.getTemperature()}&#176</h5>
 
+				</div>
 
-<!-- 	</div> -->
-				
-			</div>
-
+			
 			<div class="left-space">
+	
+				<h2>CHOOSE YOUR FRIEND</h2>
+				<div class="form-group">
+					<select name="id" class="custom-select" required>
+						<c:forEach items="${availableTeam}" var="player">
 
+							<option value="${player.getId()}">${player.getName()}
+								[Attack=${player.getAttack()}, Fire=${player.getFire()},
+								Resourcefulness=${player.getResourcefulness()}]</option>
 
-	<!-- <div class="center"> -->
-	<!-- 			<table style="width: 100%">
-				<tr>
-					<td align="center" class="column"> -->
-<!-- 	<div class="form-check disabled"> -->
-		<h2>CHOOSE YOUR FRIEND</h2>
-		<div class="form-group">
-			<select name="id" class="custom-select" required>
-				<c:forEach items="${availableTeam}" var="player">
-
-					<option value="${player.getId()}">${player.getName()}
-						[Attack=${player.getAttack()}, Fire=${player.getFire()},
-						Resourcefulness=${player.getResourcefulness()}]</option>
-
-				</c:forEach>
-				<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
-			</select>
-		</div>
-	</div>
+						</c:forEach>
+						<!-- Attack: ${player.getAttack()} Fire: ${player.getFire()} Resourcefulness: ${player.getResourcefulness} --->
+					</select>
+				</div>
+			</div>
 
 			<div class="center-space">
 
 
-	<!-- </td> -->
+				<h5>If you don't have shelter, mother nature will smell your
+					fear</h5>
+				<div class="parkChoice">
 
+					<input type="radio" name="price" value=0 checked="checked">
+					<label>In the Leaves</label>
+					<p>Price: FREE</p>
+				</div>
 
-
-	<!-- <td align="center" class="column"> -->
-<!-- 	<div> -->
-		<!--  	<form action="" method="post" class="card1"> -->
-		<!-- <div> -->
-			<h5>If you don't have shelter, mother nature will smell your
-				fear</h5>
-			<div class="parkChoice">
-
-				<input type="radio" name="price" value=0 checked="checked">
-				<label>In the Leaves</label>
-				<p>Price: FREE</p>
-			</div>
-
-			<div class="parkChoice">
-				<input
-					<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
-										disabled class="expensive-div"
-										</c:if>
-					type="radio" name="price" value=10> <label>Tent</label>
-				<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
-					<p class="expensive">You cannot afford this</p>
-				</c:if>
-				<p>Price: $10</p>
-			</div>
-
-			<c:if test="${ gameStatus.park.rvOption }">
 				<div class="parkChoice">
 					<input
-						<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
-											disabled class="expensive"
-											</c:if>
-						type="radio" name="price" value=20> <label>RV</label>
-					<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
+						<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
+										disabled class="expensive-div"
+										</c:if>
+						type="radio" name="price" value=10> <label>Tent</label>
+					<c:if test="${ gameStatus.mainPlayer.money lt 10 }">
 						<p class="expensive">You cannot afford this</p>
 					</c:if>
-					<p>Price: $20</p>
+					<p>Price: $10</p>
 				</div>
-			</c:if>
 
-		</div>
+				<c:if test="${ gameStatus.park.rvOption }">
+					<div class="parkChoice">
+						<input
+							<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
+											disabled class="expensive"
+											</c:if>
+							type="radio" name="price" value=20> <label>RV</label>
+						<c:if test="${ gameStatus.mainPlayer.money lt 20 }">
+							<p class="expensive">You cannot afford this</p>
+						</c:if>
+						<p>Price: $20</p>
+					</div>
+				</c:if>
 
-			
+			</div>
 	</div>
 
 
-	<div class="right-space">
-				
+	<div class="right-space"> 
+
 		<h4>Choose Three (3) items:</h4>
 		<p>
 			<select id="item1" name="item1Id" required>
@@ -155,7 +137,7 @@
 		<button>Confirm</button>
 
 	</div>
-
+</div>
 	</form>
 
 </body>
