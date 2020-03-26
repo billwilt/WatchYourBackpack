@@ -34,7 +34,8 @@
 		<h2>You: ${gameStatus.mainPlayer.name}</h2>
 		<h6>Attack: ${gameStatus.mainPlayer.getAttack()}</h6>
 		<h6>Fire: ${gameStatus.mainPlayer.getFire()}</h6>
-		<h6>Resourcefulness: ${gameStatus.mainPlayer.getResourcefulness()}</h6>
+		<h6>Resourcefulness:
+			${gameStatus.mainPlayer.getResourcefulness()}</h6>
 		<h6>Wallet before trip: $${gameStatus.mainPlayer.getMoney()}</h6>
 	</div>
 	<div class="confirmCube">
@@ -45,12 +46,13 @@
 	</div>
 	<div class="confirmCube">
 		<h2>Park: ${gameStatus.park.getName()}</h2>
+		<h3>Trip Length: ${ maxDays }</h3>
 		<h5>Weather: ${gameStatus.weather.getSummary()}</h5>
 		<h6>Total Cost: $${totalCost}</h6>
 		<h6>Sleeping: ${sleeping}</h6>
 		<h6>Wallet after trip: $${walletAfter}</h6>
 	</div>
-	
+
 	<a href="/genericBeastDay" class="startButton">PLAY THE GAME</a>
 </body>
 </html>
