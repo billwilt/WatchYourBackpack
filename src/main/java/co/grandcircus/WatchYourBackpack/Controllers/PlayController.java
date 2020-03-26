@@ -97,7 +97,11 @@ public class PlayController {
 		WeatherEvent event = (WeatherEvent) sesh.getAttribute("event");
 
 		Outcome finalOutcome = gameService.getFinalOutcome(gameStatus, event, choice);
+		try {
 		gameStatus.setHealth(gameStatus.getHealth() + finalOutcome.getHealthChange());
+		}catch (Exception e) {
+			
+		}
 		sesh.setAttribute("gameStatus", gameStatus);
 		int dayCount = (int) sesh.getAttribute("dayCount");
 
