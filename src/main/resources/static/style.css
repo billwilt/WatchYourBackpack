@@ -247,7 +247,7 @@ div.left-space-tall {
   background-color: #c8e4f9;
   top: 186px;
   left: 51px;
-  width: 276px;
+  width: 15em;
   height: 450px;
   padding: 10px;
   border-radius: 10px;
@@ -268,8 +268,41 @@ div.center-space-tall {
   position: absolute;
   background-color: #c8e4f9;
   top: 186px;
-  left: 373px;
+  left: 300px;
+  width: 370px;
+  height: 450px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+div.left-space-tall-2up {
+  position: absolute;
+  background-color: #c8e4f9;
+  top: 185px;
+  left: 152px;
   width: 276px;
+  height: 450px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+div.right-space-tall-2up {
+  position: absolute;
+  background-color: #c8e4f9;
+  top: 185px;
+  left: 574px;
+  width: 276px;
+  height: 450px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+div.right-space-tall-2upb {
+  position: absolute;
+  background-color: #c8e4f9;
+  top: 165px;
+  left: 615px;
+  width: 350px;
   height: 450px;
   padding: 10px;
   border-radius: 10px;
