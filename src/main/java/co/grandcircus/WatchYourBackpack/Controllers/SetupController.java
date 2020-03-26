@@ -50,7 +50,11 @@ public class SetupController {
 	@Autowired
 	private PlayerService playerService;
 
-
+	@RequestMapping("/")
+	public ModelAndView index() {
+		return new ModelAndView("title");
+	}
+	
 	@RequestMapping("/index")
 	public ModelAndView showHome(RedirectAttributes rd) {
 		ModelAndView mav = new ModelAndView("settings1");
