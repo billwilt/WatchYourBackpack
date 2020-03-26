@@ -175,13 +175,19 @@ public class SetupController {
 		//Integer totalAttack = player1.getAttack() + player2.getAttack() + itemsAttack;
 		Integer totalAttack = gameService.getTotalAttack(player1, player2, item1, item2, item3);
 		gameStatus.setTotalAttack(totalAttack);
-
-		Integer totalFire = player1.getFire() + player2.getFire() + itemsFire;
+		
+		Integer totalFire = gameService.getTotalFire(player1, player2, item1, item2, item3);
 		gameStatus.setTotalFire(totalFire);
 		
-		Integer totalResourcefulness = player1.getResourcefulness() + player2.getResourcefulness()
-				+ itemsResourcefulness;
+		Integer totalResourcefulness = gameService.getTotalResourcefulness(player1, player2, item1, item2, item3);
 		gameStatus.setTotalResourcefulness(totalResourcefulness);
+
+//		Integer totalFire = player1.getFire() + player2.getFire() + itemsFire;
+//		gameStatus.setTotalFire(totalFire);
+//		
+//		Integer totalResourcefulness = player1.getResourcefulness() + player2.getResourcefulness()
+//				+ itemsResourcefulness;
+//		gameStatus.setTotalResourcefulness(totalResourcefulness);
 
 		// if they don't have enough money, set price to 0 for sleeping in the leaves
 		if (player1.getMoney() < price || price == 0.0 || price.isNaN()) {
