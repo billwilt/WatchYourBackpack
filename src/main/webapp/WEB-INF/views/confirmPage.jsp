@@ -26,7 +26,8 @@
 	crossorigin="anonymous">
 <!-- Your custom styles -->
 <link href="/style.css" rel="stylesheet" />
-
+<script src="https://kit.fontawesome.com/c66cb055e4.js"
+	crossorigin="anonymous"></script>
 <title>Watch your Back!pack</title>
 </head>
 <body>
@@ -49,7 +50,7 @@
 			<h5>Resourcefulness: ${gameStatus.partner.getResourcefulness()}</h5>
 		</div>
 		
-		<div class="confirmCube right-space">
+		<div class="confirmCube right-space2">
 			<h2>${gameStatus.park.getName()}</h2>
 			<h5>Trip Length: ${ maxDays } Days</h5>
 			<h5>Weather: ${gameStatus.weather.getSummary()}</h5>

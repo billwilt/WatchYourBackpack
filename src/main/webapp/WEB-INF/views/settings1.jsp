@@ -26,17 +26,12 @@
 	crossorigin="anonymous">
 <!-- Your custom styles -->
 <link href="/style.css" rel="stylesheet" />
-
+<script src="https://kit.fontawesome.com/c66cb055e4.js"
+	crossorigin="anonymous"></script>
 <title>Watch your Back!pack</title>
 </head>
 <body>
 	<div class="background1">
-
-		<!-- 	<div class="left-short"> -->
-
-
-
-
 
 		<div class="left-short">
 			<!--  form-check disabled inputForm-left -->
@@ -49,7 +44,6 @@
 
 					<select name="id" class="custom-select" required
 						onchange="this.form.submit()">
-						<!-- onchange="showDiv('choose-park')" -->
 						<option value="0">Choose your player</option>
 						<c:forEach items="${players}" var="player">
 							<option value="${player.getId()}"

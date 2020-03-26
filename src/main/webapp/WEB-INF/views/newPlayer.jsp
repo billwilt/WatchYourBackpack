@@ -26,29 +26,42 @@
 	crossorigin="anonymous">
 <!-- Your custom styles -->
 <link href="/style.css" rel="stylesheet" />
-
+<script src="https://kit.fontawesome.com/c66cb055e4.js"
+	crossorigin="anonymous"></script>
 <title>Watch your Back!pack</title>
 </head>
 <body>
-	<div>
-		<form method="post">
-			<p>
-				<label>Player Name</label><input type="text" name="name" maxlength="15" >
-				<small id="emailHelp" class="form-text text-muted">15 Characters max</small>
-    </div>
-			<p>
-				<label>Player Description</label><input type="text" maxlength="255" name="description">
-				<small id="emailHelp" class="form-text text-muted">255 Characters max</small>
-			<p>
-				<label>Type</label> <select name="type">
-					<option value="1">Fighter</option>
-					<option value="2">Pyro</option>
-					<option value="3">Resourceful</option>
-				</select>
-			</p>
-			<input type="hidden" value=10 name="money">
-			<button>Add Player</button>
-		</form>
+
+	<div class="background5">
+
+		<div class="right-space-tall-2upb">
+			<p>New Character</p>
+
+
+			<form method="post">
+				<p>
+					<label>Player Name</label><input type="text" name="name"
+						maxlength="15"> <small id="emailHelp"
+						class="form-text text-muted">15 Characters max</small>
+				</p>
+
+				<p>
+					<label>Player Description</label><input type="text" maxlength="255"
+						name="description"> <small id="emailHelp"
+						class="form-text text-muted">255 Characters max</small>
+				</p>
+				<p>
+					<label>Type</label> <select name="type">
+						<option value="1">Fighter</option>
+						<option value="2">Pyro</option>
+						<option value="3">Resourceful</option>
+					</select>
+				</p>
+				<input type="hidden" value=10 name="money">
+				<button>Add Player</button>
+			</form>
+		</div>
 	</div>
+
 </body>
 </html>

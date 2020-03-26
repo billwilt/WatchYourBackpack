@@ -3,8 +3,11 @@
  */
 	function showDiv(divId){
 		document.getElementById(divId).style.display="block";
-		console.log("showing the div doo doo doo dee doo doo");
 	}
+	function wonGame(){
+		alert("You have successfully made it out alive!");
+	}
+	
 		function toggleDropdownByName() {
 			document.getElementsByClassName("browse-by-name").classList
 					.toggle("show");

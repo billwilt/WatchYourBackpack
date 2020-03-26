@@ -7,7 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<script src="https://kit.fontawesome.com/c66cb055e4.js"
+	crossorigin="anonymous"></script>
 <title>Watch Your Backpack: Conclusion - Will you be going on
 	any additional camping trips?</title>
 <meta name="viewport"
@@ -31,50 +32,82 @@
 <link href="/style.css" rel="stylesheet" />
 </head>
 <body>
+	<div class="background1">
 
-	<h1>While hiking out you found some money on the ground, turned
-		out to be $${moneyFound}</h1>
+		<div class="left-short">
 
-	<!-- end of game stats  -->
-	<div class="confirmCube">
-		<h2>You: ${gameStatus.mainPlayer.getName()}</h2>
-		<h6>Attack: ${gameStatus.mainPlayer.getAttack()}</h6>
-		<h6>Fire: ${gameStatus.mainPlayer.getFire()}</h6>
-		<h6>Resourcefulness:
-			${gameStatus.mainPlayer.getResourcefulness()}</h6>
-		<h6>Wallet after trip: $${gameStatus.mainPlayer.getMoney()}</h6>
+			<h5>While hiking out you found some money on the ground, turned
+				out to be $${moneyFound}</h5>
+
+			<!-- end of game stats  -->
+
+			<h4>${gameStatus.mainPlayer.getName()} & ${gameStatus.partner.getName()}</h4>
+			<br> <span style="font-size: 2rem; color: red;"><i
+				class="fas fa-heart"></i> ${gameStatus.getHealth()}</span> <br> <span
+				style="font-size: 2rem; color: darkgreen;"><i
+				class="fas fa-dollar-sign"></i> ${gameStatus.mainPlayer.getMoney()}</span>
+			<br> <span style="font-size: 1rem; color: #585758;"><i
+				class="fas fa-calendar-alt"></i><i class="fas fa-sign-out-alt"></i></span><span
+				style="font-size: 2rem; color: #585758;"> ${maxDays}</span> <br>
+
+		</div>
+		<div class="right-short">
+			
+			<c:choose>
+				<c:when
+					test="${ gameStatus.mainPlayer.getAttack() + gameStatus.mainPlayer.getFire() + gameStatus.mainPlayer.getResourcefulness() lt 9 }">
+
+					<h5>You get to level up one skill for making it out alive!</h5>
+					<h6>Your total skill count maxes out at 9, choose wisely.</h6>
+
+					<form action="/backHome" method="post">
+						
+							<div class="container">
+							<div class="row">
+							<div class="col-sm-4"><span style="font-size: 2rem; color: darkred;"><i
+								class="fas fa-bomb"></i> ${gameStatus.getTotalAttack()}</span>
+							</div>
+							<div class="col-sm-8"><br><input type="radio" name="skill" value="1"> <label>Attack</label>
+							</div>
+							</div>
+							<div class="row">
+							<div class="col-sm-4">
+							<span style="font-size: 2rem; color: darkorange;"><i
+								class="fas fa-fire"></i> ${gameStatus.getTotalFire()}</span>
+							</div>
+							<div class="col-sm-8">
+							<br><input type="radio" name="skill" value="2"> <label>Fire</label>
+							</div>
+							</div>
+							<div class="row">
+							<div class="col-sm-4">
+							<span style="font-size: 2rem; color: darkblue;"><i
+								class="fas fa-tools"></i>
+								${gameStatus.getTotalResourcefulness()}</span>
+							</div>
+							<div class="col-sm-8">
+							<br><input type="radio" name="skill" value="3"> <label>Resourcefulness</label>
+							</div>
+							</div>
+							</div>
+							
+						
+						<button>THIS IS THE SKILL I WANT</button>
+					</form>
+
+
+				</c:when>
+				<c:otherwise>
+					<h5>Your skills are maxed out YO! Getting out alive is its own
+						reward!</h5>
+					<a class="startButton" href="/index">Home</a>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
-
-	<c:choose>
-		<c:when
-			test="${ gameStatus.mainPlayer.getAttack() + gameStatus.mainPlayer.getFire() + gameStatus.mainPlayer.getResourcefulness() lt 9 }">
-
-			<h1>You get to level up one skill for making it out, what do you
-				want to increase?</h1>
-				<h5>Your total skill count maxes out at 9, choose wisely.</h5>
-			<div class="confirmCube">
-				<form action="/backHome" method="post">
-					<p>
-						<label>Add to Attack</label><input type="radio" name="skill"
-							value="1">
-					</p>
-					<p>
-						<label>Add to Fire</label><input type="radio" name="skill"
-							value="2">
-					</p>
-					<p>
-						<label>Add to Resourcefulness</label><input type="radio"
-							name="skill" value="3">
-					</p>
-					<button>THIS IS THE SKILL I WANT</button>
-				</form>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<h1>Your skills are maxed out YO! Getting out alive is its own reward!</h1>
-			<a class="startButton" href="/index">Home</a>
-		</c:otherwise>
-	</c:choose>
-
+	<script src="/wyb.js"></script>
+	<script>
+		wonGame();
+	</script>
 </body>
 </html>
