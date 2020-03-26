@@ -45,7 +45,7 @@ public class ParksService {
 	}
 	
 	
-///////////// Single-use Methods////////////////////////////////////////////////////////////////
+	///////////// Single-use Methods////////////////////////////////////////////////////////////////
 	public void fillDatabase() {
 		// Creating a set of park codes from the campground endpoint
 		// List<String> parkCodes = NPSapiServ.getParkCodesWithCampgrounds();
@@ -85,15 +85,10 @@ public class ParksService {
 			String stateCode = (park.getStates() != null ? park.getStates().substring(0, 2) : null);
 			dbPark.setStateCode(stateCode);
 			
-			//String lon = (!park.getLongitude().isEmpty() ? park.getLongitude() : null);			
 			dbPark.setLongitude(park.getLongitude());			
-			//String lat = (!park.getLatitude().isEmpty() ? park.getLatitude() : null);		
 			dbPark.setLatitude(park.getLatitude());			
-			//String url = (!park.getUrl().isEmpty() ? park.getLongitude() : null);		
 			dbPark.setUrl(park.getUrl());			
-			//String iUrl = (!park.getImages().get(0).getUrl().isEmpty() ? park.getImages().get(0).getUrl() : null);		
 			dbPark.setImageUrl(park.getImages().get(0).getUrl());			
-			//String name = (!park.getName().isEmpty() ? park.getName() : null);		
 			dbPark.setName(park.getName());		
 			pDao.save(dbPark);
 			}
