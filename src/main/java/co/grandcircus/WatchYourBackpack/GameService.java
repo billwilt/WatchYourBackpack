@@ -23,6 +23,18 @@ public class GameService {
 		return player1.getAttack() + player2.getAttack() + itemsAttack;
 	}
 	
+
+	public Integer getTotalFire(Player player1, Player player2, Item item1, Item item2, Item item3) {
+		Integer itemsFire = item1.getFireAdd() + item2.getFireAdd() + item3.getFireAdd();
+		return player1.getFire() + player2.getFire() + itemsFire;
+	}
+
+	public Integer getTotalResourcefulness(Player player1, Player player2, Item item1, Item item2, Item item3) {
+		Integer itemsResourcefulness = item1.getResourcefulnessAdd() + item2.getResourcefulnessAdd() + item3.getResourcefulnessAdd();
+		return player1.getResourcefulness() + player2.getResourcefulness() + itemsResourcefulness;
+	}
+	
+
 public Outcome getFinalOutcome(GameStatus gameStatus, BeastEvent event, Integer choice) {
 	
 	int theirAttackSkill = gameStatus.getTotalAttack();
@@ -52,6 +64,7 @@ public Outcome getFinalOutcome(GameStatus gameStatus, BeastEvent event, Integer 
 	
 	return finalOutcome;
 }
+
 	
 	public boolean winOrNot(int theirLevel, int requiredLevel) {
 		Random rand = new Random();

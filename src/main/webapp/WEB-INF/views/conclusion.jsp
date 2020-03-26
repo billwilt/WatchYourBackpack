@@ -7,6 +7,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<title>Watch Your Backpack: Conclusion - Will you be going on
+	any additional camping trips?</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -26,32 +29,52 @@
 	crossorigin="anonymous">
 <!-- Your custom styles -->
 <link href="/style.css" rel="stylesheet" />
-
-<title>Watch your Back!pack</title>
 </head>
 <body>
-	
-	<h1>While hiking out you found some money on the ground, turned out to be $${moneyFound}</h1>
-	
+
+	<h1>While hiking out you found some money on the ground, turned
+		out to be $${moneyFound}</h1>
+
 	<!-- end of game stats  -->
 	<div class="confirmCube">
 		<h2>You: ${gameStatus.mainPlayer.getName()}</h2>
 		<h6>Attack: ${gameStatus.mainPlayer.getAttack()}</h6>
 		<h6>Fire: ${gameStatus.mainPlayer.getFire()}</h6>
-		<h6>Resourcefulness: ${gameStatus.mainPlayer.getResourcefulness()}</h6>
+		<h6>Resourcefulness:
+			${gameStatus.mainPlayer.getResourcefulness()}</h6>
 		<h6>Wallet after trip: $${gameStatus.mainPlayer.getMoney()}</h6>
 	</div>
-	<h1>You get to level up one skill for making it out, what do you want to increase?</h1>
-	<div class="confirmCube">
-	<form action="/backHome" method="post">
-		<p><label>Add to Attack</label><input type="radio" name="skill" value="1"></p>
-		<p><label>Add to Fire</label><input type="radio" name="skill" value="2"></p>
-		<p><label>Add to Resourcefulness</label><input type="radio" name="skill" value="3"></p>
-		<button>THIS IS THE SKILL I WANT</button>
-	</form>
-	</div>
 
+	<c:choose>
+		<c:when
+			test="${ gameStatus.mainPlayer.getAttack() + gameStatus.mainPlayer.getFire() + gameStatus.mainPlayer.getResourcefulness() lt 9 }">
 
+			<h1>You get to level up one skill for making it out, what do you
+				want to increase?</h1>
+				<h5>Your total skill count maxes out at 9, choose wisely.</h5>
+			<div class="confirmCube">
+				<form action="/backHome" method="post">
+					<p>
+						<label>Add to Attack</label><input type="radio" name="skill"
+							value="1">
+					</p>
+					<p>
+						<label>Add to Fire</label><input type="radio" name="skill"
+							value="2">
+					</p>
+					<p>
+						<label>Add to Resourcefulness</label><input type="radio"
+							name="skill" value="3">
+					</p>
+					<button>THIS IS THE SKILL I WANT</button>
+				</form>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<h1>Your skills are maxed out YO! Getting out alive is its own reward!</h1>
+			<a class="startButton" href="/">Home</a>
+		</c:otherwise>
+	</c:choose>
 
 </body>
 </html>
