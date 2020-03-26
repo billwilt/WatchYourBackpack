@@ -30,17 +30,23 @@
 <title>Watch your Back!pack</title>
 </head>
 <body>
-	<h1>Did you win?: ${outcome.getSurvived()}</h1>
+
 	<h1>${outcome.getDescription()}</h1>
-	<c:if test="${outcome.getSurvived() eq 'false'}">
-	<p>Would you like to try and phone a friend to see if they can help you out of this mess??</p>
-	<a href="/phoneAFriend">Phone a friend</a>
-	</c:if>
+	<c:choose>
+	<c:when test="${outcome.getSurvived()}">
+	 <h1>You successfully went out for food!</h1>
+	</c:when>
+	<c:otherwise>
+	<h1>You were unprepared to face Mother Nature's mighty wrath.</h1>
 	
+	<p>Would you like to try and phone a friend to see if they can help you out of this mess?</p>
+	<a href="/phoneAFriend" type ="button" class="btn startButton"> Phone a friend</a>
+	</c:otherwise>
+	</c:choose>
 	<h6>${ message }</h6>
 	
 	<form action="/dayController" method="post">
-	<button>NEXT DAY</button>
+	<button class="btn startButton">NEXT DAY</button>
 	</form>
 </body>
 </html>
