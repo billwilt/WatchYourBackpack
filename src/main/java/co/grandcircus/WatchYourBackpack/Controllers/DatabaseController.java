@@ -22,7 +22,7 @@ import co.grandcircus.WatchYourBackpack.Models.DSModel.Currently;
 import co.grandcircus.WatchYourBackpack.Models.NPSModel.NpsResponse;
 
 @Controller
-public class TestController {
+public class DatabaseController {
 	
 	@Autowired
 	private NPSApiService NPSapiServ;
@@ -43,11 +43,11 @@ public class TestController {
 	
 
 	
-	@RequestMapping("/test")
+	@RequestMapping("/databaseTest")
 	public ModelAndView test() {
-		ModelAndView mav = new ModelAndView("test");
+		ModelAndView mav = new ModelAndView("redirect:/");
 		
-		pServ.setReceptionForParksInDatabase(pDao.findAll());
+		//pServ.setReceptionForParksInDatabase(pDao.findAll());
 		//pServ.setRvOptionForParksInDatabase(pDao.findAll());
 		
 		//getting parks into database
@@ -61,34 +61,7 @@ public class TestController {
 		//list possible entrance fee values
 		List<Double> distinctFees = pDao.findDistinctEntranceFees();
 		mav.addObject("fees", distinctFees);
-		
-		//testing NPS api
-		NpsResponse test = NPSapiServ.isleRoyale();
-		mav.addObject("test", test);
-		
-		//testing Campground endpoint
-		mav.addObject("campgrounds", cServ.getCampgrounds(20));
 		return mav;
 	}
-	@RequestMapping("/testWeather")
-	public ModelAndView testEvent() {
-		ModelAndView mav = new ModelAndView("test1");
-		///////////////////////////////////////////////////////////////////////////////
-		
-		Currently current = (Currently) sesh.getAttribute("currentWeather");
 
-		String triggerIcon = current.getIcon();
-		//System.out.println(triggerIcon);
-		WeatherEvent we1 = eventsService.findWeatherEvent(triggerIcon);
-		//System.out.println(pServ.findWeatherEvent(" rain,"));
-
-		mav.addObject("Event2", we1);
-		///////////////////////////////////////////////////////////////////////////////
-		BeastEvent be1 = new BeastEvent();
-		be1 = eventsService.findRandomBeastEvent();
-		mav.addObject("triggerIcon", triggerIcon);
-		mav.addObject("Event3", be1);
-		mav.addObject("summary", current.getSummary());
-		return mav;
-	}
 }

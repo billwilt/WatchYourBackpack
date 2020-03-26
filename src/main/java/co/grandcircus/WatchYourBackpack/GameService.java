@@ -14,7 +14,7 @@ import co.grandcircus.WatchYourBackpack.Entities.Player;
 
 @Component
 public class GameService {
-	
+
 	@Autowired
 	OutcomesDao oDao;
 
@@ -22,7 +22,6 @@ public class GameService {
 		Integer itemsAttack = item1.getAttackAdd() + item2.getAttackAdd() + item3.getAttackAdd();
 		return player1.getAttack() + player2.getAttack() + itemsAttack;
 	}
-	
 
 	public Integer getTotalFire(Player player1, Player player2, Item item1, Item item2, Item item3) {
 		Integer itemsFire = item1.getFireAdd() + item2.getFireAdd() + item3.getFireAdd();
@@ -30,73 +29,64 @@ public class GameService {
 	}
 
 	public Integer getTotalResourcefulness(Player player1, Player player2, Item item1, Item item2, Item item3) {
-		Integer itemsResourcefulness = item1.getResourcefulnessAdd() + item2.getResourcefulnessAdd() + item3.getResourcefulnessAdd();
+		Integer itemsResourcefulness = item1.getResourcefulnessAdd() + item2.getResourcefulnessAdd()
+				+ item3.getResourcefulnessAdd();
 		return player1.getResourcefulness() + player2.getResourcefulness() + itemsResourcefulness;
 	}
-	
 
-public Outcome getFinalOutcome(GameStatus gameStatus, BeastEvent event, Integer choice) {
-	
-	int theirAttackSkill = gameStatus.getTotalAttack();
-	int theirFireSkill = gameStatus.getTotalFire();
-	int testAttackSkill = event.getAttackThresh();
-	int testFireSkill = event.getFireThresh();
-	
-	boolean attackWin = winOrNot(theirAttackSkill, testAttackSkill);
-	boolean fireWin = winOrNot(theirFireSkill, testFireSkill);
-	boolean runAway = winOrNot(theirFireSkill, (testFireSkill + 2));
-	
-	Outcome finalOutcome;
-	switch (choice) {
-	case 1:
-		finalOutcome = oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, attackWin);
-		break;
-	case 2:
-		finalOutcome = oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, fireWin);
-		break;
-	default:
-		finalOutcome = oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, runAway);
-		break;
+	public Outcome getFinalOutcome(GameStatus gameStatus, BeastEvent event, Integer choice) {
+
+		int theirAttackSkill = gameStatus.getTotalAttack();
+		int theirFireSkill = gameStatus.getTotalFire();
+		int testAttackSkill = event.getAttackThresh();
+		int testFireSkill = event.getFireThresh();
+
+		boolean attackWin = winOrNot(theirAttackSkill, testAttackSkill);
+		boolean fireWin = winOrNot(theirFireSkill, testFireSkill);
+		boolean runAway = winOrNot(theirFireSkill, (testFireSkill + 2));
+
+		Outcome finalOutcome;
+		switch (choice) {
+		case 1:
+			finalOutcome = oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, attackWin);
+			break;
+		case 2:
+			finalOutcome = oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, fireWin);
+			break;
+		default:
+			finalOutcome = oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, runAway);
+			break;
+		}
+		gameStatus.setHealth(gameStatus.getHealth() + finalOutcome.getHealthChange());
+
+		return finalOutcome;
 	}
-	System.out.println(gameStatus.getHealth());
-	System.out.println(finalOutcome.getHealthChange());
-	gameStatus.setHealth(gameStatus.getHealth() + finalOutcome.getHealthChange());
-	
-	return finalOutcome;
-}
 
-	
 	public boolean winOrNot(int theirLevel, int requiredLevel) {
 		Random rand = new Random();
-		
+
 		double a = theirLevel + 1;
 		double b = requiredLevel + 1;
-		
+
 		if (b > a) {
 			double ourRand = rand.nextDouble() * a;
 			double requiredRand = rand.nextDouble() * b;
 			
-			System.out.println("your random: " + ourRand);
-			System.out.println("required random: " + requiredRand);
-			
-			return test(a, b);
-			
+			return test(ourRand, requiredRand);
+
 		} else {
 			double ourRand = rand.nextDouble() * (a * 3);
 			double requiredRand = rand.nextDouble() * b;
 			
-			System.out.println("your random: " + ourRand);
-			System.out.println("required random: " + requiredRand);
-			
-			return test(a, b);		
+			return test(ourRand, requiredRand);
 		}
 	}
-	
+
 	public boolean test(double theirSkill, double requiredSkill) {
 		if (theirSkill > requiredSkill) {
 			return true;
-		} else 
+		} else
 			return false;
 	}
-	
+
 }

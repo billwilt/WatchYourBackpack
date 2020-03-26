@@ -69,7 +69,6 @@ public class NPSApiService {
 				parkCodes.add(campground.getParkCode());
 			}
 		}
-		// System.out.println(parkCodes);
 		return parkCodes;
 	}
 
@@ -104,14 +103,4 @@ public class NPSApiService {
 		String url = "https://api.nps.gov/api/v1/campgrounds?parkCode=" + park.getParkCode() + "&api_key=" + apiNPS;
 		return (rt.getForObject(url, CampgroundResponse.class)).getData();		
 	}
-
-//	public Park findByStateCode(String stateCode) {
-//	String token = apiNPS;
-//	String url3 = "https://developer.nps.gov/api/v1/parks?parkCode=" + parkCode + "&api_key=" + token;
-//	NpsResponse response = null;
-//	response = rt.getForObject(url3, NpsResponse.class);
-//	Park responsePark = response.getData().get(0);
-//	return responsePark;
-//}
-
 }
