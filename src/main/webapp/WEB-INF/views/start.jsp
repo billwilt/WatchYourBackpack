@@ -10,7 +10,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<!-- Favicon It's a coffee cup right now. Change it to whatever you want-->
+<!-- Favicon-->
 <link rel="icon" type="image/png" href="/backpack-01.png">
 <!-- Bootstrap core CSS -->
 <link
@@ -27,7 +27,7 @@
 <!-- Your custom styles -->
 <link href="/style.css" rel="stylesheet" />
 
-<title>New Game+</title>
+<title>Watch your Back!pack</title>
 </head>
 <body>
 	<form action="/confirmSettings" method="post">
@@ -71,7 +71,7 @@
 							<h5>If you don't have shelter, mother nature will smell your fear</h5>
 								<div class="parkChoice">
 
-									<input type="radio" name="price" value=0> <label>In
+									<input type="radio" name="price" value=0 checked="checked" > <label>In
 										the Leaves</label>
 									<p>Price: FREE</p>
 								</div>
