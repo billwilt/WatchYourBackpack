@@ -19,6 +19,7 @@ public class Outcome {
 	@ManyToOne 
 	private BeastEvent beastEvent;
 	private Integer choice;
+	private Integer healthChange = 0;
 	
 	
 	
@@ -57,6 +58,12 @@ public class Outcome {
 	}
 	public void setChoice(Integer choice) {
 		this.choice = choice;
+	}
+	public Integer getHealthChange() {
+		return healthChange;
+	}
+	public void setHealthChange(Integer healthChange) {
+		this.healthChange = healthChange;
 	}
 	
 	

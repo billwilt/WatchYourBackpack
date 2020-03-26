@@ -42,89 +42,7 @@ public class PlayController {
 	private GameService gameService;
 
 	
-	////////////////////// DAY 1 /////////////////////////////////////
-
-//	@RequestMapping("/day1")
-//	public ModelAndView day1() {
-//		ModelAndView mav = new ModelAndView("day1");
-//		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
-//
-//		// setting the players wallet to the new wallet amount
-//		Player player1 = gameStatus.getMainPlayer();
-//		Long player1Id = player1.getId();
-//		player1.setMoney((double) sesh.getAttribute("walletAfter"));
-//
-//		int totalLevel = gameStatus.getTotalAttack() + gameStatus.getTotalFire()
-//				+ gameStatus.getMainPlayer().getResourcefulness() + gameStatus.getPartner().getResourcefulness();
-//
-//		// setting the max days for modular days
-//		int maxDays = 3 + (totalLevel / 3);
-//		sesh.setAttribute("maxDays", maxDays);
-//		sesh.setAttribute("dayCount", 1);
-//
-//		// adding a random beast event to the model
-//		BeastEvent be1 = eventsService.findRandomBeastEvent();
-//		sesh.setAttribute("event", be1);
-//
-//		// re-setting the game status with the new changes
-//		sesh.setAttribute("gameStatus", gameStatus);
-//
-//		return mav;
-//	}
-
-//	@PostMapping("/day1")
-//	public ModelAndView day1results(String choice) {
-//		ModelAndView mav = new ModelAndView("day1results");
-//		Random rand = new Random();
-//
-//		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
-//		BeastEvent event = (BeastEvent) sesh.getAttribute("event");
-//
-//		// getting sesh attributes to adjust them
-//		//GameStatus gs = (GameStatus) sesh.getAttribute("gameStatus");
-//
-//		///////////// creating outcomes //////////////////
-//		Outcome outcome1 = new Outcome(true, "You fought courageously and won.");
-//		Outcome outcome2 = new Outcome(true, "You lit them on fire you maniac!!");
-//		Outcome outcome3 = new Outcome(true, "You managed to run away, and thank your good luck!");
-//		Outcome outcome4 = new Outcome(false, "You did not win, you lose 1 health");
-//		Outcome finalOutcome = new Outcome();
-//
-//		//System.out.println(event);
-//
-//		int theirAttackSkill = gameStatus.getTotalAttack();
-//		int theirFireSkill = gameStatus.getTotalFire();
-//		int testAttackSkill = event.getAttackThresh();
-//		int testFireSkill = event.getFireThresh();
-//		
-//		if (choice.equals("1")) {
-//			if (gameService.winOrNot(theirAttackSkill, testAttackSkill)) {
-//				finalOutcome = oDao.findById(3L).orElse(null);
-//			} else {
-//				finalOutcome = oDao.findById(5L).orElse(null);
-//				gameStatus.setHealth(gameStatus.getHealth() - 1);
-//			}
-//
-//		} else if (choice.equals("2")) {
-//			if (gameService.winOrNot(theirFireSkill, testFireSkill)) {
-//				finalOutcome = oDao.findById(6L).orElse(null);
-//			} else {
-//				finalOutcome = oDao.findById(7L).orElse(null);
-//				gameStatus.setHealth(gameStatus.getHealth() - 1);
-//			}
-//
-//		} else {
-//			if (gameService.winOrNot(theirAttackSkill, (testAttackSkill + 2))) {
-//				finalOutcome = oDao.findById(8L).orElse(null);
-//			} else {
-//				finalOutcome = oDao.findById(9L).orElse(null);
-//				gameStatus.setHealth(gameStatus.getHealth() - 1);
-//			}
-//		}
-//		sesh.setAttribute("gameStatus", gameStatus);
-//		mav.addObject("outcome", finalOutcome);
-//		return mav;
-//	}
+	
 
 	//////////////////////////////////// BEAST DAY //////////////////////////////////////////
 
@@ -142,24 +60,33 @@ public class PlayController {
 	@PostMapping("/genericBeastDay")
 	public ModelAndView genericBeastDayPost(Integer choice) {
 		ModelAndView mav = new ModelAndView("genericBeastDayPost");
+		ModelAndView mavLoss = new ModelAndView("conclusion2");
 		Random rand = new Random();
 
-		/////////// getting objects from sessison //////////
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		BeastEvent event = (BeastEvent) sesh.getAttribute("event");
-		Outcome finalOutcome = new Outcome();
+		
+		Outcome finalOutcome = gameService.getFinalOutcome(gameStatus, event, choice);
+		mav.addObject("outcome", finalOutcome);
+		
+		if (gameStatus.getHealth() == 0) {
+			return mavLoss;
+		}
+		
+		return mav;
+	}
 
 
-		int theirAttackSkill = gameStatus.getTotalAttack();
-		int theirFireSkill = gameStatus.getTotalFire();
-		int testAttackSkill = event.getAttackThresh();
-		int testFireSkill = event.getFireThresh();
-		
-		boolean attackWin = gameService.winOrNot(theirAttackSkill, testAttackSkill);
-		boolean fireWin = gameService.winOrNot(theirFireSkill, testFireSkill);
-		
-		finalOutcome = choice == 2 ? oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, fireWin) :
-			oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, attackWin);
+//		int theirAttackSkill = gameStatus.getTotalAttack();
+//		int theirFireSkill = gameStatus.getTotalFire();
+//		int testAttackSkill = event.getAttackThresh();
+//		int testFireSkill = event.getFireThresh();
+//		
+//		boolean attackWin = gameService.winOrNot(theirAttackSkill, testAttackSkill);
+//		boolean fireWin = gameService.winOrNot(theirFireSkill, testFireSkill);
+//		
+//		finalOutcome = choice == 2 ? oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, fireWin) :
+//			oDao.findByBeastEventIdAndChoiceAndSurvived(event.getId(), choice, attackWin);
 		//System.out.println(finalOutcome.toString());
 
 		
@@ -192,12 +119,8 @@ public class PlayController {
 		//int dayCount = (int) sesh.getAttribute("dayCount");
 
 		//////////// adding everything to model /////////////////////////
-		mav.addObject("event", event);
-		mav.addObject("outcome", finalOutcome);
+		//mav.addObject("outcome", finalOutcome);
 		//mav.addObject("dayCount", dayCount);
-
-		return mav;
-	}
 
 	///////////////////////////////// WEATHER DAY ////////////////////////////////////////////
 
@@ -213,9 +136,10 @@ public class PlayController {
 		return mav;
 	}
 
-	@PostMapping("/genericWeatherDay")
+	@PostMapping("/genericWeatherDayPost")
 	public ModelAndView genericWeatherDayPost(String choice) {
 		ModelAndView mav = new ModelAndView("genericWeatherDayPost");
+		ModelAndView mavLoss = new ModelAndView("conclusion2");
 
 		////////////////// getting objects from sessison //////////////////
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
@@ -250,6 +174,10 @@ public class PlayController {
 		mav.addObject("outcome", finalOutcome);
 		mav.addObject("dayCount", dayCount);
 
+		if (gameStatus.getHealth() == 0) {
+			return mavLoss;
+		}
+		
 		return mav;
 	}
 
@@ -264,10 +192,7 @@ public class PlayController {
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		int totalLevel = gameStatus.getTotalAttack() + gameStatus.getTotalFire()
 		+ gameStatus.getMainPlayer().getResourcefulness() + gameStatus.getPartner().getResourcefulness();
-		Integer maxDays = 3 + (totalLevel / 3);
-		sesh.setAttribute("maxDays", maxDays);
-		System.out.println(dayCount + "" + maxDays);
-		
+		Integer maxDays = (Integer) sesh.getAttribute("maxDays");
 //		///////// if it's the first day send them to Beast Event ////////////////
 //		if (dayCount == null) {
 //			
@@ -333,6 +258,107 @@ public class PlayController {
 		playerDao.save(player1);
 		return new ModelAndView("redirect:/");
 	}
+	
+	@RequestMapping("/phoneAFriend")
+	public ModelAndView phoneAFriend() {
+		ModelAndView mav = new ModelAndView("phoneAFriend");
+		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+		System.out.println(gameStatus.getPark());
+		System.out.println(gameStatus.getPark().getReception());
+		boolean reception = gameStatus.getPark().getReception();
+		
+		if (reception) {
+			mav.addObject("message", "You walk around and around until you finally find reception and get the chance to call for a friend, you don't lose any health after all.");
+			gameStatus.setHealth(gameStatus.getHealth() + 1);
+		} else {
+			mav.addObject("message", "You try to find reception but you can't. Maybe you should have picked a park with cellphone reception.");
+		}
+		
+		return mav;
+	}
+//////////////////////DAY 1 /////////////////////////////////////
+
+//@RequestMapping("/day1")
+//public ModelAndView day1() {
+//ModelAndView mav = new ModelAndView("day1");
+//GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+//
+//// setting the players wallet to the new wallet amount
+//Player player1 = gameStatus.getMainPlayer();
+//Long player1Id = player1.getId();
+//player1.setMoney((double) sesh.getAttribute("walletAfter"));
+//
+//int totalLevel = gameStatus.getTotalAttack() + gameStatus.getTotalFire()
+//+ gameStatus.getMainPlayer().getResourcefulness() + gameStatus.getPartner().getResourcefulness();
+//
+//// setting the max days for modular days
+//int maxDays = 3 + (totalLevel / 3);
+//sesh.setAttribute("maxDays", maxDays);
+//sesh.setAttribute("dayCount", 1);
+//
+//// adding a random beast event to the model
+//BeastEvent be1 = eventsService.findRandomBeastEvent();
+//sesh.setAttribute("event", be1);
+//
+//// re-setting the game status with the new changes
+//sesh.setAttribute("gameStatus", gameStatus);
+//
+//return mav;
+//}
+
+//@PostMapping("/day1")
+//public ModelAndView day1results(String choice) {
+//ModelAndView mav = new ModelAndView("day1results");
+//Random rand = new Random();
+//
+//GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
+//BeastEvent event = (BeastEvent) sesh.getAttribute("event");
+//
+//// getting sesh attributes to adjust them
+////GameStatus gs = (GameStatus) sesh.getAttribute("gameStatus");
+//
+/////////////// creating outcomes //////////////////
+//Outcome outcome1 = new Outcome(true, "You fought courageously and won.");
+//Outcome outcome2 = new Outcome(true, "You lit them on fire you maniac!!");
+//Outcome outcome3 = new Outcome(true, "You managed to run away, and thank your good luck!");
+//Outcome outcome4 = new Outcome(false, "You did not win, you lose 1 health");
+//Outcome finalOutcome = new Outcome();
+//
+////System.out.println(event);
+//
+//int theirAttackSkill = gameStatus.getTotalAttack();
+//int theirFireSkill = gameStatus.getTotalFire();
+//int testAttackSkill = event.getAttackThresh();
+//int testFireSkill = event.getFireThresh();
+//
+//if (choice.equals("1")) {
+//if (gameService.winOrNot(theirAttackSkill, testAttackSkill)) {
+//finalOutcome = oDao.findById(3L).orElse(null);
+//} else {
+//finalOutcome = oDao.findById(5L).orElse(null);
+//gameStatus.setHealth(gameStatus.getHealth() - 1);
+//}
+//
+//} else if (choice.equals("2")) {
+//if (gameService.winOrNot(theirFireSkill, testFireSkill)) {
+//finalOutcome = oDao.findById(6L).orElse(null);
+//} else {
+//finalOutcome = oDao.findById(7L).orElse(null);
+//gameStatus.setHealth(gameStatus.getHealth() - 1);
+//}
+//
+//} else {
+//if (gameService.winOrNot(theirAttackSkill, (testAttackSkill + 2))) {
+//finalOutcome = oDao.findById(8L).orElse(null);
+//} else {
+//finalOutcome = oDao.findById(9L).orElse(null);
+//gameStatus.setHealth(gameStatus.getHealth() - 1);
+//}
+//}
+//sesh.setAttribute("gameStatus", gameStatus);
+//mav.addObject("outcome", finalOutcome);
+//return mav;
+//}
 
 //
 //	@RequestMapping("/day2")
