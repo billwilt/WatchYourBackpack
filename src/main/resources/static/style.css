@@ -49,6 +49,26 @@
 	padding: 15px;
 }
 
+.playButton {
+	margin-top: 75px;
+	margin-left: 0%;
+	background: white;
+	color: black;
+	border: 1px solid black;
+	border-radius: 7px;
+	padding: 15px;
+}
+
+.playButton:hover {
+	margin-top: 75px;
+	margin-left: 0%;
+	background: grey;
+	color: black;
+	border: 1px solid black;
+	border-radius: 7px;
+	padding: 30px;
+}
+
 .parkChoice {
 	border: 2px solid black;
 	padding: 5px;
