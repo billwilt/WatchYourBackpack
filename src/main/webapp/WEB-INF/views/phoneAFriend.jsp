@@ -40,7 +40,7 @@
 		</div>
 		
 		<div class="right-space-tall-2up">
-			<p>Beast Image</p>
+			<img src="images/cell-phone-signal.jpg" alt="Man looking for cell service" height="100%" width="100%">
 		</div>
 	</div>
 
