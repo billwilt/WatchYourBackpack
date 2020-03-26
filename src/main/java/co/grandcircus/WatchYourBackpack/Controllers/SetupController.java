@@ -106,7 +106,6 @@ public class SetupController {
 		ModelAndView mavRd = new ModelAndView("redirect:/");
 		
 		//checking if gamestatus is already added to session, then adding gameStatus object
-		//System.out.println(sesh.getAttribute("gameStatus"));
 		GameStatus gameStatus;
 		if (sesh.getAttribute("gameStatus") == null) {
 			gameStatus = new GameStatus();
@@ -114,8 +113,8 @@ public class SetupController {
 		}else {
 			gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		}
-		//Adding Player to GameStatus
 		
+		//Adding Player to GameStatus		
 		if (gameStatus.getMainPlayer() == null) {
 			rd.addFlashAttribute("noPlayerMessage", "No player was selected. Please choose or create a player first!");
 			return mavRd;
@@ -152,7 +151,7 @@ public class SetupController {
 	}
 
 	@PostMapping("/confirmSettings")
-	public ModelAndView confirmPage(double price, Long id, Long item1Id, Long item2Id, Long item3Id) {
+	public ModelAndView confirmPage(Double price, Long id, Long item1Id, Long item2Id, Long item3Id, RedirectAttributes rd) {
 		ModelAndView mav = new ModelAndView("confirmPage");
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		
@@ -185,8 +184,8 @@ public class SetupController {
 		gameStatus.setTotalResourcefulness(totalResourcefulness);
 
 		// if they don't have enough money, set price to 0 for sleeping in the leaves
-		if (player1.getMoney() < price || price == 0) {
-			price = 0;
+		if (player1.getMoney() < price || price == 0.0 || price.isNaN()) {
+			price = 0.0;
 			mav.addObject("sleeping", "in the leaves");
 		} else if (price == 10) {
 			mav.addObject("sleeping", "in a nice tent");

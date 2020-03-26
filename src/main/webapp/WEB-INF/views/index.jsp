@@ -49,10 +49,10 @@
 								selected
 
 							</c:if>>
-							<pre>${player.getName()}  ||  
+							${player.getName()}  ||  
 								Attack:${player.getAttack()}:  Fire:${player.getFire()}:  
 								Resourcefulness:${player.getResourcefulness()}:  
-								Money:<fmt:formatNumber value="${ player.money }" type="currency"/></pre>
+								Money:<fmt:formatNumber value="${ player.money }" type="currency"/>
 						</option>						
 					</c:forEach>					
 					
