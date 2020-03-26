@@ -40,13 +40,13 @@
 	<h1>You were unprepared to face Mother Nature's mighty wrath.</h1>
 	
 	<p>Would you like to try and phone a friend to see if they can help you out of this mess?</p>
-	<a href="/phoneAFriend" type ="button" class="btn"> Phone a friend</a>
+	<a href="/phoneAFriend" type ="button" class="btn startButton"> Phone a friend</a>
 	</c:otherwise>
 	</c:choose>
 	<h6>${ message }</h6>
 	
 	<form action="/dayController" method="post">
-	<button>NEXT DAY</button>
+	<button class="btn startButton">NEXT DAY</button>
 	</form>
 </body>
 </html>
