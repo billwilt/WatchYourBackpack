@@ -29,12 +29,16 @@
 
 <title>Watch your Back!pack</title>
 </head>
-<body
-	style="background-image: url('WatchYourBackpack-01.jpg'); background-repeat: no-repeat; background-size: 75% 76%;">
+<body>
+	<div class="background1">
+
+<!-- 	<div class="left-short"> -->
+	
+
 
 	<form action="/setPlayer" method="post">
 
-		<div class="form-check disabled inputForm-left">
+		<div class="left-short"><!--  form-check disabled inputForm-left -->
 			<h2>CHOOSE YOUR PLAYER</h2>
 			<h6 class="error">${ noPlayerMessage }</h6>
 			
@@ -61,9 +65,12 @@
 		</div>
 		</form>
 <h6 class="error">${ parkMessage }</h6>
-		<div class="form-check disabled inputForm-right" id="choose-park">
-		
-		<form action ="/start" method ="post">
+
+
+		<div class="right-short" id="choose-park">	<!-- form-check disabled inputForm-right  -->
+		<form action ="/start" method ="post">		
+	
+	<!-- <div class="right-short"> -->
 
 			<h2>CHOOSE YOUR NATIONAL PARK</h2>
 			<p>The park will only be an option if you can afford the entrance fee.</p>
@@ -129,7 +136,9 @@
 	</form>
 	<!-- Here is a link to STO that might help with collapsing the expanded divs when another is expanded -->
 	<!-- https://stackoverflow.com/questions/37753407/bootstrap-collapse-how-to-expand-only-one-div-at-a-time -->
+		</div>
 	
+<!-- </div> -->
 
 
 	<script src="/wyb.js">	</script>
