@@ -112,6 +112,7 @@
 	<div class="right-space"> 
 
 		<h4>Choose Three (3) items:</h4>
+		<h5>Different items add to different stats, so pack carefully!</h5>
 		<p>
 			<select id="item1" name="item1Id" required>
 				<c:forEach items="${items}" var="item">

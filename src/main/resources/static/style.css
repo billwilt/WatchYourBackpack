@@ -146,11 +146,10 @@ div.background1 {
 }
 
 div.background2 {
-  max-width: 100%;
-  height: auto;
+
   position: relative;
-  /* width: 1024px;
-  height: 768px; */
+  width: 1024px;
+  height: 768px; 
   margin: 0 auto;
   background-image: url(images/background-02.jpg);
   background-repeat: no-repeat;

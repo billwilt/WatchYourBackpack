@@ -33,9 +33,12 @@
 	<div>
 		<form method="post">
 			<p>
-				<label>Player Name</label><input type="text" name="name">
+				<label>Player Name</label><input type="text" name="name" maxlength="15" >
+				<small id="emailHelp" class="form-text text-muted">15 Characters max</small>
+    </div>
 			<p>
 				<label>Player Description</label><input type="text" maxlength="255" name="description">
+				<small id="emailHelp" class="form-text text-muted">255 Characters max</small>
 			<p>
 				<label>Type</label> <select name="type">
 					<option value="1">Fighter</option>
