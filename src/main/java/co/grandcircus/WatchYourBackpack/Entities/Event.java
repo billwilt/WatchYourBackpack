@@ -17,9 +17,7 @@ public abstract class Event {
 	protected String name;
 	protected String description;
 	protected int rsrcThresh;
-	protected String EventImageUrl;
-	
-	
+	protected String eventImageUrl;
 	public Long getId() {
 		return id;
 	}
@@ -38,19 +36,25 @@ public abstract class Event {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
 	public int getRsrcThresh() {
 		return rsrcThresh;
 	}
 	public void setRsrcThresh(int rsrcThresh) {
 		this.rsrcThresh = rsrcThresh;
 	}
+	public String getEventImageUrl() {
+		return eventImageUrl;
+	}
+	public void setEventImageUrl(String eventImageUrl) {
+		eventImageUrl = eventImageUrl;
+	}
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", rsrcThresh=" + rsrcThresh
-				+ "]";
+				+ ", EventImageUrl=" + eventImageUrl + "]";
 	}
+	
+
 	
 
 }

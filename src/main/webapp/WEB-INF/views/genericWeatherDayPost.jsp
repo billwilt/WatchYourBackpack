@@ -56,7 +56,7 @@
 			</form>
 		</div>
 		<div class="right-space-tall-2up">
-			<p>Beast Image</p>
+			<img src="${event.eventImageUrl }">
 		</div>
 	</div>
 </body>
