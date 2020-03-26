@@ -87,34 +87,15 @@ public class PlayController {
 	}
 
 	@PostMapping("/genericWeatherDayPost")
-	public ModelAndView genericWeatherDayPost(String choice) {
+	public ModelAndView genericWeatherDayPost(Integer choice) {
 		ModelAndView mav = new ModelAndView("genericWeatherDayPost");
 		ModelAndView mavLoss = new ModelAndView("conclusion2");
 
 		////////////////// getting objects from sessison //////////////////
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
 		WeatherEvent event = (WeatherEvent) sesh.getAttribute("event");
-		Outcome finalOutcome = new Outcome();
 
-		int yourSkill = gameStatus.getTotalResourcefulness();
-		int requiredSkill = event.getRsrcThresh();
-
-		if (choice.equals("1")) {
-			if (gameService.winOrNot(yourSkill, requiredSkill)) {
-				finalOutcome = oDao.findById(10L).orElse(null);
-			} else {
-				finalOutcome = oDao.findById(11L).orElse(null);
-				gameStatus.setHealth(gameStatus.getHealth() - 1);
-			}
-		} else {
-			if (yourSkill > requiredSkill) {
-				finalOutcome = oDao.findById(12L).orElse(null);
-				gameStatus.setHealth(gameStatus.getHealth() + 1);
-			} else {
-				finalOutcome = oDao.findById(13L).orElse(null);
-				gameStatus.setHealth(gameStatus.getHealth() - 1);
-			}
-		}
+		Outcome finalOutcome = gameService.getFinalOutcome(gameStatus, event, choice);
 
 		sesh.setAttribute("gameStatus", gameStatus);
 		int dayCount = (int) sesh.getAttribute("dayCount");

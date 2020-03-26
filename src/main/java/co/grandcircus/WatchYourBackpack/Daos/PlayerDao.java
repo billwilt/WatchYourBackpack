@@ -8,6 +8,8 @@ import co.grandcircus.WatchYourBackpack.Entities.Player;
 
 public interface PlayerDao extends JpaRepository<Player, Long>{
 
+	List<Player> findAllByIdNot(Long id);
+
 	
 
 }

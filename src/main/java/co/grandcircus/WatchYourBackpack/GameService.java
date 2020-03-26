@@ -11,6 +11,7 @@ import co.grandcircus.WatchYourBackpack.Entities.GameStatus;
 import co.grandcircus.WatchYourBackpack.Entities.Item;
 import co.grandcircus.WatchYourBackpack.Entities.Outcome;
 import co.grandcircus.WatchYourBackpack.Entities.Player;
+import co.grandcircus.WatchYourBackpack.Entities.WeatherEvent;
 
 @Component
 public class GameService {
@@ -61,6 +62,29 @@ public class GameService {
 
 		return finalOutcome;
 	}
+	
+	public Outcome getFinalOutcome(GameStatus gameStatus, WeatherEvent event, Integer choice) {
+		int yourSkill = gameStatus.getTotalResourcefulness();
+		int requiredSkill = event.getRsrcThresh();
+		Outcome finalOutcome = new Outcome();
+		
+		if (choice.equals("1")) {
+			if (winOrNot(yourSkill, requiredSkill)) {
+				finalOutcome = oDao.findByWeatherEventIdAndChoiceAndSurvived(event.getId(), choice, true);
+			} else {
+				finalOutcome = oDao.findByWeatherEventIdAndChoiceAndSurvived(event.getId(), choice, false);
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
+			}
+		} else {
+			if (yourSkill > requiredSkill) {
+				finalOutcome = oDao.findByWeatherEventIdAndChoiceAndSurvived(event.getId(), choice, true);
+				gameStatus.setHealth(gameStatus.getHealth() + 1);
+			} else {
+				finalOutcome = oDao.findByWeatherEventIdAndChoiceAndSurvived(event.getId(), choice, false);
+				gameStatus.setHealth(gameStatus.getHealth() - 1);
+			}
+		}		return finalOutcome;
+	}
 
 	public boolean winOrNot(int theirLevel, int requiredLevel) {
 		Random rand = new Random();
@@ -88,5 +112,7 @@ public class GameService {
 		} else
 			return false;
 	}
+
+	
 
 }
