@@ -199,7 +199,7 @@ public class PlayController {
 		}
 
 		playerDao.save(player1);
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/index");
 	}
 	
 	@RequestMapping("/phoneAFriend")

@@ -72,7 +72,7 @@
 		</c:when>
 		<c:otherwise>
 			<h1>Your skills are maxed out YO! Getting out alive is its own reward!</h1>
-			<a class="startButton" href="/">Home</a>
+			<a class="startButton" href="/index">Home</a>
 		</c:otherwise>
 	</c:choose>
 

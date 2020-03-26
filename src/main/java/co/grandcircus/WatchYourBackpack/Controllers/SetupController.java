@@ -51,9 +51,9 @@ public class SetupController {
 	private PlayerService playerService;
 
 
-	@RequestMapping("/")
+	@RequestMapping("/index")
 	public ModelAndView showHome(RedirectAttributes rd) {
-		ModelAndView mav = new ModelAndView("index");
+		ModelAndView mav = new ModelAndView("settings1");
 		//clearing the session of old game info
 		sesh.setAttribute("dayCount", 1);
 
@@ -70,7 +70,7 @@ public class SetupController {
 	
 	@PostMapping("/setPlayer")
 	public ModelAndView setPlayer(Long id) {
-		ModelAndView mav = new ModelAndView("redirect:/");
+		ModelAndView mav = new ModelAndView("redirect:/index");
 		
 		//checking if gamestatus is already added to session, then adding gameStatus object
 		GameStatus gameStatus = (GameStatus) sesh.getAttribute("gameStatus");
@@ -101,9 +101,9 @@ public class SetupController {
 
 	@PostMapping("/start")
 	public ModelAndView startGame(String parkCodeName, String parkCodeState, String parkCodeFee, RedirectAttributes rd) {
-		ModelAndView mav = new ModelAndView("start");
+		ModelAndView mav = new ModelAndView("settings2");
 
-		ModelAndView mavRd = new ModelAndView("redirect:/");
+		ModelAndView mavRd = new ModelAndView("redirect:/index");
 		
 		//checking if gamestatus is already added to session, then adding gameStatus object
 		GameStatus gameStatus;
